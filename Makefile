@@ -13,7 +13,7 @@ OBJS		=	$(addprefix $(OBJ)/, $(OFILES))
 SRCS		=	$(addprefix $(SRC)/, $(CFILES))
 
 CC			=	clang
-CFLAGS		=	-Wall -Wextra -Werror
+CFLAGS		=	-Wall -Wextra -Werror -g
 RM			=	rm -rf
 
 $(OBJ)/%.o:	$(SRC)/%.c
