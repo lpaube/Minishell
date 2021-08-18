@@ -1,16 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.h                                            :+:      :+:    :+:   */
+/*   tokenizer.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/17 16:04:45 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/17 16:05:19 by mleblanc         ###   ########.fr       */
+/*   Created: 2021/08/18 15:15:12 by mleblanc          #+#    #+#             */
+/*   Updated: 2021/08/18 17:35:57 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
+#ifndef TOKENIZER_H
+# define TOKENIZER_H
+
+# include "libft.h"
+
+typedef enum e_token_type
+{
+	STRING,
+	REDIRECT,
+	PIPE,
+}	t_token_type;
+
+typedef	struct s_token
+{
+	char			*value;
+	t_token_type	type;
+}	t_token;
+
+t_list	*tokenize(char *line);
 
 #endif

@@ -4,10 +4,10 @@ SRC			=	src
 INC			=	include
 OBJ			=	obj
 
-HFILES		=	utils.h
+HFILES		=	minishell.h tokenizer.h
 HEADERS		=	$(addprefix $(INC)/, $(HFILES))
 
-CFILES		=	main.c
+CFILES		=	main.c tokenizer.c
 OFILES		=	$(CFILES:.c=.o)
 OBJS		=	$(addprefix $(OBJ)/, $(OFILES))
 SRCS		=	$(addprefix $(SRC)/, $(CFILES))
