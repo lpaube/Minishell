@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 15:15:12 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/18 17:35:57 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/19 15:52:56 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ typedef enum e_token_type
 	PIPE,
 }	t_token_type;
 
-typedef	struct s_token
+typedef struct s_token
 {
 	char			*value;
 	t_token_type	type;

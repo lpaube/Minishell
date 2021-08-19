@@ -6,12 +6,13 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/18 19:08:21 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/19 15:28:40 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "tokenizer.h"
+#include "minishell.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <readline/readline.h>
@@ -30,7 +31,7 @@ char	*get_line(char *line)
 		line = NULL;
 	}
 	line = readline(SHELL_PROMPT);
-	tmp = ft_strtrim(line, " \t\n\v\f\r");
+	tmp = ft_strtrim(line, WHITESPACE);
 	free(line);
 	line = tmp;
 	if (line && *line)
@@ -53,6 +54,8 @@ int	main(int argc, char **argv, char **env)
 		lst = tokenize(line);
 		if (!lst)
 			printf("BAD\n");
+		else
+			printf("%s\n", (char *)lst->content);
 		if (ft_strncmp("exit", line, ft_strlen(line)) == 0)
 			break ;
 	}
