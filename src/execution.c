@@ -61,12 +61,14 @@ char	*get_bin_path(char **envp, char *cmd)
 	}
 	return (NULL);
 }
+
+/*	Executes the binary entered as cmd */
 void	ft_binary(t_parse *parse)
 {
 	char	*bin_path;
 
 	bin_path = get_bin_path(parse->env, parse->cmd);
-	printf("BIN PATH: %s\n", bin_path);
+	execve(bin_path, &(parse->cmd), parse->env);
 }
 
 int	execution_control(t_parse *parse)
