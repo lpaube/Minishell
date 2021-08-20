@@ -24,7 +24,7 @@ $(OBJ)/%.o:	$(SRC)/%.c
 			$(CC) $(CFLAGS) -I$(INC) -I$(FTDIR) -c $< -o $@
 
 $(NAME):	$(OBJ) $(OBJS)
-			$(MAKELIBFT)
+			@$(MAKELIBFT)
 			$(CC) $(OBJS) -L$(FTDIR) -l$(LIBFT) -lreadline -o $(NAME)
 
 $(OBJ):
