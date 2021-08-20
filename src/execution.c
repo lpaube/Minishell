@@ -15,6 +15,7 @@
 #include <sys/stat.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/errno.h>
 #include "../libft/libft.h"
 
 typedef struct s_parse
@@ -24,6 +25,18 @@ typedef struct s_parse
 	char	*cmd;
 	char	**cmd_args; // Needs to start with bin name, and be NULL terminated
 } t_parse;
+
+void	ft_terminate(int errno)
+{
+	char	*err_str;
+
+	if (errno != 0)
+		err_str = strerror(errno);
+	else
+		err_str = "There has been an undefined error";
+	printf("%s\n", err_str);
+	exit(0);
+}
 
 char	*validate_path(char *path, char *cmd)
 {
@@ -74,19 +87,77 @@ int	ft_binary(t_parse *parse)
 		return (-1);
 	pid = fork();
 	if (pid == -1)
-		return (-1);
+		ft_terminate(errno);
 	if (pid == 0)
 	{
 		execve(bin_path, parse->cmd_args, parse->env);
+		if (execve == -1)
+			ft_terminate(errno);
 	}
 	wait(0);
 	return (0);
+}
+
+void	ft_echo(t_parse *parse)
+{
+	int	i;
+	int	nl;
+
+	i = 0;
+	nl = 1;
+	if (ft_strnstr(parse->cmd_args)[i], '-n', 2)
+	{
+		nl = 0;
+		i++;
+	}
+	while ((parse->cmd_args)[i])
+	{
+		printf("%s", (parse->cmd_args));
+		i++;
+		if ((parse->cmd_args)[i])
+			ft_putchar(' ');
+	}
+	if (nl)
+		ft_putchar('\n');
+}
+
+void	ft_cd(t_parse *parse)
+{
+	
 }
 
 int	execution_control(t_parse *parse)
 {
 	if (parse->bin == 1)
 		ft_binary(parse);
+	else if (ft_strnstr(parse->cmd, "echo", 4))
+	{
+		ft_echo(parse);
+	}
+	else if (ft_strnstr(parse->cmd, "cd", 2))
+	{
+		ft_cd(parse);
+	}
+	else if (ft_strnstr(parse->cmd, "pwd", 3))
+	{
+		ft_pwd(parse);
+	}
+	else if (ft_strnstr(parse->cmd, "export", 6))
+	{
+		ft_export(parse);
+	}
+	else if (ft_strnstr(parse->cmd, "unset", 5))
+	{
+		ft_unset(parse);
+	}
+	else if (ft_strnstr(parse->cmd, "env", 3))
+	{
+		ft_env(parse);
+	}
+	else if (ft_strnstr(parse->cmd, "exit", 4))
+	{
+		ft_exit(parse);
+	}
 	return (0);
 }
 
