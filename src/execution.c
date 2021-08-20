@@ -22,6 +22,7 @@ typedef struct s_parse
 	int	bin;
 	char	**env;
 	char	*cmd;
+	char	**cmd_args; // Needs to start with bin name, and be NULL terminated
 } t_parse;
 
 char	*validate_path(char *path, char *cmd)
@@ -63,12 +64,23 @@ char	*get_bin_path(char **envp, char *cmd)
 }
 
 /*	Executes the binary entered as cmd */
-void	ft_binary(t_parse *parse)
+int	ft_binary(t_parse *parse)
 {
 	char	*bin_path;
+	pid_t	pid;
 
 	bin_path = get_bin_path(parse->env, parse->cmd);
-	execve(bin_path, &(parse->cmd), parse->env);
+	if (bin_path == NULL)
+		return (-1);
+	pid = fork();
+	if (pid == -1)
+		return (-1);
+	if (pid == 0)
+	{
+		execve(bin_path, parse->cmd_args, parse->env);
+	}
+	wait(0);
+	return (0);
 }
 
 int	execution_control(t_parse *parse)
@@ -81,11 +93,14 @@ int	execution_control(t_parse *parse)
 int	main(int argc, char **argv, char **env)
 {
 	t_parse	*parse;
+	char *test_args[3] = {"ls", "-l", NULL};
 
 	parse = malloc(sizeof(*parse));
 	parse->bin = 1;
 	parse->env = env;
 	parse->cmd = "ls";
+	parse->cmd_args = test_args;
+	// This function will take whatever Michael gives it after parsing
 	execution_control(parse);
 
 	return (0);
