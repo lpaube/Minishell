@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 15:14:49 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/19 15:51:35 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/20 16:56:23 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,13 @@
 static char	*get_quote_str(char **str)
 {
 	char	*end;
-	char	*tmp;
 	char	*ret;
 
 	(*str)++;
 	end = ft_strchr(*str, '\'');
 	if (!end)
 		return (NULL);
-	tmp = ft_substr(*str, 0, end - *str);
-	ret = ft_strtrim(tmp, WHITESPACE);
-	free(tmp);
+	ret = ft_substr(*str, 0, end - *str);
 	*str = end;
 	return (ret);
 }
@@ -49,18 +46,18 @@ t_list	*tokenize(char *line)
 				++line;
 				continue ;
 			}
-			str = ft_strjoin(str, ft_substr(start, 0, line - start));
+			str = ft_strjoin_free(str, ft_substr(start, 0, line - start));
 			if (*line == '\'')
-				str = ft_strjoin(str, get_quote_str(&line));
+				str = ft_strjoin_free(str, get_quote_str(&line));
 			++line;
 			start = line;
 		}
 		if (start != line)
-			str = ft_strjoin(str, ft_substr(start, 0, line - start));
-		if (ft_strncmp(str, "", 1) != 0)
+			str = ft_strjoin_free(str, ft_substr(start, 0, line - start));
+		if (*str != '\0')
 			ft_lstadd_back(&lst, ft_lstnew((void *)str));
-		free(str);
-		++line;
+		if (*line)
+			++line;
 	}
 	return (lst);
 }

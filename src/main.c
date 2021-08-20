@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/19 15:28:40 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/20 18:38:27 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int	main(int argc, char **argv, char **env)
 {
 	char	*line;
 	t_list	*lst;
+	t_list	*ptr;
 
 	(void)argc;
 	(void)argv;
@@ -55,9 +56,17 @@ int	main(int argc, char **argv, char **env)
 		if (!lst)
 			printf("BAD\n");
 		else
-			printf("%s\n", (char *)lst->content);
+		{
+			ptr = lst;
+			while (ptr->next)
+			{
+				printf("%s\n", (char *)ptr->content);
+				ptr = ptr->next;
+			}
+		}
 		if (ft_strncmp("exit", line, ft_strlen(line)) == 0)
 			break ;
 	}
 	free(line);
+	ft_lstclear(&lst, free);
 }
