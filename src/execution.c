@@ -6,7 +6,7 @@
 /*   By: laube <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 14:50:36 by laube             #+#    #+#             */
-/*   Updated: 2021/08/21 01:31:54 by laube            ###   ########.fr       */
+/*   Updated: 2021/08/21 13:56:01 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,35 +143,69 @@ void	ft_pwd(t_parse *parse)
 		ft_terminate(errno, "Could not get current directory.");
 }
 
+/*	Returns a malloc'd 2d duplicated table of env
+ *	and updates it with new var if applicable	*/
+char	**dup_env_table(char **table, t_parse *parse, int new_var)
+{
+	char	**res_table;
+	int		i;
+	char	*new_arg;
+
+	new_arg = parse->cmd_args[1];
+	i = 0;
+	while (table[i])
+		i++;
+	res_table = malloc((i + 1 + new_var) * sizeof(char *));
+	if (!res_table)
+		ft_terminate(errno, "Could not malloc 'res_table'.");
+	i = 0;
+	while (table[i])
+	{
+		res_table[i] = malloc((ft_strlen(table[i]) + 1) * sizeof(char));
+		if (!res_table[i])
+			ft_terminate(errno, "Could not malloc 'res_table[i]");
+		ft_memcpy(res_table[i], table[i], ft_strlen(table[i]) + 1);
+		i++;
+	}
+	if (new_var)
+	{
+		res_table[i] = malloc((ft_strlen(new_arg) * sizeof(char)));
+		ft_memcpy(res_table[i], new_arg, ft_strlen(new_arg) + 1);
+		i++;
+	}
+	table[i] = NULL;
+	return (res_table);
+}
+
 void	ft_export(t_parse *parse)
 {
 	char	*var_name;
 	char	*equal_char;
-	char	*existing_var;
 	int		i;
 
 	var_name = ft_strdup(parse->cmd_args[1]);
-	equal_char = ft_strchr(var_name, '=');
+	equal_char = ft_strchr(var_name, '=') + 1;
 	if (!equal_char)
 		ft_terminate(errno, "Invalid export command: no equal sign found.");
 	else
-		*equal_char = 0
-	// Duplicate parse->env
+		*equal_char = 0;
 
-	// Check if env var already exists
+	// Checks if var currently exists
 	i = 0;
 	while (parse->env[i])
 	{
-		if (strnstr(parse->env[i], var_name, ft_strlen(var_name)))
+		if (ft_strnstr(parse->env[i], var_name, ft_strlen(var_name)))
 		{
-			
+			free(parse->env[i]);
+			parse->env[i] = parse->cmd_args[1];
+			return ;
 		}
+		i++;
 	}
-	if (existing_var != NULL)
-	{
-		
-	}
+	parse->env = dup_env_table(parse->env, parse, 1);
 
+	// If var doesn't already exist, add export to env
+	
 }
 
 int	execution_control(t_parse *parse)
@@ -211,19 +245,36 @@ int	execution_control(t_parse *parse)
 	return (0);
 }
 
+
+/*	Prints a 2d table of char
+ *	for testing purposes	*/
+void	put_table(char **table)
+{
+	int	i;
+
+	i = 0;
+	while (table[i])
+	{
+		printf("%s\n", table[i]);
+		i++;
+	}
+}
+
+/*	t_parse parse will be replaced by the struct passed by Mik	*/
 int	main(int argc, char **argv, char **env)
 {
 	errno = 0;
 	t_parse	*parse;
-	char *test_args[3] = {"pwd", "/", NULL};
+	char *test_args[3] = {"export", "TESTINGP=whatsup", NULL};
 
 	parse = malloc(sizeof(*parse));
 	parse->bin = 0;
-	parse->env = env;
-	parse->cmd = "pwd";
+	parse->cmd = "export";
 	parse->cmd_args = test_args;
-	// This function will take whatever Michael gives it after parsing
+	parse->env = dup_env_table(env, parse, 0);
+
 	execution_control(parse);
+	put_table(parse->env);
 
 	return (0);
 }
