@@ -6,7 +6,7 @@
 /*   By: laube <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 14:50:36 by laube             #+#    #+#             */
-/*   Updated: 2021/08/18 14:52:25 by laube            ###   ########.fr       */
+/*   Updated: 2021/08/21 00:02:05 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/errno.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 #include "../libft/libft.h"
 
 typedef struct s_parse
@@ -26,14 +29,14 @@ typedef struct s_parse
 	char	**cmd_args; // Needs to start with bin name, and be NULL terminated
 } t_parse;
 
-void	ft_terminate(int errno)
+void	ft_terminate(int err, char *err_str)
 {
-	char	*err_str;
+	char	*ret_str;
 
-	if (errno != 0)
-		err_str = strerror(errno);
+	if (err != 0)
+		ret_str = strerror(err);
 	else
-		err_str = "There has been an undefined error";
+		ret_str = err_str;
 	printf("%s\n", err_str);
 	exit(0);
 }
@@ -87,12 +90,11 @@ int	ft_binary(t_parse *parse)
 		return (-1);
 	pid = fork();
 	if (pid == -1)
-		ft_terminate(errno);
+		ft_terminate(errno, "Invalid process id after fork.");
 	if (pid == 0)
 	{
-		execve(bin_path, parse->cmd_args, parse->env);
-		if (execve == -1)
-			ft_terminate(errno);
+		if (execve(bin_path, parse->cmd_args, parse->env) == -1)
+			ft_terminate(errno, "Invalid execution of binary.");
 	}
 	wait(0);
 	return (0);
@@ -103,27 +105,32 @@ void	ft_echo(t_parse *parse)
 	int	i;
 	int	nl;
 
-	i = 0;
+	i = 1;
 	nl = 1;
-	if (ft_strnstr(parse->cmd_args)[i], '-n', 2)
+	if (ft_strnstr((parse->cmd_args)[i], "-n", 2))
 	{
 		nl = 0;
 		i++;
 	}
 	while ((parse->cmd_args)[i])
 	{
-		printf("%s", (parse->cmd_args));
+		printf("%s", (parse->cmd_args[i]));
 		i++;
 		if ((parse->cmd_args)[i])
-			ft_putchar(' ');
+			printf(" ");
 	}
 	if (nl)
-		ft_putchar('\n');
+		printf("\n");
 }
 
 void	ft_cd(t_parse *parse)
 {
+	int	ret;
 	
+	if (parse->cmd_args[1] != NULL && parse->cmd_args[2] != NULL)
+		ft_terminate(errno, "cd: too many arguments");
+	if (chdir(parse->cmd_args[1]) == -1)
+		ft_terminate(errno, "Could not change directory.");
 }
 
 int	execution_control(t_parse *parse)
@@ -138,6 +145,7 @@ int	execution_control(t_parse *parse)
 	{
 		ft_cd(parse);
 	}
+	/*
 	else if (ft_strnstr(parse->cmd, "pwd", 3))
 	{
 		ft_pwd(parse);
@@ -158,18 +166,20 @@ int	execution_control(t_parse *parse)
 	{
 		ft_exit(parse);
 	}
+	*/
 	return (0);
 }
 
 int	main(int argc, char **argv, char **env)
 {
+	errno = 0;
 	t_parse	*parse;
-	char *test_args[3] = {"ls", "-l", NULL};
+	char *test_args[3] = {"cd", "/", NULL};
 
 	parse = malloc(sizeof(*parse));
-	parse->bin = 1;
+	parse->bin = 0;
 	parse->env = env;
-	parse->cmd = "ls";
+	parse->cmd = "cd";
 	parse->cmd_args = test_args;
 	// This function will take whatever Michael gives it after parsing
 	execution_control(parse);
