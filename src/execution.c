@@ -6,7 +6,7 @@
 /*   By: laube <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 14:50:36 by laube             #+#    #+#             */
-/*   Updated: 2021/08/21 00:02:05 by laube            ###   ########.fr       */
+/*   Updated: 2021/08/21 01:31:54 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <limits.h>
 #include "../libft/libft.h"
 
 typedef struct s_parse
@@ -133,6 +134,46 @@ void	ft_cd(t_parse *parse)
 		ft_terminate(errno, "Could not change directory.");
 }
 
+void	ft_pwd(t_parse *parse)
+{
+	char	cwd[PATH_MAX];
+	if (getcwd(cwd, PATH_MAX) != NULL)
+		printf("%s\n", cwd);
+	else
+		ft_terminate(errno, "Could not get current directory.");
+}
+
+void	ft_export(t_parse *parse)
+{
+	char	*var_name;
+	char	*equal_char;
+	char	*existing_var;
+	int		i;
+
+	var_name = ft_strdup(parse->cmd_args[1]);
+	equal_char = ft_strchr(var_name, '=');
+	if (!equal_char)
+		ft_terminate(errno, "Invalid export command: no equal sign found.");
+	else
+		*equal_char = 0
+	// Duplicate parse->env
+
+	// Check if env var already exists
+	i = 0;
+	while (parse->env[i])
+	{
+		if (strnstr(parse->env[i], var_name, ft_strlen(var_name)))
+		{
+			
+		}
+	}
+	if (existing_var != NULL)
+	{
+		
+	}
+
+}
+
 int	execution_control(t_parse *parse)
 {
 	if (parse->bin == 1)
@@ -145,7 +186,6 @@ int	execution_control(t_parse *parse)
 	{
 		ft_cd(parse);
 	}
-	/*
 	else if (ft_strnstr(parse->cmd, "pwd", 3))
 	{
 		ft_pwd(parse);
@@ -154,6 +194,7 @@ int	execution_control(t_parse *parse)
 	{
 		ft_export(parse);
 	}
+	/*
 	else if (ft_strnstr(parse->cmd, "unset", 5))
 	{
 		ft_unset(parse);
@@ -174,12 +215,12 @@ int	main(int argc, char **argv, char **env)
 {
 	errno = 0;
 	t_parse	*parse;
-	char *test_args[3] = {"cd", "/", NULL};
+	char *test_args[3] = {"pwd", "/", NULL};
 
 	parse = malloc(sizeof(*parse));
 	parse->bin = 0;
 	parse->env = env;
-	parse->cmd = "cd";
+	parse->cmd = "pwd";
 	parse->cmd_args = test_args;
 	// This function will take whatever Michael gives it after parsing
 	execution_control(parse);
