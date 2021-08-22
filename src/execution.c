@@ -6,7 +6,7 @@
 /*   By: laube <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 14:50:36 by laube             #+#    #+#             */
-/*   Updated: 2021/08/21 13:56:01 by laube            ###   ########.fr       */
+/*   Updated: 2021/08/22 00:48:57 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,10 +202,79 @@ void	ft_export(t_parse *parse)
 		}
 		i++;
 	}
+	// If var doesn't already exist: add new env var
 	parse->env = dup_env_table(parse->env, parse, 1);
+}
 
-	// If var doesn't already exist, add export to env
-	
+/*	Receives a malloc'd str, and returns a new malloc'd str
+ *	with appended char	*/
+char	*ft_append_str(char **str, char c)
+{
+	char	*new_str;
+	int		i;
+
+	printf("here1\n");
+	new_str = malloc((ft_strlen(*str) + 1) * sizeof(char));
+	i = 0;
+	while ((*str)[i])
+	{
+		new_str[i] = (*str)[i];
+		i++;
+	}
+	printf("here2\n");
+	new_str[i] = c;
+	i++;
+	new_str[i] = 0;
+	printf("here3\n");
+	printf("HEY: %s\n", *str);
+	//free(*str);
+	printf("here4\n");
+	return (new_str);
+}
+
+void	ft_unset(t_parse *parse)
+{
+	int	i;
+	int	j;
+
+	i = 1;
+	printf("ok1\n");
+	while (parse->cmd_args[i])
+	{
+		printf("ok2\n");
+		parse->cmd_args[i] = ft_append_str(&parse->cmd_args[i], '=');
+		printf("ok3\n");
+		j = 0;
+		while (parse->env[j])
+		{
+			if (ft_strnstr(parse->env[j], parse->cmd_args[i], ft_strlen(parse->cmd_args[i])))
+			{
+				free(parse->env[j]);
+				while(parse->env[j + 1])
+				{
+					parse->env[j] = parse->env[j + 1];
+					j++;
+				}
+				parse->env[j] = NULL;
+				free(parse->env[j + 1]);
+				break ;
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
+void	ft_env(t_parse *parse)
+{
+	int	i;
+
+	i = 0;
+	while (parse->env[i])
+	{
+		printf("%s\n", parse->env[i]);
+		i++;
+	}
 }
 
 int	execution_control(t_parse *parse)
@@ -228,7 +297,6 @@ int	execution_control(t_parse *parse)
 	{
 		ft_export(parse);
 	}
-	/*
 	else if (ft_strnstr(parse->cmd, "unset", 5))
 	{
 		ft_unset(parse);
@@ -237,6 +305,7 @@ int	execution_control(t_parse *parse)
 	{
 		ft_env(parse);
 	}
+	/*
 	else if (ft_strnstr(parse->cmd, "exit", 4))
 	{
 		ft_exit(parse);
@@ -265,16 +334,16 @@ int	main(int argc, char **argv, char **env)
 {
 	errno = 0;
 	t_parse	*parse;
-	char *test_args[3] = {"export", "TESTINGP=whatsup", NULL};
+	char *test_args[3] = {"env", NULL, NULL};
 
 	parse = malloc(sizeof(*parse));
 	parse->bin = 0;
-	parse->cmd = "export";
+	parse->cmd = "env";
 	parse->cmd_args = test_args;
 	parse->env = dup_env_table(env, parse, 0);
 
 	execution_control(parse);
-	put_table(parse->env);
+	//put_table(parse->env);
 
 	return (0);
 }
