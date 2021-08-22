@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/20 18:38:27 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/22 18:07:56 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include <readline/history.h>
 #include <stdbool.h>
 
-#define SHELL_PROMPT ("minishell: ")
+void	free_token(void *t);
 
 char	*get_line(char *line)
 {
@@ -41,32 +41,36 @@ char	*get_line(char *line)
 
 int	main(int argc, char **argv, char **env)
 {
-	char	*line;
-	t_list	*lst;
-	t_list	*ptr;
+	t_list		*lst;
+	t_list		*ptr;
+	t_tokenizer	*tok;
+	t_token		*token;
 
 	(void)argc;
 	(void)argv;
 	(void)env;
-	line = NULL;
+	tok = (t_tokenizer *)ft_calloc(1, sizeof(t_tokenizer));
 	while (true)
 	{
-		line = get_line(line);
-		lst = tokenize(line);
+		tok->str = get_line(tok->str);
+		tok->cursor = 0;
+		lst = tokenize(tok);
 		if (!lst)
 			printf("BAD\n");
 		else
 		{
 			ptr = lst;
-			while (ptr->next)
+			while (ptr)
 			{
-				printf("%s\n", (char *)ptr->content);
+				token = (t_token *)ptr->content;
+				printf("%s\n", token->value);
 				ptr = ptr->next;
 			}
 		}
-		if (ft_strncmp("exit", line, ft_strlen(line)) == 0)
+		if (ft_strncmp("exit", tok->str, 5) == 0)
 			break ;
+		ft_lstclear(&lst, free_token);
 	}
-	free(line);
+	free(tok->str);
 	ft_lstclear(&lst, free);
 }
