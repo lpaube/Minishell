@@ -43,7 +43,7 @@ fclean:		clean
 re:			fclean all
 
 norme:
-			#$(MAKELIBFT) norme
+#			$(MAKELIBFT) norme
 			norminette $(SRCS) $(HEADERS)
 
 .PHONY:		all clean fclean re norme

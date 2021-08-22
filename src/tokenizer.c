@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 15:14:49 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/22 18:24:06 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/22 19:15:19 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #include <stdlib.h>
 
 #define OP ">|<"
-#define SEPARATOR WHITESPACE">|<"
 
 void	free_token(void *t)
 {
@@ -37,17 +36,42 @@ static char	*get_quote_str(t_tokenizer *tok)
 	return (ret);
 }
 
+static bool	parse_quote(t_tokenizer *tok, t_token *token)
+{
+	char	*tmp;
+
+	tmp = get_quote_str(tok);
+	if (!tmp)
+	{
+		free_token(token);
+		return (false);
+	}
+	token->value = ft_strjoin_free(token->value, tmp);
+	return (true);
+}
+
+static t_token	*new_token(char *value, t_token_type type)
+{
+	t_token	*token;
+
+	token = (t_token *)ft_calloc(1, sizeof(t_token));
+	token->value = value;
+	token->type = type;
+	return (token);
+}
+
 static bool	get_op_token(t_tokenizer *tok)
 {
 	t_token			*token;
 	unsigned int	index;
-	
+
 	index = tok->cursor;
-	if (ft_strchr("<>", tok->str[index + 1]))
+	if (ft_strchr("<>", tok->str[index + 1])
+		&& ft_strchr("<>", tok->str[index]))
 		++index;
-	token = (t_token *)ft_calloc(1, sizeof(t_token));
-	token->value = ft_substr(tok->str, tok->cursor, index - tok->cursor + 1);
-	token->type = OPERATOR;
+	token = new_token(
+			ft_substr(tok->str, tok->cursor, index - tok->cursor + 1),
+			OPERATOR);
 	tok->cursor = index + 1;
 	tok->next_token = token;
 	return (true);
@@ -57,14 +81,12 @@ bool	get_next_token(t_tokenizer *tok)
 {
 	t_token			*token;
 	unsigned int	index;
-	char			*tmp;
 
 	if (ft_strchr(OP, tok->str[tok->cursor]))
 		return (get_op_token(tok));
-	token = (t_token *)ft_calloc(1, sizeof(t_token));
-	token->value = ft_strdup("");
+	token = new_token(ft_strdup(""), STRING);
 	index = tok->cursor;
-	while (!ft_strchr(SEPARATOR, tok->str[index]))
+	while (!ft_strchr(WHITESPACE OP, tok->str[index]))
 	{
 		if (!ft_strchr("\'\"", tok->str[index]))
 		{
@@ -72,22 +94,15 @@ bool	get_next_token(t_tokenizer *tok)
 			continue ;
 		}
 		token->value = ft_strjoin_free(token->value,
-			ft_substr(tok->str, tok->cursor, index - tok->cursor));
+				ft_substr(tok->str, tok->cursor, index - tok->cursor));
 		tok->cursor = index;
 		if (tok->str[tok->cursor] == '\'')
-		{
-			tmp = get_quote_str(tok);
-			if (!tmp)
-			{
-				free_token(token);
+			if (!parse_quote(tok, token))
 				return (false);
-			}
-			token->value = ft_strjoin_free(token->value, tmp);
-		}
 		index = tok->cursor;
 	}
 	token->value = ft_strjoin_free(token->value,
-		ft_substr(tok->str, tok->cursor, index - tok->cursor));
+			ft_substr(tok->str, tok->cursor, index - tok->cursor));
 	tok->next_token = token;
 	tok->cursor = index;
 	return (true);
