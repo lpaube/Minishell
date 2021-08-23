@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 15:14:49 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/23 12:45:34 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/23 13:42:11 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ static void	parse_variable(t_tokenizer *tok, t_token *token)
 	char			*var_value;
 	unsigned int	index;
 
+	if (tok->str[tok->cursor + 1] == '?')
+			;
 	++tok->cursor;
 	index = tok->cursor;
 	while (ft_isalnum(tok->str[index]) || tok->str[index] == '_')
