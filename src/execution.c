@@ -6,7 +6,7 @@
 /*   By: laube <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 14:50:36 by laube             #+#    #+#             */
-/*   Updated: 2021/08/22 01:14:27 by laube            ###   ########.fr       */
+/*   Updated: 2021/08/22 01:17:32 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -282,6 +282,7 @@ void	ft_exit(t_parse *parse)
 	exit(0);
 }
 
+/* Most functions don't correctly handle arguments of size 0 or > 1 */
 int	execution_control(t_parse *parse)
 {
 	if (parse->bin == 1)
@@ -310,6 +311,7 @@ int	execution_control(t_parse *parse)
 	{
 		ft_env(parse);
 	}
+	/* Doesn't currently handle arguments */
 	else if (ft_strnstr(parse->cmd, "exit", 4))
 	{
 		ft_exit(parse);
