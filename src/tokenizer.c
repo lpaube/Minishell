@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 15:14:49 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/22 19:15:19 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/22 22:53:33 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ bool	get_next_token(t_tokenizer *tok)
 		return (get_op_token(tok));
 	token = new_token(ft_strdup(""), STRING);
 	index = tok->cursor;
-	while (!ft_strchr(WHITESPACE OP, tok->str[index]))
+	while (!ft_strchr(WHITESPACE OP "$", tok->str[index]))
 	{
 		if (!ft_strchr("\'\"", tok->str[index]))
 		{
