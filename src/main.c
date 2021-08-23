@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/23 18:43:19 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/23 19:04:00 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,14 @@ char	*get_line(char *line)
 	return (line);
 }
 
+void	init_tokenizer(t_tokenizer *tok)
+{
+	tok->cursor = 0;
+	tok->state = TEXT;
+	tok->last_state = TEXT;
+	tok->next_token = NULL;
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	t_list		*lst;
@@ -52,8 +60,8 @@ int	main(int argc, char **argv, char **env)
 	tok = (t_tokenizer *)ft_calloc(1, sizeof(t_tokenizer));
 	while (true)
 	{
+		init_tokenizer(tok);
 		tok->str = get_line(tok->str);
-		tok->cursor = 0;
 		lst = tokenize(tok);
 		if (!lst)
 			printf("BAD\n");
@@ -63,7 +71,7 @@ int	main(int argc, char **argv, char **env)
 			while (ptr)
 			{
 				token = (t_token *)ptr->content;
-				printf("%s - %d\n", token->value, token->type);
+				printf("%s - %d\n", token->value->data, token->type);
 				ptr = ptr->next;
 			}
 		}
