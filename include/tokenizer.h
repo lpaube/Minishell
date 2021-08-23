@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 15:15:12 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/23 13:50:53 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/23 18:06:49 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,21 @@ typedef struct s_token
 	t_token_type	type;
 }	t_token;
 
+typedef enum e_state
+{
+	TEXT,
+	QUOTE,
+	DQUOTE,
+	VARIABLE,
+	ESCAPE,
+}	t_state;
+
 typedef struct s_tokenizer
 {
 	char			*str;
 	unsigned int	cursor;
+	t_state			last_state;
+	t_state			state;
 	t_token			*next_token;
 }	t_tokenizer;
 
