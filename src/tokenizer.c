@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 15:14:49 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/23 19:04:45 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/23 19:19:13 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,10 @@ bool	get_next_token(t_tokenizer *tok)
 	if (ft_strchr(OP, cursor_char(tok)))
 		return (get_op_token(tok));
 	token = new_token(ft_string_new(NULL), STRING);
-	while (!ft_strchr(WHITESPACE OP, cursor_char(tok)))
+	while (!ft_strchr(WHITESPACE, cursor_char(tok)))
 	{
+		if (tok->state == TEXT && ft_strchr(OP, cursor_char(tok)))
+			break ;
 		if (cursor_char(tok) == '\'')
 		{
 			if (tok->state == QUOTE)
