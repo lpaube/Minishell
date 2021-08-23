@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 15:14:49 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/22 22:53:33 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/23 12:45:34 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,24 @@ static bool	get_op_token(t_tokenizer *tok)
 	return (true);
 }
 
+static void	parse_variable(t_tokenizer *tok, t_token *token)
+{
+	char			*var_name;
+	char			*var_value;
+	unsigned int	index;
+
+	++tok->cursor;
+	index = tok->cursor;
+	while (ft_isalnum(tok->str[index]) || tok->str[index] == '_')
+		++index;
+	var_name = ft_substr(tok->str, tok->cursor, index - tok->cursor);
+	var_value = getenv(var_name);
+	free(var_name);
+	tok->cursor = index;
+	if (var_value)
+		token->value = ft_strjoin_free(token->value, ft_strdup(var_value));
+}
+
 bool	get_next_token(t_tokenizer *tok)
 {
 	t_token			*token;
@@ -86,9 +104,9 @@ bool	get_next_token(t_tokenizer *tok)
 		return (get_op_token(tok));
 	token = new_token(ft_strdup(""), STRING);
 	index = tok->cursor;
-	while (!ft_strchr(WHITESPACE OP "$", tok->str[index]))
+	while (!ft_strchr(WHITESPACE OP, tok->str[index]))
 	{
-		if (!ft_strchr("\'\"", tok->str[index]))
+		if (!ft_strchr("\'\"$", tok->str[index]))
 		{
 			++index;
 			continue ;
@@ -99,6 +117,8 @@ bool	get_next_token(t_tokenizer *tok)
 		if (tok->str[tok->cursor] == '\'')
 			if (!parse_quote(tok, token))
 				return (false);
+		if (tok->str[tok->cursor] == '$')
+			parse_variable(tok, token);
 		index = tok->cursor;
 	}
 	token->value = ft_strjoin_free(token->value,
