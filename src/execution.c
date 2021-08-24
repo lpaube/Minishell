@@ -6,7 +6,7 @@
 /*   By: laube <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 14:50:36 by laube             #+#    #+#             */
-/*   Updated: 2021/08/24 13:44:06 by laube            ###   ########.fr       */
+/*   Updated: 2021/08/24 15:36:30 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@
 #include <limits.h>
 #include "../libft/libft.h"
 
-typedef struct s_parse
+typedef struct s_phrase
 {
 	int	bin;
 	char	**env;
 	char	*cmd;
 	char	**cmd_args; // Needs to start with bin name, and be NULL terminated
-} t_parse;
+} t_phrase;
 
 void	ft_terminate(int err, char *err_str)
 {
@@ -64,6 +64,20 @@ char	*validate_path(char *path, char *cmd)
 	return (NULL);
 }
 
+/*	Prints a 2d table of char
+ *	for testing purposes	*/
+void	put_table(char **table)
+{
+	int	i;
+
+	i = 0;
+	while (table[i])
+	{
+		printf("%s\n", table[i]);
+		i++;
+	}
+}
+
 /*	Finds the PATH variable,
 	then returns the full binary path of the binary */
 char	*get_bin_path(char **envp, char *cmd)
@@ -81,12 +95,12 @@ char	*get_bin_path(char **envp, char *cmd)
 }
 
 /*	Executes the binary entered as cmd */
-int	ft_binary(t_parse *parse)
+int	ft_binary(t_phrase *phrase)
 {
 	char	*bin_path;
 	pid_t	pid;
 
-	bin_path = get_bin_path(parse->env, parse->cmd);
+	bin_path = get_bin_path(phrase->env, phrase->cmd);
 	if (bin_path == NULL)
 		return (-1);
 	pid = fork();
@@ -94,47 +108,47 @@ int	ft_binary(t_parse *parse)
 		ft_terminate(errno, "Invalid process id after fork.");
 	if (pid == 0)
 	{
-		if (execve(bin_path, parse->cmd_args, parse->env) == -1)
+		if (execve(bin_path, phrase->cmd_args, phrase->env) == -1)
 			ft_terminate(errno, "Invalid execution of binary.");
 	}
 	wait(0);
 	return (0);
 }
 
-void	ft_echo(t_parse *parse)
+void	ft_echo(t_phrase *phrase)
 {
 	int	i;
 	int	nl;
 
 	i = 1;
 	nl = 1;
-	if (ft_strnstr((parse->cmd_args)[i], "-n", 2))
+	if (ft_strnstr((phrase->cmd_args)[i], "-n", 2))
 	{
 		nl = 0;
 		i++;
 	}
-	while ((parse->cmd_args)[i])
+	while ((phrase->cmd_args)[i])
 	{
-		printf("%s", (parse->cmd_args[i]));
+		printf("%s", (phrase->cmd_args[i]));
 		i++;
-		if ((parse->cmd_args)[i])
+		if ((phrase->cmd_args)[i])
 			printf(" ");
 	}
 	if (nl)
 		printf("\n");
 }
 
-void	ft_cd(t_parse *parse)
+void	ft_cd(t_phrase *phrase)
 {
 	int	ret;
 	
-	if (parse->cmd_args[1] != NULL && parse->cmd_args[2] != NULL)
+	if (phrase->cmd_args[1] != NULL && phrase->cmd_args[2] != NULL)
 		ft_terminate(errno, "cd: too many arguments");
-	if (chdir(parse->cmd_args[1]) == -1)
+	if (chdir(phrase->cmd_args[1]) == -1)
 		ft_terminate(errno, "Could not change directory.");
 }
 
-void	ft_pwd(t_parse *parse)
+void	ft_pwd(t_phrase *phrase)
 {
 	char	cwd[PATH_MAX];
 	if (getcwd(cwd, PATH_MAX) != NULL)
@@ -145,13 +159,13 @@ void	ft_pwd(t_parse *parse)
 
 /*	Returns a malloc'd 2d duplicated table of env
  *	and updates it with new var if applicable	*/
-char	**dup_env_table(char **table, t_parse *parse, int new_var)
+char	**dup_env_table(char **table, t_phrase *phrase, int new_var)
 {
 	char	**res_table;
 	int		i;
 	char	*new_arg;
 
-	new_arg = parse->cmd_args[1];
+	new_arg = phrase->cmd_args[1];
 	i = 0;
 	while (table[i])
 		i++;
@@ -177,13 +191,13 @@ char	**dup_env_table(char **table, t_parse *parse, int new_var)
 	return (res_table);
 }
 
-void	ft_export(t_parse *parse)
+void	ft_export(t_phrase *phrase)
 {
 	char	*var_name;
 	char	*equal_char;
 	int		i;
 
-	var_name = ft_strdup(parse->cmd_args[1]);
+	var_name = ft_strdup(phrase->cmd_args[1]);
 	equal_char = ft_strchr(var_name, '=') + 1;
 	if (!equal_char)
 		ft_terminate(errno, "Invalid export command: no equal sign found.");
@@ -192,18 +206,18 @@ void	ft_export(t_parse *parse)
 
 	// Checks if var currently exists
 	i = 0;
-	while (parse->env[i])
+	while (phrase->env[i])
 	{
-		if (ft_strnstr(parse->env[i], var_name, ft_strlen(var_name)))
+		if (ft_strnstr(phrase->env[i], var_name, ft_strlen(var_name)))
 		{
-			free(parse->env[i]);
-			parse->env[i] = parse->cmd_args[1];
+			free(phrase->env[i]);
+			phrase->env[i] = phrase->cmd_args[1];
 			return ;
 		}
 		i++;
 	}
 	// If var doesn't already exist: add new env var
-	parse->env = dup_env_table(parse->env, parse, 1);
+	phrase->env = dup_env_table(phrase->env, phrase, 1);
 }
 
 /*	Receives a malloc'd str, and returns a new malloc'd str
@@ -228,31 +242,31 @@ char	*ft_append_str(char **str, char c)
 	return (new_str);
 }
 
-void	ft_unset(t_parse *parse)
+void	ft_unset(t_phrase *phrase)
 {
 	int	i;
 	int	j;
 
 	i = 1;
 	printf("ok1\n");
-	while (parse->cmd_args[i])
+	while (phrase->cmd_args[i])
 	{
 		printf("ok2\n");
-		parse->cmd_args[i] = ft_append_str(&parse->cmd_args[i], '=');
+		phrase->cmd_args[i] = ft_append_str(&phrase->cmd_args[i], '=');
 		printf("ok3\n");
 		j = 0;
-		while (parse->env[j])
+		while (phrase->env[j])
 		{
-			if (ft_strnstr(parse->env[j], parse->cmd_args[i], ft_strlen(parse->cmd_args[i])))
+			if (ft_strnstr(phrase->env[j], phrase->cmd_args[i], ft_strlen(phrase->cmd_args[i])))
 			{
-				free(parse->env[j]);
-				while(parse->env[j + 1])
+				free(phrase->env[j]);
+				while(phrase->env[j + 1])
 				{
-					parse->env[j] = parse->env[j + 1];
+					phrase->env[j] = phrase->env[j + 1];
 					j++;
 				}
-				parse->env[j] = NULL;
-				free(parse->env[j + 1]);
+				phrase->env[j] = NULL;
+				free(phrase->env[j + 1]);
 				break ;
 			}
 			j++;
@@ -261,90 +275,78 @@ void	ft_unset(t_parse *parse)
 	}
 }
 
-void	ft_env(t_parse *parse)
+void	ft_env(t_phrase *phrase)
 {
 	int	i;
 
 	i = 0;
-	while (parse->env[i])
+	while (phrase->env[i])
 	{
-		printf("%s\n", parse->env[i]);
+		printf("%s\n", phrase->env[i]);
 		i++;
 	}
 }
 
-void	ft_exit(t_parse *parse)
+void	ft_exit(t_phrase *phrase)
 {
 	exit(0);
 }
 
 /* Most functions don't correctly handle arguments of size 0 or > 1 */
-int	execution_control(t_parse *parse)
+int	execution_control(t_phrase *phrase)
 {
-	if (parse->bin == 1)
-		ft_binary(parse);
-	else if (ft_strnstr(parse->cmd, "echo", 4))
+	if (phrase->bin == 1)
+		ft_binary(phrase);
+	else if (ft_strnstr(phrase->cmd, "echo", 5))
 	{
-		ft_echo(parse);
+		ft_echo(phrase);
 	}
-	else if (ft_strnstr(parse->cmd, "cd", 2))
+	else if (ft_strnstr(phrase->cmd, "cd", 3))
 	{
-		ft_cd(parse);
+		ft_cd(phrase);
 	}
-	else if (ft_strnstr(parse->cmd, "pwd", 3))
+	else if (ft_strnstr(phrase->cmd, "pwd", 4))
 	{
-		ft_pwd(parse);
+		ft_pwd(phrase);
 	}
-	else if (ft_strnstr(parse->cmd, "export", 6))
+	else if (ft_strnstr(phrase->cmd, "export", 7))
 	{
-		ft_export(parse);
+		ft_export(phrase);
 	}
-	else if (ft_strnstr(parse->cmd, "unset", 5))
+	else if (ft_strnstr(phrase->cmd, "unset", 6))
 	{
-		ft_unset(parse);
+		ft_unset(phrase);
 	}
-	else if (ft_strnstr(parse->cmd, "env", 3))
+	else if (ft_strnstr(phrase->cmd, "env", 4))
 	{
-		ft_env(parse);
+		ft_env(phrase);
 	}
 	/* Doesn't currently handle arguments */
-	else if (ft_strnstr(parse->cmd, "exit", 4))
+	else if (ft_strnstr(phrase->cmd, "exit", 5))
 	{
-		ft_exit(parse);
+		ft_exit(phrase);
 	}
 	return (0);
 }
 
 
-/*	Prints a 2d table of char
- *	for testing purposes	*/
-void	put_table(char **table)
-{
-	int	i;
-
-	i = 0;
-	while (table[i])
-	{
-		printf("%s\n", table[i]);
-		i++;
-	}
-}
-
-/*	t_parse parse will be replaced by the struct passed by Mik	*/
+//	t_phrase phrase will be replaced by the struct passed by Mik	*/
+/*
 int	main(int argc, char **argv, char **env)
 {
 	errno = 0;
-	t_parse	*parse;
+	t_phrase	*phrase;
 	char *test_args[3] = {"env", NULL, NULL};
 
-	parse = malloc(sizeof(*parse));
-	parse->bin = 0;
-	parse->cmd = "env";
-	parse->cmd_args = test_args;
-	parse->env = dup_env_table(env, parse, 0);
+	phrase = malloc(sizeof(*phrase));
+	phrase->bin = 0;
+	phrase->cmd = "env";
+	phrase->cmd_args = test_args;
+	phrase->env = dup_env_table(env, phrase, 0);
 
-	execution_control(parse);
-	//put_table(parse->env);
+	execution_control(phrase);
+	//put_table(phrase->env);
 
 	return (0);
 }
+*/
