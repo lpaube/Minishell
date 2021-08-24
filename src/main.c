@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/23 20:30:14 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/23 21:50:17 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,7 @@ char	*get_line(char *line)
 	char	*tmp;
 
 	if (line)
-	{
 		free(line);
-		line = NULL;
-	}
 	line = readline(SHELL_PROMPT);
 	tmp = ft_strtrim(line, WHITESPACE);
 	free(line);
