@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 15:16:25 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/21 18:56:11 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/24 15:37:48 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,6 @@
 # include <stdbool.h>
 
 # define SHELL_PROMPT ("minishell: ")
-
-typedef enum e_builtin
-{
-	ECHO,
-	CD,
-	PWD,
-	EXPORT,
-	UNSET,
-	ENV,
-	EXIT,
-}	t_builtin;
 
 typedef struct s_parse
 {
