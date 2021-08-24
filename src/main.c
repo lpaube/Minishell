@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/24 13:13:12 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/24 15:08:15 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ int	main(int argc, char **argv, char **env)
 	{
 		init_tokenizer(tok);
 		tok->str = get_line(tok->str);
+		if (!*tok->str)
+			continue ;
 		lst = tokenize(tok);
 		if (!lst)
 			printf("BAD\n");
