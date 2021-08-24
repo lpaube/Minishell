@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 15:15:12 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/23 20:17:15 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/23 23:03:31 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ typedef enum e_token_type
 
 typedef struct s_token
 {
-	t_string		*value;
+	t_string		value;
 	t_token_type	type;
 }	t_token;
 

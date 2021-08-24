@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 15:14:49 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/23 20:27:09 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/23 23:14:20 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@
 
 void	free_token(void *t)
 {
-	ft_string_clear(((t_token *)t)->value);
+	ft_strfree(((t_token *)t)->value);
 	free(t);
 }
 
-static t_token	*new_token(t_string *value, t_token_type type)
+static t_token	*new_token(t_string value, t_token_type type)
 {
 	t_token	*token;
 
@@ -47,13 +47,13 @@ static bool	get_op_token(t_tokenizer *tok)
 	t_token		*token;
 	char		first_char;
 
-	token = new_token(ft_string_new(NULL), OPERATOR);
+	token = new_token(ft_strnew(NULL), OPERATOR);
 	first_char = cursor_char(tok);
-	ft_string_add_back(token->value, first_char);
+	ft_stradd_back(token->value, first_char);
 	inc_cursor(tok);
 	if (ft_strchr(OP, first_char) && first_char == cursor_char(tok))
 	{
-		ft_string_add_back(token->value, first_char);
+		ft_stradd_back(token->value, first_char);
 		inc_cursor(tok);
 	}
 	tok->next_token = token;
@@ -68,19 +68,19 @@ static void	set_state(t_tokenizer *tok, t_state state)
 
 void	parse_variable(t_tokenizer *tok, t_token *token)
 {
-	t_string	*var_name;
+	t_string	var_name;
 	char		*var_value;
 
 	inc_cursor(tok);
-	var_name = ft_string_new(NULL);
+	var_name = ft_strnew(NULL);
 	while (ft_isalnum(cursor_char(tok)) || cursor_char(tok) == '_')
 	{
-		ft_string_add_back(var_name, cursor_char(tok));
+		ft_stradd_back(var_name, cursor_char(tok));
 		inc_cursor(tok);
 	}
-	var_value = getenv(var_name->data);
-	ft_string_clear(var_name);
-	ft_string_append_cstr(token->value, var_value);
+	var_value = getenv(ft_strdata(var_name));
+	ft_strfree(var_name);
+	ft_strappend_cstr(token->value, var_value);
 }
 
 bool	get_next_token(t_tokenizer *tok)
@@ -89,8 +89,8 @@ bool	get_next_token(t_tokenizer *tok)
 
 	if (ft_strchr(OP, cursor_char(tok)))
 		return (get_op_token(tok));
-	token = new_token(ft_string_new(NULL), STRING);
-	while (true)
+	token = new_token(ft_strnew(NULL), STRING);
+	while (cursor_char(tok))
 	{
 		if (tok->state == TEXT
 			&& (ft_strchr(WHITESPACE, cursor_char(tok))
@@ -114,12 +114,12 @@ bool	get_next_token(t_tokenizer *tok)
 			inc_cursor(tok);
 			continue ;
 		}
-		else if (cursor_char(tok) == '$')
+		else if (cursor_char(tok) == '$' && tok->state != QUOTE)
 		{
 			parse_variable(tok, token);
 			continue ;
 		}
-		ft_string_add_back(token->value, cursor_char(tok));
+		ft_stradd_back(token->value, cursor_char(tok));
 		inc_cursor(tok);
 	}
 	tok->next_token = token;
