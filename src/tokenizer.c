@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 15:14:49 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/24 15:06:22 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/24 18:06:43 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,10 @@ void	parse_variable(t_tokenizer *tok, t_token *token)
 	}
 	var_value = getenv(ft_strdata(var_name));
 	ft_strfree(var_name);
-	ft_strappend_cstr(token->value, var_value);
+	if (var_value)
+		ft_strappend_cstr(token->value, var_value);
+	else
+		ft_strappend_cstr(token->value, "");
 }
 
 static bool	parse_special_str(t_tokenizer *tok, t_token *token)

@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 15:16:25 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/24 15:37:48 by laube            ###   ########.fr       */
+/*   Updated: 2021/08/24 17:47:08 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ typedef struct s_parse
 {
 	char		*name;
 	bool		is_builtin;
-	t_builtin	cmd;
 	char		**args;
 	char		**opts;
 }	t_parse;
