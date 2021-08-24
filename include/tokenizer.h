@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 15:15:12 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/23 18:49:27 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/23 20:17:15 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ typedef enum e_state
 	TEXT,
 	QUOTE,
 	DQUOTE,
-	VARIABLE,
-	ESCAPE,
 }	t_state;
 
 typedef struct s_tokenizer

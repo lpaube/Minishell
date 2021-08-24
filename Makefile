@@ -43,7 +43,7 @@ fclean:		clean
 re:			fclean all
 
 norme:
-#			$(MAKELIBFT) norme
-			norminette $(SRCS) $(HEADERS)
+			@$(MAKELIBFT) norme
+			@norminette $(SRCS) $(HEADERS) | grep Error
 
 .PHONY:		all clean fclean re norme
