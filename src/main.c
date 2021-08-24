@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/20 18:38:27 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/23 23:04:56 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,14 @@
 #include <readline/history.h>
 #include <stdbool.h>
 
-#define SHELL_PROMPT ("minishell: ")
+void	free_token(void *t);
 
 char	*get_line(char *line)
 {
 	char	*tmp;
 
 	if (line)
-	{
 		free(line);
-		line = NULL;
-	}
 	line = readline(SHELL_PROMPT);
 	tmp = ft_strtrim(line, WHITESPACE);
 	free(line);
@@ -39,34 +36,47 @@ char	*get_line(char *line)
 	return (line);
 }
 
+void	init_tokenizer(t_tokenizer *tok)
+{
+	tok->cursor = 0;
+	tok->state = TEXT;
+	tok->last_state = TEXT;
+	tok->next_token = NULL;
+}
+
 int	main(int argc, char **argv, char **env)
 {
-	char	*line;
-	t_list	*lst;
-	t_list	*ptr;
+	t_list		*lst;
+	t_list		*ptr;
+	t_tokenizer	*tok;
+	t_token		*token;
 
 	(void)argc;
 	(void)argv;
 	(void)env;
-	line = NULL;
+	tok = (t_tokenizer *)ft_calloc(1, sizeof(t_tokenizer));
 	while (true)
 	{
-		line = get_line(line);
-		lst = tokenize(line);
+		init_tokenizer(tok);
+		tok->str = get_line(tok->str);
+		lst = tokenize(tok);
 		if (!lst)
 			printf("BAD\n");
 		else
 		{
 			ptr = lst;
-			while (ptr->next)
+			while (ptr)
 			{
-				printf("%s\n", (char *)ptr->content);
+				token = (t_token *)ptr->content;
+				printf("%s - %d\n", ft_strdata(token->value), token->type);
 				ptr = ptr->next;
 			}
 		}
-		if (ft_strncmp("exit", line, ft_strlen(line)) == 0)
+		if (ft_strncmp("exit", tok->str, 5) == 0)
 			break ;
+		ft_lstclear(&lst, free_token);
 	}
-	free(line);
-	ft_lstclear(&lst, free);
+	free(tok->str);
+	free(tok);
+	ft_lstclear(&lst, free_token);
 }
