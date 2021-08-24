@@ -1,16 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.h                                            :+:      :+:    :+:   */
+/*   token.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/21 19:39:36 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/21 20:05:43 by mleblanc         ###   ########.fr       */
+/*   Created: 2021/08/24 14:37:37 by mleblanc          #+#    #+#             */
+/*   Updated: 2021/08/24 14:40:14 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
+#ifndef TOKEN_H
+# define TOKEN_H
+
+# include "libft.h"
+
+typedef enum e_token_type
+{
+	STRING,
+	OPERATOR,
+}	t_token_type;
+
+typedef struct s_token
+{
+	t_string		value;
+	t_token_type	type;
+}	t_token;
+
+void	free_token(void *t);
+t_token	*new_token(t_string value, t_token_type type);
 
 #endif
