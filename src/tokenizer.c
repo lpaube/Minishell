@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 15:14:49 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/23 20:13:05 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/23 20:27:09 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ t_list	*tokenize(t_tokenizer *tok)
 		ft_lstadd_back(&lst, ft_lstnew(tok->next_token));
 		tok->next_token = NULL;
 	}
-	if (tok->state == QUOTE || tok->state == DQUOTE)
+	if (tok->state != TEXT)
 		ft_lstclear(&lst, free_token);
 	return (lst);
 }

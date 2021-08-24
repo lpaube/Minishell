@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/23 19:04:00 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/23 20:30:14 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,6 @@ int	main(int argc, char **argv, char **env)
 		ft_lstclear(&lst, free_token);
 	}
 	free(tok->str);
+	free(tok);
 	ft_lstclear(&lst, free_token);
 }
