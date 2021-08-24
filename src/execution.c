@@ -6,7 +6,7 @@
 /*   By: laube <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 14:50:36 by laube             #+#    #+#             */
-/*   Updated: 2021/08/22 01:17:32 by laube            ###   ########.fr       */
+/*   Updated: 2021/08/24 13:44:06 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,7 +213,6 @@ char	*ft_append_str(char **str, char c)
 	char	*new_str;
 	int		i;
 
-	printf("here1\n");
 	new_str = malloc((ft_strlen(*str) + 1) * sizeof(char));
 	i = 0;
 	while ((*str)[i])
@@ -221,14 +220,11 @@ char	*ft_append_str(char **str, char c)
 		new_str[i] = (*str)[i];
 		i++;
 	}
-	printf("here2\n");
 	new_str[i] = c;
 	i++;
 	new_str[i] = 0;
-	printf("here3\n");
 	printf("HEY: %s\n", *str);
 	//free(*str);
-	printf("here4\n");
 	return (new_str);
 }
 
