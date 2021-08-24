@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/24 15:08:15 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/24 16:55:20 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	(void)env;
-	tok = (t_tokenizer *)ft_calloc(1, sizeof(t_tokenizer));
+	tok = ft_calloc(1, sizeof(t_tokenizer));
 	while (true)
 	{
 		init_tokenizer(tok);
