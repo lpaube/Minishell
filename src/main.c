@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/23 23:04:56 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/24 13:13:12 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	init_tokenizer(t_tokenizer *tok)
 {
 	tok->cursor = 0;
 	tok->state = TEXT;
-	tok->last_state = TEXT;
 	tok->next_token = NULL;
 }
 

@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 15:15:12 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/23 23:03:31 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/24 13:07:30 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ typedef struct s_tokenizer
 {
 	char			*str;
 	unsigned int	cursor;
-	t_state			last_state;
 	t_state			state;
 	t_token			*next_token;
 }	t_tokenizer;

@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 15:14:49 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/23 23:14:20 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/24 13:11:54 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ static bool	get_op_token(t_tokenizer *tok)
 
 static void	set_state(t_tokenizer *tok, t_state state)
 {
-	tok->last_state = tok->state;
 	tok->state = state;
 }
 
@@ -119,6 +118,9 @@ bool	get_next_token(t_tokenizer *tok)
 			parse_variable(tok, token);
 			continue ;
 		}
+		else if (cursor_char(tok) == '\\' && tok->state == DQUOTE)
+			if (ft_strchr("\"\\?", tok->str[tok->cursor + 1]))
+				inc_cursor(tok);
 		ft_stradd_back(token->value, cursor_char(tok));
 		inc_cursor(tok);
 	}
