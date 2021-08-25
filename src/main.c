@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/24 16:55:20 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/25 02:21:25 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	main(int argc, char **argv, char **env)
 			while (ptr)
 			{
 				token = (t_token *)ptr->content;
-				printf("%s - %d\n", ft_strdata(token->value), token->type);
+				printf("%s - %d\n", ft_str_data(token->value), token->type);
 				ptr = ptr->next;
 			}
 		}

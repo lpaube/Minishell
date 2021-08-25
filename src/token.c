@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 14:39:24 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/24 16:57:58 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/25 02:22:39 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	free_token(void *t)
 {
-	ft_strfree(((t_token *)t)->value);
+	ft_str_free(((t_token *)t)->value);
 	free(t);
 }
 
