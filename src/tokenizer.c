@@ -6,13 +6,15 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 15:14:49 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/25 15:02:09 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/25 15:14:00 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokenizer.h"
 #include "minishell.h"
+#include "error_code.h"
 #include <stdlib.h>
+#include <sys/errno.h>
 
 static bool	get_operator_token(t_tokenizer *tok)
 {
@@ -47,7 +49,7 @@ void	parse_variable(t_tokenizer *tok, t_token *token)
 	var_value = getenv(ft_str_data(var_name));
 	ft_str_free(var_name);
 	if (var_value)
-		ft_strappend_cstr(token->value, var_value);
+		ft_str_append_cstr(token->value, var_value);
 }
 
 static bool	parse_special_str(t_tokenizer *tok, t_token *token)
@@ -90,6 +92,10 @@ bool	get_next_token(t_tokenizer *tok)
 		inc_cursor(tok);
 	}
 	tok->next_token = token;
+	if (tok->state == QUOTE)
+		errno = UNCLOSED_QUOTE;
+	else if (tok->state == DQUOTE)
+		errno = UNCLOSED_DQUOTE;
 	return (tok->state == TEXT);
 }
 

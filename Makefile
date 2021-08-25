@@ -4,7 +4,7 @@ SRC			=	src
 INC			=	include
 OBJ			=	obj
 
-HFILES		=	minishell.h tokenizer.h utils.h token.h
+HFILES		=	minishell.h tokenizer.h utils.h token.h error_code.h
 HEADERS		=	$(addprefix $(INC)/, $(HFILES))
 
 CFILES		=	main.c tokenizer.c tokenizer_utils.c token.c

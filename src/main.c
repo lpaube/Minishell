@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/25 02:21:25 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/25 15:14:24 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,20 +47,20 @@ int	main(int argc, char **argv, char **env)
 {
 	t_list		*lst;
 	t_list		*ptr;
-	t_tokenizer	*tok;
+	t_tokenizer	tok;
 	t_token		*token;
 
 	(void)argc;
 	(void)argv;
 	(void)env;
-	tok = ft_calloc(1, sizeof(t_tokenizer));
+	tok.str = NULL;
 	while (true)
 	{
-		init_tokenizer(tok);
-		tok->str = get_line(tok->str);
-		if (!*tok->str)
+		init_tokenizer(&tok);
+		tok.str = get_line(tok.str);
+		if (!*tok.str)
 			continue ;
-		lst = tokenize(tok);
+		lst = tokenize(&tok);
 		if (!lst)
 			printf("BAD\n");
 		else
@@ -73,11 +73,10 @@ int	main(int argc, char **argv, char **env)
 				ptr = ptr->next;
 			}
 		}
-		if (ft_strncmp("exit", tok->str, 5) == 0)
+		if (ft_strncmp("exit", tok.str, 5) == 0)
 			break ;
 		ft_lstclear(&lst, free_token);
 	}
-	free(tok->str);
-	free(tok);
+	free(tok.str);
 	ft_lstclear(&lst, free_token);
 }
