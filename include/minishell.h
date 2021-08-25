@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 15:16:25 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/24 21:40:35 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/25 15:34:46 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,7 @@ typedef struct s_phrase
 	char		*name;
 	char		**args;
 }	t_phrase;
+
+void	print_error(const char *msg);
 
 #endif
