@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/25 23:18:30 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/26 02:54:44 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	main(int argc, char **argv, char **env)
 		lst = tokenize(&tok);
 		if (ft_strncmp("exit", tok.str, 5) == 0)
 			break ;
-		print_token_list(lst);
+		// print_token_list(lst);
 		ast = parse(lst);
 		ft_lstclear(&lst, free_token);
 	}

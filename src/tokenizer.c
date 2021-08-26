@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 15:14:49 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/25 23:25:51 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/26 03:03:34 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ bool	get_operator_token(t_tokenizer *tok)
 	t_token		*token;
 	char		first_char;
 
-	token = new_token(ft_str_new(NULL), OPERATOR);
+	token = new_token(ft_str_new(NULL), PIPE);
 	first_char = cursor_char(tok);
 	ft_str_add_back(token->value, first_char);
 	inc_cursor(tok);
@@ -28,6 +28,8 @@ bool	get_operator_token(t_tokenizer *tok)
 		ft_str_add_back(token->value, first_char);
 		inc_cursor(tok);
 	}
+	if (ft_strchr("<>", *ft_str_data(token->value)))
+		token->type = REDIRECT;
 	tok->next_token = token;
 	return (true);
 }
@@ -91,9 +93,9 @@ bool	get_next_token(t_tokenizer *tok)
 	}
 	tok->next_token = token;
 	if (tok->state == QUOTE)
-		print_error("Found unclosed quotes");
+		print_error("found unclosed quotes");
 	else if (tok->state == DQUOTE)
-		print_error("Found unclosed double quotes");
+		print_error("found unclosed double quotes");
 	return (tok->state == TEXT);
 }
 

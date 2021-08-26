@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 15:15:12 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/24 15:06:31 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/26 02:53:42 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ typedef struct s_tokenizer
 }	t_tokenizer;
 
 t_list	*tokenize(t_tokenizer *tok);
-char	cursor_char(t_tokenizer *tok);
+char	cursor_char(const t_tokenizer *tok);
 void	inc_cursor(t_tokenizer *tok);
 void	eval_quote(t_tokenizer *tok);
 void	eval_dquote(t_tokenizer *tok);
-bool	end_of_token(t_tokenizer *tok);
+bool	end_of_token(const t_tokenizer *tok);
 
 #endif

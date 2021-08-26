@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 14:37:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/24 14:40:14 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/26 03:03:19 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 typedef enum e_token_type
 {
 	STRING,
-	OPERATOR,
+	REDIRECT,
+	PIPE,
 }	t_token_type;
 
 typedef struct s_token
