@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 15:14:49 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/25 15:37:58 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/25 23:25:51 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "minishell.h"
 #include <stdlib.h>
 
-static bool	get_operator_token(t_tokenizer *tok)
+bool	get_operator_token(t_tokenizer *tok)
 {
 	t_token		*token;
 	char		first_char;
@@ -50,7 +50,7 @@ void	parse_variable(t_tokenizer *tok, t_token *token)
 		ft_str_append_cstr(token->value, var_value);
 }
 
-static bool	parse_special_str(t_tokenizer *tok, t_token *token)
+bool	parse_special_str(t_tokenizer *tok, t_token *token)
 {
 	if (cursor_char(tok) == '\'' && tok->state != DQUOTE)
 	{

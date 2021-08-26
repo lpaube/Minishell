@@ -1,29 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/18 15:16:25 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/25 23:45:13 by mleblanc         ###   ########.fr       */
+/*   Created: 2021/08/25 23:16:36 by mleblanc          #+#    #+#             */
+/*   Updated: 2021/08/26 00:00:46 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "parser.h"
 
-# include <stdbool.h>
-
-# define SHELL_PROMPT "minishell: "
-
-typedef struct s_phrase
+t_tree	*parse(t_list *token_lst)
 {
-	char	*name;
-	char	**args;
-	bool	is_cmd;
-}	t_phrase;
+	t_tree	*ast;
 
-void	print_error(const char *msg);
-
-#endif
+	(void)token_lst;
+	return (NULL);
+}
