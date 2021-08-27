@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 15:14:49 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/27 04:12:09 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/27 17:57:26 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,23 @@
 
 bool	get_operator_token(t_tokenizer *tok)
 {
-	t_token		*token;
+	t_string	token;
 	char		first_char;
 
-	token = new_token(ft_str_new(NULL), OPERATOR);
+	token = ft_str_new(NULL);
 	first_char = cursor_char(tok);
-	ft_str_add_back(token->value, first_char);
+	ft_str_add_back(token, first_char);
 	inc_cursor(tok);
 	if (ft_strchr("<>", first_char) && first_char == cursor_char(tok))
 	{
-		ft_str_add_back(token->value, first_char);
+		ft_str_add_back(token, first_char);
 		inc_cursor(tok);
 	}
 	tok->next_token = token;
 	return (true);
 }
 
-void	parse_variable(t_tokenizer *tok, t_token *token)
+void	parse_variable(t_tokenizer *tok, t_string token)
 {
 	t_string	var_name;
 	char		*var_value;
@@ -47,10 +47,10 @@ void	parse_variable(t_tokenizer *tok, t_token *token)
 	var_value = getenv(ft_str_data(var_name));
 	ft_str_free(var_name);
 	if (var_value)
-		ft_str_append_cstr(token->value, var_value);
+		ft_str_append_cstr(token, var_value);
 }
 
-bool	parse_special_str(t_tokenizer *tok, t_token *token)
+bool	parse_special_str(t_tokenizer *tok, t_string token)
 {
 	if (cursor_char(tok) == '\'' && tok->state != DQUOTE)
 	{
@@ -75,18 +75,18 @@ bool	parse_special_str(t_tokenizer *tok, t_token *token)
 
 bool	get_next_token(t_tokenizer *tok)
 {
-	t_token	*token;
+	t_string	token;
 
 	if (ft_strchr(OP, cursor_char(tok)))
 		return (get_operator_token(tok));
-	token = new_token(ft_str_new(NULL), STRING);
+	token = ft_str_new(NULL);
 	while (cursor_char(tok))
 	{
 		if (end_of_token(tok))
 			break ;
 		if (parse_special_str(tok, token))
 			continue ;
-		ft_str_add_back(token->value, cursor_char(tok));
+		ft_str_add_back(token, cursor_char(tok));
 		inc_cursor(tok);
 	}
 	tok->next_token = token;
@@ -108,7 +108,7 @@ t_list	*tokenize(t_tokenizer *tok)
 			inc_cursor(tok);
 		if (!get_next_token(tok))
 		{
-			ft_lstclear(&lst, free_token);
+			ft_lstclear(&lst, ft_str_free);
 			return (NULL);
 		}
 		ft_lstadd_back(&lst, ft_lstnew(tok->next_token));

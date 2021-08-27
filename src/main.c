@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/26 02:54:44 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/27 18:02:54 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,16 @@ char	*get_line(char *line)
 
 void	print_token_list(t_list *lst)
 {
-	t_token	*token;
-	t_list	*ptr;
+	t_string	token;
+	t_list		*ptr;
 
 	if (lst)
 	{
 		ptr = lst;
 		while (ptr)
 		{
-			token = (t_token *)ptr->content;
-			printf("%s - %d\n", ft_str_data(token->value), token->type);
+			token = (t_string)ptr->content;
+			printf("%s\n", ft_str_data(token));
 			ptr = ptr->next;
 		}
 	}
@@ -77,10 +77,13 @@ int	main(int argc, char **argv, char **env)
 		lst = tokenize(&tok);
 		if (ft_strncmp("exit", tok.str, 5) == 0)
 			break ;
-		// print_token_list(lst);
-		ast = parse(lst);
-		ft_lstclear(&lst, free_token);
+		if (lst)
+		{
+			print_token_list(lst);
+			ast = parse(lst);
+		}
+		ft_lstclear(&lst, ft_str_free);
 	}
 	free(tok.str);
-	ft_lstclear(&lst, free_token);
+	ft_lstclear(&lst, ft_str_free);
 }

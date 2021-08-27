@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/27 04:10:20 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/27 04:21:00 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/27 17:53:59 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,6 @@ typedef enum e_operator
 	NONE,
 }	t_operator;
 
-t_operator	get_operator(t_string str);
+t_operator	get_operator(t_string token);
 
 #endif

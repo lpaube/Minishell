@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 15:16:25 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/26 02:50:33 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/27 17:58:09 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,6 @@ typedef struct s_phrase
 }	t_phrase;
 
 void	print_error(const char *msg);
-void	unexpected_token(const t_token *token);
+void	unexpected_token(const t_string token);
 
 #endif
