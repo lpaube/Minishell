@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/27 18:02:54 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/27 19:56:51 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,21 +34,38 @@ char	*get_line(char *line)
 	return (line);
 }
 
-void	print_token_list(t_list *lst)
+void	print_token_list(const t_list *lst)
 {
-	t_string	token;
-	t_list		*ptr;
+	t_string		token;
+	const t_list	*ptr;
 
 	if (lst)
 	{
 		ptr = lst;
 		while (ptr)
 		{
-			token = (t_string)ptr->content;
+			token = ptr->content;
 			printf("%s\n", ft_str_data(token));
 			ptr = ptr->next;
 		}
 	}
+	printf("\n");
+}
+
+void	print_ast(const t_tree *ast)
+{
+	t_construct	*construct;
+	size_t		i;
+
+	construct = ast->content;
+	printf("Name: %s\n", construct->name);
+	i = 0;
+	while (construct->args[i])
+	{
+		printf("Arg %zu: %s\n", i + 1, construct->args[i]);
+		++i;
+	}
+	printf("\n");
 }
 
 void	init_tokenizer(t_tokenizer *tok)
@@ -81,6 +98,11 @@ int	main(int argc, char **argv, char **env)
 		{
 			print_token_list(lst);
 			ast = parse(lst);
+			if (ast)
+			{
+				print_ast(ast);
+				print_ast(ast->right);
+			}
 		}
 		ft_lstclear(&lst, ft_str_free);
 	}

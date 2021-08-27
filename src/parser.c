@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 23:16:36 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/27 18:00:15 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/27 19:53:48 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,37 @@ t_tree	*parse_recurse(t_list *lst)
 	return (NULL);
 }
 
+t_tree	*get_next_node(t_list **lst)
+{
+	t_tree		*node;
+	t_construct	*construct;
+	char		*str;
+
+	if (!*lst)
+		return (NULL);
+	construct = ft_calloc(1, sizeof(t_construct));
+	construct->op = get_operator((*lst)->content);
+	construct->name = ft_strdup(ft_str_data((*lst)->content));
+	construct->is_cmd = construct->op == NONE;
+	construct->args = ft_calloc(1, sizeof(char *));
+	*lst = (*lst)->next;
+	while (*lst && construct->op == NONE
+		&& get_operator((*lst)->content) == NONE)
+	{
+		str = ft_str_data((*lst)->content);
+		construct->args = ft_expand_strarr(construct->args, ft_strdup(str));
+		*lst = (*lst)->next;
+	}
+	node = ft_calloc(1, sizeof(t_tree));
+	node->content = construct;
+	return (node);
+}
+
 t_tree	*parse(t_list *token_lst)
 {
-	// t_tree		*ast;
-	t_string	token;
-	t_operator	op;
+	t_tree	*ast;
 
-	token = token_lst->content;
-	op = get_operator(token);
-	if (op == PIPE)
-	{
-		unexpected_token(token);
-		return (NULL);
-	}
-	//ast = parse_recurse(token_lst);
-	return (ft_calloc(1, 1));
+	ast = get_next_node(&token_lst);
+	ast->right = get_next_node(&token_lst);
+	return (ast);
 }
