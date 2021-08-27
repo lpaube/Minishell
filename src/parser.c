@@ -6,13 +6,14 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 23:16:36 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/26 03:03:47 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/27 04:22:29 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include "token.h"
 #include "minishell.h"
+#include "operator.h"
 
 t_tree	*parse_recurse(t_list *lst)
 {
@@ -29,9 +30,11 @@ t_tree	*parse(t_list *token_lst)
 {
 	// t_tree		*ast;
 	t_token		*token;
+	t_operator	op;
 
 	token = token_lst->content;
-	if (token->type == PIPE)
+	op = get_operator(token->value);
+	if (op == PIPE)
 	{
 		unexpected_token(token);
 		return (NULL);

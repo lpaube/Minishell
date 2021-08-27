@@ -1,33 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token.h                                            :+:      :+:    :+:   */
+/*   operator.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/24 14:37:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/27 04:09:11 by mleblanc         ###   ########.fr       */
+/*   Created: 2021/08/27 04:10:20 by mleblanc          #+#    #+#             */
+/*   Updated: 2021/08/27 04:21:00 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TOKEN_H
-# define TOKEN_H
+#ifndef OPERATOR_H
+# define OPERATOR_H
 
 # include "libft.h"
 
-typedef enum e_token_type
+typedef enum e_operator
 {
-	STRING,
-	OPERATOR,
-}	t_token_type;
+	PIPE,
+	OUTPUT,
+	APPEND,
+	INPUT,
+	READ,
+	NONE,
+}	t_operator;
 
-typedef struct s_token
-{
-	t_string		value;
-	t_token_type	type;
-}	t_token;
-
-void	free_token(void *t);
-t_token	*new_token(t_string value, t_token_type type);
+t_operator	get_operator(t_string str);
 
 #endif

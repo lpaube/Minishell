@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 15:14:49 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/26 03:03:34 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/27 04:12:09 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,15 @@ bool	get_operator_token(t_tokenizer *tok)
 	t_token		*token;
 	char		first_char;
 
-	token = new_token(ft_str_new(NULL), PIPE);
+	token = new_token(ft_str_new(NULL), OPERATOR);
 	first_char = cursor_char(tok);
 	ft_str_add_back(token->value, first_char);
 	inc_cursor(tok);
-	if (ft_strchr(OP, first_char) && first_char == cursor_char(tok))
+	if (ft_strchr("<>", first_char) && first_char == cursor_char(tok))
 	{
 		ft_str_add_back(token->value, first_char);
 		inc_cursor(tok);
 	}
-	if (ft_strchr("<>", *ft_str_data(token->value)))
-		token->type = REDIRECT;
 	tok->next_token = token;
 	return (true);
 }
