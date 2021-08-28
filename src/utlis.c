@@ -1,39 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   utlis.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/18 15:16:25 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/28 18:32:53 by mleblanc         ###   ########.fr       */
+/*   Created: 2021/08/28 18:31:35 by mleblanc          #+#    #+#             */
+/*   Updated: 2021/08/28 18:34:49 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "minishell.h"
+#include "libft.h"
 
-# include "operator.h"
-# include <stdbool.h>
-
-# define SHELL_PROMPT "minishell: "
-
-typedef struct s_cmd
+void	free_cmd(void *cmd)
 {
-	char	*name;
-	char	**args;
-}	t_cmd;
+	t_cmd	*c;
 
-typedef struct s_node
+	c = cmd;
+	free(c->name);
+	ft_free_strarr(c->args);
+}
+
+void	free_node(void *node)
 {
-	t_cmd		*cmd1;
-	t_cmd		*cmd2;
-	t_operator	op;
-}	t_node;
+	t_node	*n;
 
-void	print_error(const char *msg);
-void	unexpected_token(const t_string token);
-void	free_node(void *node);
-void	free_cmd(void *cmd);
-
-#endif
+	n = node;
+	free_cmd(n->cmd1);
+	free_cmd(n->cmd2);
+	free(n);
+}

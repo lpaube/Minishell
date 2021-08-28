@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/27 20:37:38 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/28 18:35:04 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,22 +52,6 @@ void	print_token_list(const t_list *lst)
 	printf("\n");
 }
 
-void	print_ast(const t_tree *ast)
-{
-	t_construct	*construct;
-	size_t		i;
-
-	construct = ast->content;
-	printf("Name: %s\n", construct->name);
-	i = 0;
-	while (construct->args[i])
-	{
-		printf("Arg %zu: %s\n", i + 1, construct->args[i]);
-		++i;
-	}
-	printf("\n");
-}
-
 void	init_tokenizer(t_tokenizer *tok)
 {
 	tok->cursor = 0;
@@ -79,7 +63,7 @@ int	main(int argc, char **argv, char **env)
 {
 	t_tokenizer	tok;
 	t_list		*lst;
-	t_tree		*ast;
+	t_list		*cmds;
 
 	(void)argc;
 	(void)argv;
@@ -97,15 +81,13 @@ int	main(int argc, char **argv, char **env)
 		if (lst)
 		{
 			print_token_list(lst);
-			ast = parse(lst);
-			if (ast)
+			cmds = parse(lst);
+			if (cmds)
 			{
-				print_ast(ast);
-				print_ast(ast->right);
 			}
 		}
 		ft_lstclear(&lst, ft_str_free);
-		ft_treeclear(&ast, free_construct);
+		ft_lstclear(&cmds, free_node);
 	}
 	free(tok.str);
 	ft_lstclear(&lst, ft_str_free);

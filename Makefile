@@ -8,7 +8,7 @@ HFILES		=	minishell.h tokenizer.h utils.h parser.h operator.h
 HEADERS		=	$(addprefix $(INC)/, $(HFILES))
 
 CFILES		=	main.c tokenizer.c tokenizer_utils.c error.c parser.c\
-				operator.c
+				operator.c utils.c
 OFILES		=	$(CFILES:.c=.o)
 OBJS		=	$(addprefix $(OBJ)/, $(OFILES))
 SRCS		=	$(addprefix $(SRC)/, $(CFILES))
