@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 23:11:20 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/27 04:24:46 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/27 20:34:58 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,6 @@ typedef struct s_construct
 }	t_construct;
 
 t_tree	*parse(t_list *token_lst);
+void	free_construct(void *c);
 
 #endif

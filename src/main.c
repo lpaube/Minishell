@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/27 19:56:51 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/27 20:37:38 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,8 @@ void	init_tokenizer(t_tokenizer *tok)
 
 int	main(int argc, char **argv, char **env)
 {
-	t_list		*lst;
 	t_tokenizer	tok;
+	t_list		*lst;
 	t_tree		*ast;
 
 	(void)argc;
@@ -105,6 +105,7 @@ int	main(int argc, char **argv, char **env)
 			}
 		}
 		ft_lstclear(&lst, ft_str_free);
+		ft_treeclear(&ast, free_construct);
 	}
 	free(tok.str);
 	ft_lstclear(&lst, ft_str_free);

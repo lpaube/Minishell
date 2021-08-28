@@ -6,23 +6,23 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 23:16:36 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/27 19:53:48 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/28 01:53:45 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include "minishell.h"
 #include "operator.h"
+#include <stdlib.h>
 
-t_tree	*parse_recurse(t_list *lst)
+void	free_construct(void *c)
 {
 	t_construct	*construct;
-	t_string	token;
 
-	construct = ft_calloc(1, sizeof(t_construct));
-	token = lst->content;
-	construct->name = ft_strdup(ft_str_data(token));
-	return (NULL);
+	construct = c;
+	free(construct->name);
+	ft_free_strarr(construct->args);
+	free(construct);
 }
 
 t_tree	*get_next_node(t_list **lst)
