@@ -6,18 +6,19 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 15:35:44 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/30 17:51:19 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/30 19:43:54 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <unistd.h>
 
-void	print_error(const char *msg)
+void	*print_error(const char *msg)
 {
 	ft_putstr_fd("Error: ", STDERR_FILENO);
 	ft_putstr_fd(msg, STDERR_FILENO);
 	ft_putstr_fd("\n", STDERR_FILENO);
+	return (NULL);
 }
 
 void	*unexpected_token(const t_string token)

@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/30 18:38:34 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/30 18:57:21 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/30 19:35:31 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ typedef struct s_node
 
 void	nodeclear(t_node **node);
 void	nodeadd_back(t_node **lst, t_node *new);
+t_node	*nodelast(t_node *lst);
 
 #endif

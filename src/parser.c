@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 23:16:36 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/30 19:02:21 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/30 19:44:03 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,16 @@ t_node	*get_operator_first_node(t_list **tokens)
 	return (node);
 }
 
+bool	is_valid_syntax(t_node *cmds)
+{
+	t_node	*last;
+
+	last = nodelast(cmds);
+	if (last->op != NONE)
+		return (false);
+	return (true);
+}
+
 t_node	*parse(t_list *tokens)
 {
 	t_node	*cmds;
@@ -72,6 +82,11 @@ t_node	*parse(t_list *tokens)
 			return (unexpected_token(tokens->content));
 		}
 		nodeadd_back(&cmds, new);
+	}
+	if (!is_valid_syntax(cmds))
+	{
+		nodeclear(&cmds);
+		return (print_error("parse error near '\\n'"));
 	}
 	return (cmds);
 }

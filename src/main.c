@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/30 19:01:28 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/30 19:51:26 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ int	main(int argc, char **argv, char **env)
 	(void)argv;
 	(void)env;
 	tok.str = NULL;
+	cmds = NULL;
 	while (true)
 	{
 		init_tokenizer(&tok);

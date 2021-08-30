@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 15:16:25 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/30 18:39:52 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/30 19:44:01 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 # define SHELL_PROMPT "minishell: "
 
-void	print_error(const char *msg);
+void	*print_error(const char *msg);
 void	*unexpected_token(const t_string token);
 
 #endif
