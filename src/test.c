@@ -6,7 +6,7 @@
 /*   By: laube <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 14:50:36 by laube             #+#    #+#             */
-/*   Updated: 2021/08/24 13:44:06 by laube            ###   ########.fr       */
+/*   Updated: 2021/08/22 01:17:32 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ typedef struct s_parse
 	char	**env;
 	char	*cmd;
 	char	**cmd_args; // Needs to start with bin name, and be NULL terminated
-	int		*fd;
 } t_parse;
 
 void	ft_terminate(int err, char *err_str)
@@ -128,7 +127,7 @@ void	ft_echo(t_parse *parse)
 void	ft_cd(t_parse *parse)
 {
 	int	ret;
-	
+
 	if (parse->cmd_args[1] != NULL && parse->cmd_args[2] != NULL)
 		ft_terminate(errno, "cd: too many arguments");
 	if (chdir(parse->cmd_args[1]) == -1)
@@ -153,8 +152,8 @@ char	**dup_env_table(char **table, t_parse *parse, int new_var)
 	char	*new_arg;
 
 	new_arg = parse->cmd_args[1];
-	i = 0;
 	while (table[i])
+i = 0;
 		i++;
 	res_table = malloc((i + 1 + new_var) * sizeof(char *));
 	if (!res_table)
@@ -170,9 +169,9 @@ char	**dup_env_table(char **table, t_parse *parse, int new_var)
 	}
 	if (new_var)
 	{
+i++;
 		res_table[i] = malloc((ft_strlen(new_arg) * sizeof(char)));
 		ft_memcpy(res_table[i], new_arg, ft_strlen(new_arg) + 1);
-		i++;
 	}
 	table[i] = NULL;
 	return (res_table);
@@ -214,6 +213,7 @@ char	*ft_append_str(char **str, char c)
 	char	*new_str;
 	int		i;
 
+	printf("here1\n");
 	new_str = malloc((ft_strlen(*str) + 1) * sizeof(char));
 	i = 0;
 	while ((*str)[i])
@@ -221,11 +221,14 @@ char	*ft_append_str(char **str, char c)
 		new_str[i] = (*str)[i];
 		i++;
 	}
+	printf("here2\n");
 	new_str[i] = c;
 	i++;
 	new_str[i] = 0;
+	printf("here3\n");
 	printf("HEY: %s\n", *str);
-	//free(*str);
+	printf("here4\n");
+	// free(*str);
 	return (new_str);
 }
 
@@ -244,7 +247,7 @@ void	ft_unset(t_parse *parse)
 		j = 0;
 		while (parse->env[j])
 		{
-			if (ft_strnstr(parse->env[j], parse->cmd_args[i], ft_strlen(parse->cmd_args[i])))
+if (ft_strnstr(parse->env[j], parse->cmd_args[i], ft_strlen(parse->cmd_args[i])))
 			{
 				free(parse->env[j]);
 				while(parse->env[j + 1])
@@ -279,24 +282,9 @@ void	ft_exit(t_parse *parse)
 	exit(0);
 }
 
-void	fork_it(t_parse *parse)
-{
-	int	fd[2];
-	int	pid1;
-
-	if (pipe(fd) == -1)
-		terminate(errno, "pipe error");
-	pid1 = fork();
-	if (pid1 == 0)
-	{
-		pipe_write(
-	}
-}
 /* Most functions don't correctly handle arguments of size 0 or > 1 */
 int	execution_control(t_parse *parse)
 {
-	if (parse->next)
-		fork_it(parse);
 	if (parse->bin == 1)
 		ft_binary(parse);
 	else if (ft_strnstr(parse->cmd, "echo", 4))
