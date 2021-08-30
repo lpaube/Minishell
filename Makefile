@@ -4,11 +4,11 @@ SRC			=	src
 INC			=	include
 OBJ			=	obj
 
-HFILES		=	minishell.h tokenizer.h utils.h parser.h operator.h
+HFILES		=	minishell.h tokenizer.h parser.h operator.h
 HEADERS		=	$(addprefix $(INC)/, $(HFILES))
 
 CFILES		=	main.c tokenizer.c tokenizer_utils.c error.c parser.c\
-				free.c operator.c
+				node.c operator.c
 OFILES		=	$(CFILES:.c=.o)
 OBJS		=	$(addprefix $(OBJ)/, $(OFILES))
 SRCS		=	$(addprefix $(SRC)/, $(CFILES))
@@ -47,6 +47,6 @@ re:			fclean all
 
 norme:
 			@$(MAKELIBFT) norme
-			@norminette $(SRCS) $(HEADERS) | grep Error
+			@norminette $(SRCS) $(HEADERS)
 
 .PHONY:		all clean fclean re norme

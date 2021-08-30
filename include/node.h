@@ -1,24 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   node.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/30 17:04:45 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/30 17:05:06 by mleblanc         ###   ########.fr       */
+/*   Created: 2021/08/30 18:38:34 by mleblanc          #+#    #+#             */
+/*   Updated: 2021/08/30 18:57:21 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include <stdlib.h>
+#ifndef NODE_H
+# define NODE_H
 
-void	free_node(void *node)
+# include "operator.h"
+
+typedef struct s_node
 {
-	t_node	*n;
+	char			*name;
+	char			**args;
+	t_operator		op;
+	struct s_node	*next;
+	struct s_node	*prev;
+}	t_node;
 
-	n = node;
-	free(n->name);
-	ft_free_strarr(n->args);
-	free(n);
-}
+void	nodeclear(t_node **node);
+void	nodeadd_back(t_node **lst, t_node *new);
+
+#endif

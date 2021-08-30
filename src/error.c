@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 15:35:44 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/27 17:58:06 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/30 17:51:19 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	print_error(const char *msg)
 	ft_putstr_fd("\n", STDERR_FILENO);
 }
 
-void	unexpected_token(const t_string token)
+void	*unexpected_token(const t_string token)
 {
 	t_string	msg;
 
@@ -30,4 +30,5 @@ void	unexpected_token(const t_string token)
 	ft_str_add_back(msg, '\'');
 	print_error(ft_str_data(msg));
 	ft_str_free(msg);
+	return (NULL);
 }

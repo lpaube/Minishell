@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 15:14:49 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/27 17:57:26 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/30 17:13:02 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,6 @@ bool	parse_special_str(t_tokenizer *tok, t_string token)
 		parse_variable(tok, token);
 		return (true);
 	}
-	else if (cursor_char(tok) == '\\' && tok->state == DQUOTE)
-		if (ft_strchr("\"?\\", tok->str[tok->cursor + 1]))
-			inc_cursor(tok);
 	return (false);
 }
 
