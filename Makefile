@@ -8,7 +8,7 @@ HFILES		=	minishell.h tokenizer.h utils.h parser.h operator.h
 HEADERS		=	$(addprefix $(INC)/, $(HFILES))
 
 CFILES		=	main.c tokenizer.c tokenizer_utils.c error.c parser.c\
-				operator.c utils.c
+				free.c operator.c
 OFILES		=	$(CFILES:.c=.o)
 OBJS		=	$(addprefix $(OBJ)/, $(OFILES))
 SRCS		=	$(addprefix $(SRC)/, $(CFILES))
@@ -21,7 +21,9 @@ CC			=	clang
 CFLAGS		=	-Wall -Wextra -Werror -g
 RM			=	rm -rf
 
-$(OBJ)/%.o:	$(SRC)/%.c
+VPATH		= $(SRC)
+
+$(OBJ)/%.o:	%.c
 			$(CC) $(CFLAGS) -I$(INC) -I$(FTDIR) -c $< -o $@
 
 $(NAME):	$(OBJ) $(OBJS)
