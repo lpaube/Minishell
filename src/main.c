@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/30 18:57:34 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/30 19:01:28 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,7 @@ void	print_nodes(const t_node *lst)
 	while (lst)
 	{
 		printf("Cmd: %s - Operator: %s\n", lst->name, op_name(lst->op));
-		if (lst->args)
-			print_args(lst->args);
+		print_args(lst->args);
 		printf("\n");
 		lst = lst->next;
 	}
