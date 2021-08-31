@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 23:16:36 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/30 22:06:51 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/31 01:34:03 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ t_node	*get_next_node(t_list **tokens)
 	{
 		str = ft_strdup(ft_str_data((*tokens)->content));
 		node->args = ft_expand_strarr(node->args, str);
-		*tokens = (*tokens)->next;
+		ft_lstnext(tokens);
 	}
 	if (*tokens)
 	{
 		node->op = get_operator((*tokens)->content);
-		*tokens = (*tokens)->next;
+		ft_lstnext(tokens);
 	}
 	else
 		node->op = NONE;
@@ -49,7 +49,7 @@ t_node	*get_operator_first_node(t_list **tokens)
 	node = ft_calloc(1, sizeof(t_node));
 	node->args = ft_calloc(1, sizeof(char *));
 	node->op = get_operator((*tokens)->content);
-	*tokens = (*tokens)->next;
+	ft_lstnext(tokens);
 	return (node);
 }
 

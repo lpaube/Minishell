@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/30 19:51:26 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/31 01:51:44 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "parser.h"
 #include "minishell.h"
 #include "node.h"
+#include "print.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <readline/readline.h>
@@ -35,62 +36,17 @@ char	*get_line(char *line)
 	return (line);
 }
 
-void	print_token_list(const t_list *lst)
-{
-	t_string	token;
-
-	while (lst)
-	{
-		token = lst->content;
-		printf("%s\n", ft_str_data(token));
-		lst = lst->next;
-	}
-	printf("\n");
-}
-
-char	*op_name(t_operator op)
-{
-	if (op == PIPE)
-		return ("PIPE");
-	if (op == OUTPUT)
-		return ("OUTPUT");
-	if (op == APPEND)
-		return ("APPEND");
-	if (op == INPUT)
-		return ("INPUT");
-	if (op == READ)
-		return ("READ");
-	return ("NONE");
-}
-
-void	print_args(char **args)
-{
-	int	i;
-
-	i = 0;
-	while (args[i])
-	{
-		printf("Arg %d: %s\n", i, args[i]);
-		++i;
-	}
-}
-
-void	print_nodes(const t_node *lst)
-{
-	while (lst)
-	{
-		printf("Cmd: %s - Operator: %s\n", lst->name, op_name(lst->op));
-		print_args(lst->args);
-		printf("\n");
-		lst = lst->next;
-	}
-}
-
 void	init_tokenizer(t_tokenizer *tok)
 {
 	tok->cursor = 0;
 	tok->state = TEXT;
 	tok->next_token = NULL;
+}
+
+void	free_lists(t_list **lst1, t_node **lst2)
+{
+	ft_lstclear(&lst1, ft_str_free);
+	nodeclear(&lst2);
 }
 
 int	main(int argc, char **argv, char **env)
@@ -111,18 +67,12 @@ int	main(int argc, char **argv, char **env)
 		if (!*tok.str)
 			continue ;
 		lst = tokenize(&tok);
-		if (ft_strncmp("exit", tok.str, 5) == 0)
-			break ;
 		if (lst)
 		{
 			cmds = parse(lst);
-			if (cmds)
-				print_nodes(cmds);
+			print_nodes(cmds);
 		}
-		ft_lstclear(&lst, ft_str_free);
-		nodeclear(&cmds);
+		free_lists(&lst, &cmds);
 	}
 	free(tok.str);
-	ft_lstclear(&lst, ft_str_free);
-	nodeclear(&cmds);
 }
