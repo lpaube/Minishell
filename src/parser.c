@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 23:16:36 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/30 19:44:03 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/30 22:06:51 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ t_node	*parse(t_list *tokens)
 	if (!is_valid_syntax(cmds))
 	{
 		nodeclear(&cmds);
-		return (print_error("parse error near '\\n'"));
+		return (print_error("syntax error near unexpected token '\\n'"));
 	}
 	return (cmds);
 }
