@@ -21,17 +21,19 @@
 #include <limits.h>
 #include "../libft/libft.h"
 
-typedef struct	s_phrase
+typedef struct s_phrase	t_phrase;
+
+struct	s_phrase
 {
 	int	bin;
 	char		**env;
 	char		*cmd;
 	char		**cmd_args; // Needs to start with bin name, and be NULL terminated
-	int	next;
-	int	prev;
-	int			op;
+	t_phrase	*next;
+	t_phrase	*prev;
+	char			op;
 	int			*fd;
-}				t_phrase;
+};
 
 void	execution_control(t_phrase *phrase);
 
@@ -242,7 +244,6 @@ char	*ft_append_str(char **str, char c)
 	new_str[i] = c;
 	i++;
 	new_str[i] = 0;
-	printf("HEY: %s\n", *str);
 	//free(*str);
 	return (new_str);
 }
@@ -253,12 +254,9 @@ void	ft_unset(t_phrase *phrase)
 	int	j;
 
 	i = 1;
-	printf("ok1\n");
 	while (phrase->cmd_args[i])
 	{
-		printf("ok2\n");
 		phrase->cmd_args[i] = ft_append_str(&phrase->cmd_args[i], '=');
-		printf("ok3\n");
 		j = 0;
 		while (phrase->env[j])
 		{
@@ -317,9 +315,13 @@ void	pipe_read(t_phrase *phrase)
 	saved_stdin = dup(0);
 	dup2(phrase->prev->fd[0], 0);
 	if (phrase->next && phrase->op == '|')
+	{
 		pipe_write(phrase);
+	}
 	else
-		execution_control(t_phrase *phrase);
+	{
+		execution_control(phrase);
+	}
 	dup2(saved_stdin, 0);
 	close(phrase->prev->fd[0]);
 }
@@ -344,8 +346,11 @@ void	operation_control(t_phrase *phrase)
 
 void	execution_control(t_phrase *phrase)
 {
+	
 	if (phrase->bin == 1)
+	{
 		ft_binary(phrase);
+	}
 	else if (ft_strnstr(phrase->cmd, "echo", 5))
 	{
 		ft_echo(phrase);
@@ -380,13 +385,17 @@ void	execution_control(t_phrase *phrase)
 /* Most functions don't correctly handle arguments of size 0 or > 1 */
 int	main_control(t_phrase *phrase)
 {
-	if (phrase->op)
+	while (phrase)
 	{
-		operation_control(phrase);
-	}
-	else
-	{
-		execution_control(phrase);
+		if (phrase->next || phrase->prev)
+		{
+			operation_control(phrase);
+		}
+		else
+		{
+			execution_control(phrase);
+		}
+		phrase = phrase->next;
 	}
 	return (0);
 }
@@ -394,20 +403,35 @@ int	main_control(t_phrase *phrase)
 //	t_phrase phrase will be replaced by the struct passed by Mik	*/
 int	main(int argc, char **argv, char **env)
 {
+	t_phrase	*phrase1;
+	t_phrase	*phrase2;
+	char *test_args1[2] = {"ls", NULL};
+	char *test_args2[3] = {"wc", "-w", NULL};
+
 	errno = 0;
-	t_phrase	*phrase;
-	char *test_args[3] = {"env", NULL, NULL};
 
-	phrase = malloc(sizeof(*phrase));
-	phrase->fd = malloc(2 * sizeof(int));
-	phrase->bin = 1;
-	phrase->next = 1;
-	phrase->cmd = "ls";
-	phrase->op = '|';
-	phrase->cmd_args = test_args;
-	phrase->env = dup_env_table(env, phrase, 0);
+	phrase1 = malloc(sizeof(*phrase1));
+	phrase1->fd = malloc(2 * sizeof(int));
+	phrase1->bin = 1;
+	phrase1->prev = NULL;
+	phrase1->cmd = "ls";
+	phrase1->op = '|';
+	phrase1->cmd_args = test_args1;
+	phrase1->env = dup_env_table(env, phrase1, 0);
 
-	main_control(phrase);
+	phrase2 = malloc(sizeof(*phrase2));
+	phrase2->fd = malloc(2 * sizeof(int));
+	phrase2->bin = 1;
+	phrase2->next = NULL;
+	phrase2->prev = phrase1;
+	phrase2->cmd = "wc";
+	phrase2->op = 0;
+	phrase2->cmd_args = test_args2;
+	phrase2->env = dup_env_table(env, phrase2, 0);
+
+	phrase1->next = phrase2;
+
+	main_control(phrase1);
 
 	return (0);
 }
