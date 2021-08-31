@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/31 01:51:44 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/31 15:13:26 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ void	init_tokenizer(t_tokenizer *tok)
 
 void	free_lists(t_list **lst1, t_node **lst2)
 {
-	ft_lstclear(&lst1, ft_str_free);
-	nodeclear(&lst2);
+	ft_lstclear(lst1, ft_str_free);
+	nodeclear(lst2);
 }
 
 int	main(int argc, char **argv, char **env)
