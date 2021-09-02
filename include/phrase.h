@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/30 18:38:34 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/02 14:22:24 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/02 15:19:03 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ typedef struct s_phrase
 	struct s_phrase	*next;
 	struct s_phrase	*prev;
 	int				*fd;
-	int				bin;
 }	t_phrase;
 
 void	nodeclear(t_phrase **node);

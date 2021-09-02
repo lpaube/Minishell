@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:31:51 by laube             #+#    #+#             */
-/*   Updated: 2021/09/02 14:30:04 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/02 16:21:21 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ char	*ft_getenv(char *var)
 {
 	char	*var_name;
 	int		i;
+	char	*ret;
 
 	var_name = ft_append_str(&var, '=');
 	i = 0;
@@ -78,7 +79,8 @@ char	*ft_getenv(char *var)
 	{
 		if (ft_strnstr(my_env[i], var_name, ft_strlen(var_name)))
 		{
-			return (ft_str_dup(my_env[i]));
+			ret = ft_strdup(my_env[i]);
+			return (ret);
 		}
 		i++;
 	}

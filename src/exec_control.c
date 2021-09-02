@@ -6,38 +6,15 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:29:29 by laube             #+#    #+#             */
-/*   Updated: 2021/08/31 18:33:39 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/02 18:54:22 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-void	operation_control(t_phrase *phrase)
-{
-	if (phrase->prev)
-	{
-		if (phrase->prev->op == '|')
-		{
-			pipe_read(phrase);
-		}
-	}
-	if (phrase->next)
-	{
-		if (phrase->op == '|')
-		{
-			pipe_write(phrase);
-		}
-	}
-}
-
 void	execution_control(t_phrase *phrase)
 {
-	
-	if (phrase->bin == 1)
-	{
-		ft_binary(phrase);
-	}
-	else if (ft_strnstr(phrase->name, "echo", 5))
+	if (ft_strnstr(phrase->name, "echo", 5))
 	{
 		ft_echo(phrase);
 	}
@@ -65,6 +42,10 @@ void	execution_control(t_phrase *phrase)
 	else if (ft_strnstr(phrase->name, "exit", 5))
 	{
 		ft_exit(phrase);
+	}
+	else
+	{
+		ft_binary(phrase);
 	}
 }
 
