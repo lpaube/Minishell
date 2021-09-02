@@ -6,7 +6,7 @@
 /*   By: laube <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 18:54:03 by laube             #+#    #+#             */
-/*   Updated: 2021/09/02 19:00:24 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/02 19:06:49 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	operation_control(t_phrase *phrase)
 		if (phrase->prev->op == PIPE)
 		{
 			pipe_read(phrase);
-			ft_putstr_fd(2, phrase->name);
+			ft_putstr_fd(phrase->name, 2);
 		}
 	}
 	if (phrase->next)
@@ -59,7 +59,7 @@ void	operation_control(t_phrase *phrase)
 		if (phrase->op == PIPE)
 		{
 			pipe_write(phrase);
-			ft_putstr_fd(2, phrase->name);
+			ft_putstr_fd(phrase->name, 2);
 		}
 	}
 }

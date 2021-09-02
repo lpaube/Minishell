@@ -9,7 +9,7 @@ HEADERS		=	$(addprefix $(INC)/, $(HFILES))
 
 CFILES		=	main.c tokenizer.c tokenizer_utils.c error.c parser.c\
 				phrase.c print.c exec_bin.c exec_cmd1.c exec_cmd2.c\
-				exec_control.c exec_utils.c execution.c
+				exec_control.c exec_utils.c exec_operation.c
 OFILES		=	$(CFILES:.c=.o)
 OBJS		=	$(addprefix $(OBJ)/, $(OFILES))
 SRCS		=	$(addprefix $(SRC)/, $(CFILES))
