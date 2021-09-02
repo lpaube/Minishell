@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laube <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:15:00 by laube             #+#    #+#             */
-/*   Updated: 2021/08/31 00:34:24 by laube            ###   ########.fr       */
+/*   Updated: 2021/08/31 18:57:30 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tmp_header.h"
+#include "execution.h"
 
 /*	Executes the binary entered as cmd */
 int	ft_binary(t_phrase *phrase)
@@ -18,16 +18,16 @@ int	ft_binary(t_phrase *phrase)
 	char	*bin_path;
 	pid_t	pid;
 
-	bin_path = get_bin_path(phrase->env, phrase->cmd);
+	bin_path = get_bin_path(my_env, phrase->name);
 	if (bin_path == NULL)
 		return (-1);
 	pid = fork();
 	if (pid == -1)
-		ft_terminate(errno, "Invalid process id after fork.");
+		print_error("Invalid process id after fork.");
 	if (pid == 0)
 	{
-		if (execve(bin_path, phrase->cmd_args, phrase->env) == -1)
-			ft_terminate(errno, "Invalid execution of binary.");
+		if (execve(bin_path, phrase->args, my_env) == -1)
+			print_error("Invalid execution of binary.");
 	}
 	wait(0);
 	return (0);
@@ -40,16 +40,16 @@ void	ft_echo(t_phrase *phrase)
 
 	i = 1;
 	nl = 1;
-	if (ft_strnstr((phrase->cmd_args)[i], "-n", 2))
+	if (ft_strnstr((phrase->args)[i], "-n", 2))
 	{
 		nl = 0;
 		i++;
 	}
-	while ((phrase->cmd_args)[i])
+	while ((phrase->args)[i])
 	{
-		printf("%s", (phrase->cmd_args[i]));
+		printf("%s", (phrase->args[i]));
 		i++;
-		if ((phrase->cmd_args)[i])
+		if ((phrase->args)[i])
 			printf(" ");
 	}
 	if (nl)

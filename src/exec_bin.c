@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec_bin.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laube <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:16:38 by laube             #+#    #+#             */
-/*   Updated: 2021/08/31 00:27:26 by laube            ###   ########.fr       */
+/*   Updated: 2021/08/31 18:32:54 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tmp_header.h"
+#include "execution.h"
 
 char	*validate_path(char *path, char *cmd)
 {

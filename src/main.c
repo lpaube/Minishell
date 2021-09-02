@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/31 01:51:44 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/31 18:45:57 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "execution.h"
 #include "tokenizer.h"
 #include "parser.h"
-#include "minishell.h"
-#include "node.h"
+#include "phrase.h"
 #include "print.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -21,13 +21,15 @@
 #include <readline/history.h>
 #include <stdbool.h>
 
+static char	**my_env = NULL;
+
 char	*get_line(char *line)
 {
 	char	*tmp;
 
 	if (line)
 		free(line);
-	line = readline(SHELL_PROMPT);
+	line = readline("minishell: ");
 	tmp = ft_strtrim(line, WHITESPACE);
 	free(line);
 	line = tmp;
@@ -43,21 +45,21 @@ void	init_tokenizer(t_tokenizer *tok)
 	tok->next_token = NULL;
 }
 
-void	free_lists(t_list **lst1, t_node **lst2)
+void	free_lists(t_list **lst1, t_phrase **lst2)
 {
-	ft_lstclear(&lst1, ft_str_free);
-	nodeclear(&lst2);
+	ft_lstclear(lst1, ft_str_free);
+	nodeclear(lst2);
 }
 
 int	main(int argc, char **argv, char **env)
 {
 	t_tokenizer	tok;
 	t_list		*lst;
-	t_node		*cmds;
+	t_phrase		*cmds;
 
 	(void)argc;
 	(void)argv;
-	(void)env;
+	my_env = ft_dup_strarr(env);
 	tok.str = NULL;
 	cmds = NULL;
 	while (true)
@@ -70,7 +72,7 @@ int	main(int argc, char **argv, char **env)
 		if (lst)
 		{
 			cmds = parse(lst);
-			print_nodes(cmds);
+			main_control(cmds);
 		}
 		free_lists(&lst, &cmds);
 	}

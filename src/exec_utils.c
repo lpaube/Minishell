@@ -3,26 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laube <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:31:51 by laube             #+#    #+#             */
-/*   Updated: 2021/08/31 00:34:58 by laube            ###   ########.fr       */
+/*   Updated: 2021/08/31 18:57:30 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tmp_header.h"
-
-void	ft_terminate(int err, char *err_str)
-{
-	char	*ret_str;
-
-	if (err != 0)
-		ret_str = strerror(err);
-	else
-		ret_str = err_str;
-	printf("%s\n", err_str);
-	exit(0);
-}
+#include "execution.h"
 
 /*	Returns a malloc'd 2d duplicated table of env
  *	and updates it with new var if applicable	*/
@@ -32,19 +20,19 @@ char	**dup_env_table(char **table, t_phrase *phrase, int new_var)
 	int		i;
 	char	*new_arg;
 
-	new_arg = phrase->cmd_args[1];
+	new_arg = phrase->args[1];
 	i = 0;
 	while (table[i])
 		i++;
 	res_table = malloc((i + 1 + new_var) * sizeof(char *));
 	if (!res_table)
-		ft_terminate(errno, "Could not malloc 'res_table'.");
+		print_error("Could not malloc 'res_table'.");
 	i = 0;
 	while (table[i])
 	{
 		res_table[i] = malloc((ft_strlen(table[i]) + 1) * sizeof(char));
 		if (!res_table[i])
-			ft_terminate(errno, "Could not malloc 'res_table[i]");
+			print_error("Could not malloc 'res_table[i]");
 		ft_memcpy(res_table[i], table[i], ft_strlen(table[i]) + 1);
 		i++;
 	}
@@ -77,4 +65,22 @@ char	*ft_append_str(char **str, char c)
 	new_str[i] = 0;
 	//free(*str);
 	return (new_str);
+}
+
+char	*ft_getenv(char *var)
+{
+	char	*var_name;
+	int		i;
+
+	var_name = ft_append_str(&var, '=');
+	i = 0;
+	while (ft_env[i])
+	{
+		if (ft_strnstr(ft_env[i], var_name, ft_strlen(var_name)))
+		{
+			return (ft_str_dup(ft_env[i]));
+		}
+		i++;
+	}
+	return (NULL);
 }

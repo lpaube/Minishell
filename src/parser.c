@@ -3,27 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 23:16:36 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/31 01:34:03 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/31 18:51:42 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-#include "minishell.h"
-#include "node.h"
-#include "operator.h"
+#include "phrase.h"
+#include "tokenizer.h"
 #include <stdlib.h>
 
-t_node	*get_next_node(t_list **tokens)
+t_phrase	*get_next_node(t_list **tokens)
 {
-	t_node	*node;
+	t_phrase	*node;
 	char	*str;
 
 	if (get_operator((*tokens)->content) != NONE)
 		return (NULL);
-	node = ft_calloc(1, sizeof(t_node));
+	node = ft_calloc(1, sizeof(t_phrase));
 	node->name = ft_strdup(ft_str_data((*tokens)->content));
 	node->args = ft_calloc(1, sizeof(char *));
 	while (*tokens && get_operator((*tokens)->content) == NONE)
@@ -42,20 +41,20 @@ t_node	*get_next_node(t_list **tokens)
 	return (node);
 }
 
-t_node	*get_operator_first_node(t_list **tokens)
+t_phrase	*get_operator_first_node(t_list **tokens)
 {
-	t_node	*node;
+	t_phrase	*node;
 
-	node = ft_calloc(1, sizeof(t_node));
+	node = ft_calloc(1, sizeof(t_phrase));
 	node->args = ft_calloc(1, sizeof(char *));
 	node->op = get_operator((*tokens)->content);
 	ft_lstnext(tokens);
 	return (node);
 }
 
-bool	is_valid_syntax(t_node *cmds)
+bool	is_valid_syntax(t_phrase *cmds)
 {
-	t_node	*last;
+	t_phrase	*last;
 
 	last = nodelast(cmds);
 	if (last->op != NONE)
@@ -63,10 +62,10 @@ bool	is_valid_syntax(t_node *cmds)
 	return (true);
 }
 
-t_node	*parse(t_list *tokens)
+t_phrase	*parse(t_list *tokens)
 {
-	t_node	*cmds;
-	t_node	*new;
+	t_phrase	*cmds;
+	t_phrase	*new;
 
 	cmds = NULL;
 	if (get_operator(tokens->content) == PIPE)

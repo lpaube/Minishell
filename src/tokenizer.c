@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 15:14:49 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/30 19:47:06 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/08/31 18:47:56 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "my_env.h"
 #include "tokenizer.h"
-#include "minishell.h"
 #include <stdlib.h>
 
 bool	get_operator_token(t_tokenizer *tok)
@@ -44,7 +44,7 @@ void	parse_variable(t_tokenizer *tok, t_string token)
 		ft_str_add_back(var_name, cursor_char(tok));
 		inc_cursor(tok);
 	}
-	var_value = getenv(ft_str_data(var_name));
+	var_value = ft_getenv(ft_str_data(var_name));
 	ft_str_free(var_name);
 	if (var_value)
 		ft_str_append_cstr(token, var_value);
