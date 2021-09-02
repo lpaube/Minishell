@@ -6,7 +6,8 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/31 18:45:57 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/02 14:35:13 by laube            ###   ########.fr       */
+/*   Updated: 2021/08/31 15:13:26 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +22,7 @@
 #include <readline/history.h>
 #include <stdbool.h>
 
-static char	**my_env = NULL;
+char	**my_env = NULL;
 
 char	*get_line(char *line)
 {

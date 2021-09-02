@@ -1,30 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   operator.h                                         :+:      :+:    :+:   */
+/*   my_env.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/27 04:10:20 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/27 17:53:59 by mleblanc         ###   ########.fr       */
+/*   Created: 2021/08/31 18:36:03 by laube             #+#    #+#             */
+/*   Updated: 2021/09/02 14:34:29 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef OPERATOR_H
-# define OPERATOR_H
+#ifndef MY_ENV_H
+# define MY_ENV_H
 
-# include "libft.h"
+extern char	**my_env;
 
-typedef enum e_operator
-{
-	PIPE,
-	OUTPUT,
-	APPEND,
-	INPUT,
-	READ,
-	NONE,
-}	t_operator;
-
-t_operator	get_operator(t_string token);
+char	*ft_getenv(char *var);
 
 #endif

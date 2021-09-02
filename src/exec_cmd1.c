@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:11:05 by laube             #+#    #+#             */
-/*   Updated: 2021/08/31 18:54:42 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/02 14:16:41 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void	ft_cd(t_phrase *phrase)
 {
-	int	ret;
-	
 	if (phrase->args[1] != NULL && phrase->args[2] != NULL)
 		print_error("cd: too many arguments");
 	if (chdir(phrase->args[1]) == -1)
@@ -24,6 +22,7 @@ void	ft_cd(t_phrase *phrase)
 
 void	ft_pwd(t_phrase *phrase)
 {
+	(void)phrase;
 	char	cwd[PATH_MAX];
 	if (getcwd(cwd, PATH_MAX) != NULL)
 		printf("%s\n", cwd);
@@ -94,10 +93,11 @@ void	ft_env(t_phrase *phrase)
 {
 	int	i;
 
+	(void)phrase;
 	i = 0;
-	while (ft_env[i])
+	while (my_env[i])
 	{
-		printf("%s\n", ft_env[i]);
+		printf("%s\n", my_env[i]);
 		i++;
 	}
 }

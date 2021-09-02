@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:15:00 by laube             #+#    #+#             */
-/*   Updated: 2021/08/31 18:57:30 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/02 14:16:31 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,6 @@ void	ft_echo(t_phrase *phrase)
 
 void	ft_exit(t_phrase *phrase)
 {
+	(void)phrase;
 	exit(0);
 }
