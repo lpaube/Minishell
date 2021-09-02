@@ -6,7 +6,7 @@
 /*   By: laube <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 18:54:03 by laube             #+#    #+#             */
-/*   Updated: 2021/09/02 19:06:49 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/02 19:20:27 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,13 @@ void	pipe_read(t_phrase *phrase)
 
 	saved_stdin = dup(0);
 	dup2(phrase->prev->fd[0], 0);
-	if (phrase->next && phrase->op == '|')
+	/*
+	if (phrase->next && phrase->op == PIPE)
 	{
 		pipe_write(phrase);
 	}
 	else
+	*/
 	{
 		execution_control(phrase);
 	}
@@ -50,16 +52,19 @@ void	operation_control(t_phrase *phrase)
 	{
 		if (phrase->prev->op == PIPE)
 		{
+			printf("PREV: curr_name: %s\n", phrase->name);
+			printf("OP: %d\n", phrase->op);
 			pipe_read(phrase);
-			ft_putstr_fd(phrase->name, 2);
+			printf("hmmmmmmmm\n");
 		}
 	}
 	if (phrase->next)
 	{
 		if (phrase->op == PIPE)
 		{
+			printf("NEXT: curr_name: %s\n", phrase->name);
+			printf("OP: %d\n", phrase->op);
 			pipe_write(phrase);
-			ft_putstr_fd(phrase->name, 2);
 		}
 	}
 }
