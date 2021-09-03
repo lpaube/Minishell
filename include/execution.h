@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laube <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 14:46:24 by laube             #+#    #+#             */
-/*   Updated: 2021/09/02 19:04:13 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/03 17:13:50 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@
 void	execution_control(t_phrase *phrase);
 int		main_control(t_phrase *phrase);
 char	**dup_env_table(char **table, t_phrase *phrase, int new_var);
-char	*ft_append_str(char **str, char c);
 char	*get_bin_path(char **envp, char *cmd);
 void	pipe_read(t_phrase *phrase);
 void	pipe_write(t_phrase *phrase);

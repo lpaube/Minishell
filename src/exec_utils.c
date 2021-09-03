@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:31:51 by laube             #+#    #+#             */
-/*   Updated: 2021/09/02 16:21:21 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/03 17:13:17 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,43 +46,24 @@ char	**dup_env_table(char **table, t_phrase *phrase, int new_var)
 	return (res_table);
 }
 
-/*	Receives a malloc'd str, and returns a new malloc'd str
- *	with appended char	*/
-char	*ft_append_str(char **str, char c)
-{
-	char	*new_str;
-	int		i;
-
-	new_str = malloc((ft_strlen(*str) + 1) * sizeof(char));
-	i = 0;
-	while ((*str)[i])
-	{
-		new_str[i] = (*str)[i];
-		i++;
-	}
-	new_str[i] = c;
-	i++;
-	new_str[i] = 0;
-	//free(*str);
-	return (new_str);
-}
-
 char	*ft_getenv(char *var)
 {
 	char	*var_name;
 	int		i;
 	char	*ret;
 
-	var_name = ft_append_str(&var, '=');
+	var_name = ft_strjoin(var, "=");
 	i = 0;
 	while (my_env[i])
 	{
 		if (ft_strnstr(my_env[i], var_name, ft_strlen(var_name)))
 		{
-			ret = ft_strdup(my_env[i]);
+			ret = (my_env[i] + ft_strlen(var_name));
+			free(var_name);
 			return (ret);
 		}
 		i++;
 	}
+	free(var_name);
 	return (NULL);
 }
