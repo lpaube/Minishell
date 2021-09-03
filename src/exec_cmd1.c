@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:11:05 by laube             #+#    #+#             */
-/*   Updated: 2021/09/02 14:16:41 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/03 17:12:35 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	ft_unset(t_phrase *phrase)
 	i = 1;
 	while (phrase->args[i])
 	{
-		phrase->args[i] = ft_append_str(&phrase->args[i], '=');
+		phrase->args[i] = ft_strjoin(phrase->args[i], "=");
 		j = 0;
 		while (my_env[j])
 		{
