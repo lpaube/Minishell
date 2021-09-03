@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 18:54:03 by laube             #+#    #+#             */
-/*   Updated: 2021/09/03 17:59:10 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/03 18:38:47 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,32 @@ void	pipe_read(t_phrase *phrase)
 	close(saved_stdin);
 }
 
+void	redirect_write(t_phrase *phrase)
+{
+	int	open_fd;
+	int	saved_stdout;
+
+	if (phrase->op == APPEND)
+	{
+		open_fd = open(phrase->next->name, O_RDWR | O_APPEND | O_CREAT);
+	}
+	else if (phrase->op == OUTPUT)
+	{
+		open_fd = open(phrase->next->name, O_RDWR | O_CREAT);
+	}
+	else
+		return ;
+	//
+	//NEED TO CHANGE ACCESS TO FILE IF NEWLY CREATED
+	//
+	saved_stdout = dup(1);
+	dup2(open_fd, 1);
+	execution_control(phrase);
+	dup2(saved_stdout, 1);
+	close(saved_stdout);
+	close(open_fd);
+}
+
 void	operation_control(t_phrase *phrase)
 {
 	if (phrase->prev)
@@ -62,6 +88,10 @@ void	operation_control(t_phrase *phrase)
 			// printf("NEXT: curr_name: %s\n", phrase->name);
 			//printf("OP: %d\n", phrase->op);
 			pipe_write(phrase);
+		}
+		if (phrase->op == OUTPUT || phrase->op == APPEND)
+		{
+			redirect_write(phrase);
 		}
 	}
 }

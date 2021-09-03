@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/30 18:38:34 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/02 15:19:03 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/03 18:10:12 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@
 
 typedef enum e_operator
 {
-	PIPE,
-	OUTPUT,
-	APPEND,
-	INPUT,
-	READ,
+	PIPE,	// |
+	OUTPUT,	// >
+	APPEND,	// >>
+	INPUT,	// <
+	READ,	// <<
 	NONE,
 }	t_operator;
 

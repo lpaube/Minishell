@@ -6,12 +6,13 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 14:46:24 by laube             #+#    #+#             */
-/*   Updated: 2021/09/03 17:13:50 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/03 18:27:43 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
 #include "phrase.h"
+#include <fcntl.h>
 #include <unistd.h>
 #include <sys/stat.h>
 #include <stdio.h>
