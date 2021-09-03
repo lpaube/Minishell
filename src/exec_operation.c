@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_operation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laube <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 18:54:03 by laube             #+#    #+#             */
-/*   Updated: 2021/09/02 19:20:27 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/02 21:58:40 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,8 @@ void	pipe_read(t_phrase *phrase)
 
 	saved_stdin = dup(0);
 	dup2(phrase->prev->fd[0], 0);
-	/*
-	if (phrase->next && phrase->op == PIPE)
-	{
-		pipe_write(phrase);
-	}
-	else
-	*/
-	{
+	if (!phrase->next)
 		execution_control(phrase);
-	}
 	dup2(saved_stdin, 0);
 	close(phrase->prev->fd[0]);
 }
@@ -53,9 +45,8 @@ void	operation_control(t_phrase *phrase)
 		if (phrase->prev->op == PIPE)
 		{
 			printf("PREV: curr_name: %s\n", phrase->name);
-			printf("OP: %d\n", phrase->op);
+			//printf("OP: %d\n", phrase->op);
 			pipe_read(phrase);
-			printf("hmmmmmmmm\n");
 		}
 	}
 	if (phrase->next)
@@ -63,7 +54,7 @@ void	operation_control(t_phrase *phrase)
 		if (phrase->op == PIPE)
 		{
 			printf("NEXT: curr_name: %s\n", phrase->name);
-			printf("OP: %d\n", phrase->op);
+			//printf("OP: %d\n", phrase->op);
 			pipe_write(phrase);
 		}
 	}
