@@ -6,27 +6,27 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 18:54:03 by laube             #+#    #+#             */
-/*   Updated: 2021/09/04 18:45:12 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/04 19:01:29 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
 
-void	pipe_write(t_phrase *phrase)
-{
-	int	saved_stdout;
+// void	pipe_write(t_phrase *phrase)
+// {
+// 	int	saved_stdout;
 
-	phrase->fd = malloc(2 * sizeof(int));
-	saved_stdout = dup(1);
-	if (pipe(phrase->fd) == -1)
-		print_error("pipe error");
-	dup2(phrase->fd[1], 1);
-	execution_control(phrase);
-	dup2(saved_stdout, 1);
-	close(phrase->fd[1]);
-	close(saved_stdout);
-}
+// 	phrase->fd = malloc(2 * sizeof(int));
+// 	saved_stdout = dup(1);
+// 	if (pipe(phrase->fd) == -1)
+// 		print_error("pipe error");
+// 	dup2(phrase->fd[1], 1);
+// 	execution_control(phrase);
+// 	dup2(saved_stdout, 1);
+// 	close(phrase->fd[1]);
+// 	close(saved_stdout);
+// }
 
 void	src_pipe_read(t_phrase *phrase)
 {
@@ -49,6 +49,20 @@ void	get_source(t_phrase *phrase)
 		src_pipe_read(phrase);
 	if (phrase->next->op == INPUT || phrase->next->op == READ)
 		src_red_input(phrase);
+}
+
+void	dest_pipe_write(t_phrase *phrase)
+{
+	phrase->saved_stdout = dup(1);
+	phrase->fd = malloc(2 * sizeof(int));
+	if (pipe(phrase->fd) == -1)
+		print_error("Pipe error");
+	dup2(phrase->fd[1], 1);
+}
+
+void	dest_red_output(t_phrase *phrase)
+{
+	phrase->saved_stdout = dup(1);
 }
 
 void	get_dest(t_phrase *phrase)
