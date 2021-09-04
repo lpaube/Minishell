@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 18:54:03 by laube             #+#    #+#             */
-/*   Updated: 2021/09/04 18:28:59 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/04 18:45:12 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,11 @@ void	src_pipe_read(t_phrase *phrase)
 
 void	src_red_input(t_phrase *phrase)
 {
-	
+	int	open_fd;
+
+	phrase->saved_stdin = dup(0);
+	open_fd = open(phrase->next->name, O_RDONLY);
+	dup2(open_fd, 0);
 }
 
 void	get_source(t_phrase *phrase)
@@ -49,23 +53,26 @@ void	get_source(t_phrase *phrase)
 
 void	get_dest(t_phrase *phrase)
 {
-
-}
-
-void	pipe_read(t_phrase *phrase)
-{
-	int	saved_stdin;
-
-	saved_stdin = dup(0);
-	dup2(phrase->prev->fd[0], 0);
-	if (!phrase->next)
-		execution_control(phrase);
 	if (phrase->op == PIPE)
-		pipe_write(phrase);
-	dup2(saved_stdin, 0);
-	close(phrase->prev->fd[0]);
-	close(saved_stdin);
+		dest_pipe_write(phrase);
+	if (phrase->op == OUTPUT || phrase->op == APPEND)
+		dest_red_output(phrase);
 }
+
+// void	pipe_read(t_phrase *phrase)
+// {
+// 	int	saved_stdin;
+
+// 	saved_stdin = dup(0);
+// 	dup2(phrase->prev->fd[0], 0);
+// 	if (!phrase->next)
+// 		execution_control(phrase);
+// 	if (phrase->op == PIPE)
+// 		pipe_write(phrase);
+// 	dup2(saved_stdin, 0);
+// 	close(phrase->prev->fd[0]);
+// 	close(saved_stdin);
+// }
 
 void	redirect_write(t_phrase *phrase)
 {
@@ -98,4 +105,5 @@ void	operation_control(t_phrase *phrase)
 	get_source(phrase);
 	get_dest(phrase);
 	execution_control(phrase);
+	clean_fd(phrase);
 }
