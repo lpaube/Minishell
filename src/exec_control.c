@@ -6,11 +6,13 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:29:29 by laube             #+#    #+#             */
-/*   Updated: 2021/09/03 13:50:14 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/04 18:20:24 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+
+
 
 void	execution_control(t_phrase *phrase)
 {
@@ -54,14 +56,7 @@ int	main_control(t_phrase *phrase)
 {
 	while (phrase)
 	{
-		if (phrase->next || phrase->prev)
-		{
-			operation_control(phrase);
-		}
-		else
-		{
-			execution_control(phrase);
-		}
+		operation_control(phrase);
 		phrase = phrase->next;
 	}
 	return (0);
