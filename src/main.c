@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
+/*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/02 14:35:13 by laube            ###   ########.fr       */
-/*   Updated: 2021/08/31 15:13:26 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/05 17:56:28 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "execution.h"
 #include "tokenizer.h"
