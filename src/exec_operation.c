@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 18:54:03 by laube             #+#    #+#             */
-/*   Updated: 2021/09/04 19:01:29 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/05 14:13:39 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	src_pipe_read(t_phrase *phrase)
 {
 	phrase->saved_stdin = dup(0);
 	dup2(phrase->prev->fd[0], 0);
+	close(phrase->prev->fd[0]);
 }
 
 void	src_red_input(t_phrase *phrase)
@@ -41,13 +42,15 @@ void	src_red_input(t_phrase *phrase)
 	phrase->saved_stdin = dup(0);
 	open_fd = open(phrase->next->name, O_RDONLY);
 	dup2(open_fd, 0);
+	close(open_fd);
 }
 
 void	get_source(t_phrase *phrase)
 {
-	if (phrase->prev->op == PIPE)
+
+	if (phrase->prev && phrase->prev->op == PIPE)
 		src_pipe_read(phrase);
-	if (phrase->next->op == INPUT || phrase->next->op == READ)
+	if (phrase->next && (phrase->next->op == INPUT || phrase->next->op == READ))
 		src_red_input(phrase);
 }
 
@@ -58,11 +61,17 @@ void	dest_pipe_write(t_phrase *phrase)
 	if (pipe(phrase->fd) == -1)
 		print_error("Pipe error");
 	dup2(phrase->fd[1], 1);
+	close(phrase->fd[1]);
 }
 
 void	dest_red_output(t_phrase *phrase)
 {
+	int	open_fd;
+
+	open_fd = open(phrase->next->name, O_RDWR | O_CREAT);
 	phrase->saved_stdout = dup(1);
+	dup2(open_fd, 1);
+	close(open_fd);
 }
 
 void	get_dest(t_phrase *phrase)
@@ -73,6 +82,19 @@ void	get_dest(t_phrase *phrase)
 		dest_red_output(phrase);
 }
 
+void	clean_fd(t_phrase *phrase)
+{
+	if ((phrase->prev && phrase->prev->op == PIPE) || phrase->op == INPUT)
+	{
+		dup2(phrase->saved_stdin, 0);
+		close(phrase->saved_stdin);
+	}
+	if (phrase->op == PIPE || phrase->op == OUTPUT)
+	{
+		dup2(phrase->saved_stdout, 1);
+		close(phrase->saved_stdout);
+	}
+}
 // void	pipe_read(t_phrase *phrase)
 // {
 // 	int	saved_stdin;
@@ -88,31 +110,31 @@ void	get_dest(t_phrase *phrase)
 // 	close(saved_stdin);
 // }
 
-void	redirect_write(t_phrase *phrase)
-{
-	int	open_fd;
-	int	saved_stdout;
+// void	redirect_write(t_phrase *phrase)
+// {
+// 	int	open_fd;
+// 	int	saved_stdout;
 
-	if (phrase->op == APPEND)
-	{
-		open_fd = open(phrase->next->name, O_RDWR | O_APPEND | O_CREAT);
-	}
-	else if (phrase->op == OUTPUT)
-	{
-		open_fd = open(phrase->next->name, O_RDWR | O_CREAT);
-	}
-	else
-		return ;
-	//
-	//NEED TO CHANGE ACCESS TO FILE IF NEWLY CREATED
-	//
-	saved_stdout = dup(1);
-	dup2(open_fd, 1);
-	execution_control(phrase);
-	dup2(saved_stdout, 1);
-	close(saved_stdout);
-	close(open_fd);
-}
+// 	if (phrase->op == APPEND)
+// 	{
+// 		open_fd = open(phrase->next->name, O_RDWR | O_APPEND | O_CREAT);
+// 	}
+// 	else if (phrase->op == OUTPUT)
+// 	{
+// 		open_fd = open(phrase->next->name, O_RDWR | O_CREAT);
+// 	}
+// 	else
+// 		return ;
+// 	//
+// 	//NEED TO CHANGE ACCESS TO FILE IF NEWLY CREATED
+// 	//
+// 	saved_stdout = dup(1);
+// 	dup2(open_fd, 1);
+// 	execution_control(phrase);
+// 	dup2(saved_stdout, 1);
+// 	close(saved_stdout);
+// 	close(open_fd);
+// }
 
 void	operation_control(t_phrase *phrase)
 {
