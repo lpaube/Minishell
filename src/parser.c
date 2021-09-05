@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
+/*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 23:16:36 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/31 18:51:42 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/05 17:38:44 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 t_phrase	*get_next_node(t_list **tokens)
 {
 	t_phrase	*node;
-	char	*str;
+	char		*str;
 
 	if (get_operator((*tokens)->content) != NONE)
 		return (NULL);
@@ -48,6 +48,16 @@ t_phrase	*get_operator_first_node(t_list **tokens)
 	node = ft_calloc(1, sizeof(t_phrase));
 	node->args = ft_calloc(1, sizeof(char *));
 	node->op = get_operator((*tokens)->content);
+	if (node->op == INPUT || node->op == READ)
+	{
+		node->name = ft_strdup("more");
+		ft_expand_strarr(node->args, ft_strdup("more"));
+	}
+	else if (node->op == OUTPUT || node->op == APPEND)
+	{
+		node->name = ft_strdup("cat");
+		ft_expand_strarr(node->args, ft_strdup("cat"));
+	}
 	ft_lstnext(tokens);
 	return (node);
 }
