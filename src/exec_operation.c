@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 18:54:03 by laube             #+#    #+#             */
-/*   Updated: 2021/09/05 15:45:37 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/05 17:03:08 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,32 @@ void	src_red_input(t_phrase *phrase)
 	close(open_fd);
 }
 
+void	src_heredoc(t_phrase *phrase)
+{
+	char	*line;
+	char	*limiter;
+
+	if (phrase->next)
+		limiter = phrase->next->name;
+	else
+		limiter = NULL;
+	while (get_next_line(0, &line))
+	{
+		if (ft_strncmp(line, limiter, ft_strlen(line) + 1) == 0)
+			return ;
+		ft_putstr_fd(line, 0);
+	}
+}
+
 void	get_source(t_phrase *phrase)
 {
 
 	if (phrase->prev && phrase->prev->op == PIPE)
 		src_pipe_read(phrase);
-	if (phrase->op == INPUT || phrase->op == READ)
-	{
-		if (!phrase->name)
-			phrase->name = "more";
+	if (phrase->op == INPUT)
 		src_red_input(phrase);
-	}
+	if (phrase->op == READ)
+		src_heredoc(phrase);
 }
 
 void	dest_pipe_write(t_phrase *phrase)
@@ -91,12 +106,12 @@ void	get_dest(t_phrase *phrase)
 
 void	clean_fd(t_phrase *phrase)
 {
-	if ((phrase->prev && phrase->prev->op == PIPE) || phrase->op == INPUT)
+	if ((phrase->prev && phrase->prev->op == PIPE) || phrase->op == INPUT || phrase->op == READ)
 	{
 		dup2(phrase->saved_stdin, 0);
 		close(phrase->saved_stdin);
 	}
-	if (phrase->op == PIPE || phrase->op == OUTPUT)
+	if (phrase->op == PIPE || phrase->op == OUTPUT || phrase->op == APPEND)
 	{
 		dup2(phrase->saved_stdout, 1);
 		close(phrase->saved_stdout);
