@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   phrase.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/30 18:38:34 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/03 18:10:12 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/04 18:35:37 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,10 @@ typedef struct s_phrase
 	struct s_phrase	*next;
 	struct s_phrase	*prev;
 	int				*fd;
+	int				output_fd;
+	int				intput_fd;
+	int				saved_stdout;
+	int				saved_stdin;
 }	t_phrase;
 
 void	nodeclear(t_phrase **node);
