@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
+/*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 15:14:49 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/02 16:23:18 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/06 16:28:56 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,26 +50,6 @@ void	parse_variable(t_tokenizer *tok, t_string token)
 		ft_str_append_cstr(token, var_value);
 }
 
-bool	parse_special_str(t_tokenizer *tok, t_string token)
-{
-	if (cursor_char(tok) == '\'' && tok->state != DQUOTE)
-	{
-		eval_quote(tok);
-		return (true);
-	}
-	else if (cursor_char(tok) == '\"' && tok->state != QUOTE)
-	{
-		eval_dquote(tok);
-		return (true);
-	}
-	else if (cursor_char(tok) == '$' && tok->state != QUOTE)
-	{
-		parse_variable(tok, token);
-		return (true);
-	}
-	return (false);
-}
-
 bool	get_next_token(t_tokenizer *tok)
 {
 	t_string	token;
@@ -81,8 +61,10 @@ bool	get_next_token(t_tokenizer *tok)
 	{
 		if (end_of_token(tok))
 			break ;
-		if (parse_special_str(tok, token))
-			continue ;
+		if (cursor_char(tok) == '\'')
+			eval_quote(tok);
+		else if (cursor_char(tok) == '\"')
+			eval_dquote(tok);
 		ft_str_add_back(token, cursor_char(tok));
 		inc_cursor(tok);
 	}

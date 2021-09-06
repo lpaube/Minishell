@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 14:47:05 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/26 02:53:32 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/06 16:11:37 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	eval_quote(t_tokenizer *tok)
 		tok->state = TEXT;
 	else
 		tok->state = QUOTE;
-	inc_cursor(tok);
 }
 
 void	eval_dquote(t_tokenizer *tok)
@@ -37,7 +36,6 @@ void	eval_dquote(t_tokenizer *tok)
 		tok->state = TEXT;
 	else
 		tok->state = DQUOTE;
-	inc_cursor(tok);
 }
 
 bool	end_of_token(const t_tokenizer *tok)
