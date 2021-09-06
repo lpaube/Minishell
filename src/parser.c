@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 23:16:36 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/05 17:54:41 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/06 14:55:01 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,8 @@ t_phrase	*get_operator_first_node(t_list **tokens)
 	node = ft_calloc(1, sizeof(t_phrase));
 	node->args = ft_calloc(1, sizeof(char *));
 	node->op = get_operator((*tokens)->content);
-	if (node->op == INPUT || node->op == READ)
-	{
-		node->name = ft_strdup("more");
-		node->args = ft_expand_strarr(node->args, ft_strdup("more"));
-	}
-	else if (node->op == OUTPUT || node->op == APPEND)
+	if (node->op == READ || node->op == APPEND
+		|| node->op == INPUT || node->op == READ)
 	{
 		node->name = ft_strdup("cat");
 		node->args = ft_expand_strarr(node->args, ft_strdup("cat"));
