@@ -8,7 +8,7 @@ HFILES		=	tokenizer.h parser.h print.h phrase.h execution.h my_env.h\
 				signal_handler.h
 HEADERS		=	$(addprefix $(INC)/, $(HFILES))
 
-CFILES		=	main.c tokenizer.c tokenizer_utils.c error.c parser.c\
+CFILES		=	main.c tokenizer.c tokenizer_utils.c error.c parser.c parser2.c\
 				phrase.c print.c exec_bin.c exec_cmd1.c exec_cmd2.c\
 				exec_control.c exec_utils.c exec_operation.c\
 				signal_handler.c

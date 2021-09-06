@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/06 16:28:11 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/06 19:46:07 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	main(int argc, char **argv, char **env)
 	signal(SIGINT, newline);
 	signal(SIGQUIT, nothing);
 	my_env = ft_dup_strarr(env);
+	printf("%s\n", parse_special_chars("ec\"ho\" '$PWD 456' $USR abc\"$?$USER\""));
 	tok.str = NULL;
 	cmds = NULL;
 	while (true)
