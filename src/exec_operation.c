@@ -6,27 +6,12 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 18:54:03 by laube             #+#    #+#             */
-/*   Updated: 2021/09/05 17:03:08 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/06 01:10:22 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-
-// void	pipe_write(t_phrase *phrase)
-// {
-// 	int	saved_stdout;
-
-// 	phrase->fd = malloc(2 * sizeof(int));
-// 	saved_stdout = dup(1);
-// 	if (pipe(phrase->fd) == -1)
-// 		print_error("pipe error");
-// 	dup2(phrase->fd[1], 1);
-// 	execution_control(phrase);
-// 	dup2(saved_stdout, 1);
-// 	close(phrase->fd[1]);
-// 	close(saved_stdout);
-// }
 
 void	src_pipe_read(t_phrase *phrase)
 {
@@ -45,20 +30,27 @@ void	src_red_input(t_phrase *phrase)
 	close(open_fd);
 }
 
+// WHY CAN'T I NOT LEAVE THE STDIN OF GETNEXTLINE!???!??!?!?!?!??!?!?!?!?!??
 void	src_heredoc(t_phrase *phrase)
 {
 	char	*line;
 	char	*limiter;
 
+	phrase->fd = malloc(2 * sizeof(int));
+	if (pipe(phrase->fd) != 0)
+		print_error("pipe failed in src_heredoc");
 	if (phrase->next)
 		limiter = phrase->next->name;
 	else
 		limiter = NULL;
-	while (get_next_line(0, &line))
+	while (get_next_line(0, &line) > 0)
 	{
-		if (ft_strncmp(line, limiter, ft_strlen(line) + 1) == 0)
+		if (ft_strncmp(line, limiter, ft_strlen(line)) == 0)
+		{
+			printf("returning\n");
 			return ;
-		ft_putstr_fd(line, 0);
+		}
+		ft_putstr_fd(line, phrase->fd[1]);
 	}
 }
 
