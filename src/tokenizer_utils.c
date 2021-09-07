@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 14:47:05 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/06 16:11:37 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/06 22:23:07 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	eval_quote(t_tokenizer *tok)
 {
 	if (tok->state == QUOTE)
 		tok->state = TEXT;
-	else
+	else if (tok->state == TEXT)
 		tok->state = QUOTE;
 }
 
@@ -34,7 +34,7 @@ void	eval_dquote(t_tokenizer *tok)
 {
 	if (tok->state == DQUOTE)
 		tok->state = TEXT;
-	else
+	else if (tok->state == TEXT)
 		tok->state = DQUOTE;
 }
 
