@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/06 20:46:59 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/07 19:11:35 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int	main(int argc, char **argv, char **env)
 		if (lst)
 		{
 			cmds = parse(lst);
+			print_nodes(cmds);
 			main_control(cmds);
 		}
 		free_lists(&lst, &cmds);

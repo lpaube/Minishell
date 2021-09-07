@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 23:16:36 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/06 14:55:01 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/07 19:14:34 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,30 @@ bool	is_valid_syntax(t_phrase *cmds)
 	return (true);
 }
 
+void	fix_redirections(t_phrase *cmds)
+{
+	int	i;
+
+	while (cmds)
+	{
+		if (cmds->op == OUTPUT || cmds->op == APPEND)
+		{
+			if (cmds->next && ft_strarr_size(cmds->next->args) > 1)
+			{
+				i = 1;
+				while (cmds->next->args[i])
+				{
+					cmds->args = ft_expand_strarr(cmds->args,
+						cmds->next->args[i]);
+					cmds->next->args[i] = NULL;
+					++i;
+				}
+			}
+		}
+		cmds = cmds->next;
+	}
+}
+
 t_phrase	*parse(t_list *tokens)
 {
 	t_phrase	*cmds;
@@ -93,5 +117,6 @@ t_phrase	*parse(t_list *tokens)
 		nodeclear(&cmds);
 		return (print_error("syntax error near unexpected token '\\n'"));
 	}
+	fix_redirections(cmds);
 	return (cmds);
 }
