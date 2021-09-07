@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 18:54:03 by laube             #+#    #+#             */
-/*   Updated: 2021/09/06 01:10:22 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/07 16:05:36 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,27 +30,32 @@ void	src_red_input(t_phrase *phrase)
 	close(open_fd);
 }
 
-// WHY CAN'T I NOT LEAVE THE STDIN OF GETNEXTLINE!???!??!?!?!?!??!?!?!?!?!??
 void	src_heredoc(t_phrase *phrase)
 {
 	char	*line;
 	char	*limiter;
+	int		ret;
 
 	phrase->fd = malloc(2 * sizeof(int));
+	phrase->saved_stdin = dup(0);
 	if (pipe(phrase->fd) != 0)
 		print_error("pipe failed in src_heredoc");
 	if (phrase->next)
 		limiter = phrase->next->name;
 	else
 		limiter = NULL;
-	while (get_next_line(0, &line) > 0)
+	ft_putstr_fd("> ", 1);
+	while ((ret = get_next_line(0, &line)) > 0)
 	{
-		if (ft_strncmp(line, limiter, ft_strlen(line)) == 0)
+		if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
 		{
-			printf("returning\n");
+			dup2(phrase->fd[0], 0);
+			close(phrase->fd[1]);
 			return ;
 		}
+		ft_putstr_fd("> ", 1);
 		ft_putstr_fd(line, phrase->fd[1]);
+		ft_putstr_fd("\n", phrase->fd[1]);
 	}
 }
 
