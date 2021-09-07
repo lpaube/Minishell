@@ -6,13 +6,14 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 18:56:07 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/06 19:50:15 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/06 20:35:16 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include "tokenizer.h"
 #include "my_env.h"
+#include <stdlib.h>
 
 static char	*output_code(void)
 {
@@ -38,6 +39,8 @@ static char	*parse_variable(char **str)
 	}
 	var_value = ft_getenv(ft_str_data(var_name));
 	ft_str_free(var_name);
+	if (!var_value)
+		return ("");
 	return (var_value);
 }
 
@@ -69,16 +72,16 @@ char	*parse_special_chars(char *str)
 	t_string	ret;
 	t_state		state;
 	char		*tmp;
+	char		*ptr;
 
+	ptr = str;
 	ret = ft_str_new(NULL);
 	state = TEXT;
 	while (*str)
 	{
 		if (*str == '$' && (state == TEXT || state == DQUOTE))
 		{
-			tmp = parse_variable(&str);
-			if (tmp)
-				ft_str_append_cstr(ret, tmp);
+			ft_str_append_cstr(ret, parse_variable(&str));
 			continue ;
 		}
 		if (eval_quotes(&str, &state))
@@ -88,6 +91,6 @@ char	*parse_special_chars(char *str)
 	}
 	tmp = ft_strdup(ft_str_data(ret));
 	ft_str_free(ret);
-	free(str);
+	free(ptr);
 	return (tmp);
 }
