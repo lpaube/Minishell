@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 18:56:07 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/06 20:35:16 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/06 20:43:27 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,4 +93,16 @@ char	*parse_special_chars(char *str)
 	ft_str_free(ret);
 	free(ptr);
 	return (tmp);
+}
+
+void	parse_special_chars_arr(char **arr)
+{
+	int	i;
+
+	i = 0;
+	while (arr[i])
+	{
+		arr[i] = parse_special_chars(arr[i]);
+		++i;
+	}
 }
