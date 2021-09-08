@@ -1,19 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   my_env.h                                           :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
+/*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/31 18:36:03 by laube             #+#    #+#             */
-/*   Updated: 2021/09/02 14:34:29 by laube            ###   ########.fr       */
+/*   Created: 2021/09/08 13:33:08 by mleblanc          #+#    #+#             */
+/*   Updated: 2021/09/08 13:44:46 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MY_ENV_H
-# define MY_ENV_H
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
-extern char	**my_env;
+# include "phrase.h"
+
+typedef struct s_minishell
+{
+	char		**env;
+	int			code;
+}	t_minishell;
+
+extern t_minishell	g_minishell;
 
 char	*ft_getenv(char *var);
 

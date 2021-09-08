@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 23:16:36 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/07 19:14:34 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/08 13:44:17 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	fix_redirections(t_phrase *cmds)
 				while (cmds->next->args[i])
 				{
 					cmds->args = ft_expand_strarr(cmds->args,
-						cmds->next->args[i]);
+							cmds->next->args[i]);
 					cmds->next->args[i] = NULL;
 					++i;
 				}

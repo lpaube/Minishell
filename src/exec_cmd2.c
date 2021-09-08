@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
+/*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:15:00 by laube             #+#    #+#             */
-/*   Updated: 2021/09/03 13:50:07 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/08 13:42:52 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_binary(t_phrase *phrase)
 	char	*bin_path;
 	pid_t	pid;
 
-	bin_path = get_bin_path(my_env, phrase->name);
+	bin_path = get_bin_path(g_minishell.env, phrase->name);
 	if (bin_path == NULL)
 		return (-1);
 	pid = fork();
@@ -26,7 +26,7 @@ int	ft_binary(t_phrase *phrase)
 		print_error("Invalid process id after fork.");
 	if (pid == 0)
 	{
-		if (execve(bin_path, phrase->args, my_env) == -1)
+		if (execve(bin_path, phrase->args, g_minishell.env) == -1)
 			print_error("Invalid execution of binary.");
 	}
 	wait(0);
