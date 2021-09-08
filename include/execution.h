@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 14:46:24 by laube             #+#    #+#             */
-/*   Updated: 2021/09/03 18:27:43 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/08 12:43:22 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 #include <limits.h>
 #include "my_env.h"
 #include "tokenizer.h"
+#include "parser.h"
 
 void	execution_control(t_phrase *phrase);
 int		main_control(t_phrase *phrase);

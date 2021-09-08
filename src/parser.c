@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 23:16:36 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/07 19:14:34 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/08 12:49:37 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	fix_redirections(t_phrase *cmds)
 
 	while (cmds)
 	{
-		if (cmds->op == OUTPUT || cmds->op == APPEND)
+		if (cmds->op == OUTPUT || cmds->op == APPEND || cmds->op == INPUT || cmds->op == READ)
 		{
 			if (cmds->next && ft_strarr_size(cmds->next->args) > 1)
 			{

@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:29:29 by laube             #+#    #+#             */
-/*   Updated: 2021/09/07 19:41:34 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/08 12:42:20 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ int	main_control(t_phrase *phrase)
 {
 	while (phrase)
 	{
+		phrase->name = parse_special_chars(phrase->name);
+		parse_special_chars_arr(phrase->args);
 		operation_control(phrase);
 		phrase = phrase->next;
 	}
