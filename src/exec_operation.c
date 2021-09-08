@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 18:54:03 by laube             #+#    #+#             */
-/*   Updated: 2021/09/07 18:02:59 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/08 14:18:02 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,20 @@ void	get_source(t_phrase *phrase)
 		src_heredoc(phrase);
 }
 
+void	clean_fd(t_phrase *phrase)
+{
+	if ((phrase->prev && phrase->prev->op == PIPE) || phrase->op == INPUT || phrase->op == READ)
+	{
+		dup2(phrase->saved_stdin, 0);
+		close(phrase->saved_stdin);
+	}
+	if (phrase->op == PIPE || phrase->op == OUTPUT || phrase->op == APPEND)
+	{
+		dup2(phrase->saved_stdout, 1);
+		close(phrase->saved_stdout);
+	}
+}
+
 void	dest_pipe_write(t_phrase *phrase)
 {
 	phrase->saved_stdout = dup(1);
@@ -85,14 +99,22 @@ void	dest_pipe_write(t_phrase *phrase)
 void	dest_red_output(t_phrase *phrase)
 {
 	int	open_fd;
+	t_phrase	*phrase_og;
 
-	if (phrase->op == OUTPUT)
-		open_fd = open(phrase->next->name, O_RDWR | O_CREAT, 0644);
-	if (phrase->op == APPEND)
-		open_fd = open(phrase->next->name, O_RDWR | O_APPEND | O_CREAT, 0644);
-	phrase->saved_stdout = dup(1);
-	dup2(open_fd, 1);
-	close(open_fd);
+	phrase_og = phrase;
+	while (phrase->op == OUTPUT || phrase->op == APPEND)
+	{
+		if (phrase->op == OUTPUT)
+			open_fd = open(phrase->next->name, O_RDWR | O_CREAT, 0644);
+		if (phrase->op == APPEND)
+			open_fd = open(phrase->next->name, O_RDWR | O_APPEND | O_CREAT, 0644);
+		phrase->saved_stdout = dup(1);
+		dup2(open_fd, 1);
+		close(open_fd);
+		execution_control(phrase_og);
+		clean_fd(phrase);
+		phrase = phrase->next;
+	}
 }
 
 void	get_dest(t_phrase *phrase)
@@ -101,20 +123,6 @@ void	get_dest(t_phrase *phrase)
 		dest_pipe_write(phrase);
 	if (phrase->op == OUTPUT || phrase->op == APPEND)
 		dest_red_output(phrase);
-}
-
-void	clean_fd(t_phrase *phrase)
-{
-	if ((phrase->prev && phrase->prev->op == PIPE) || phrase->op == INPUT || phrase->op == READ)
-	{
-		dup2(phrase->saved_stdin, 0);
-		close(phrase->saved_stdin);
-	}
-	if (phrase->op == PIPE || phrase->op == OUTPUT || phrase->op == APPEND)
-	{
-		dup2(phrase->saved_stdout, 1);
-		close(phrase->saved_stdout);
-	}
 }
 
 void	operation_control(t_phrase *phrase)
