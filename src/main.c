@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/07 19:41:01 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/07 21:31:12 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,8 @@ int	main(int argc, char **argv, char **env)
 		if (lst)
 		{
 			cmds = parse(lst);
-			//print_nodes(cmds);
+			if (argv[1] && ft_strncmp(argv[1], "-d", 3) == 0)	// Launch with "-d" for debug mode
+				print_nodes(cmds);
 			main_control(cmds);
 		}
 		free_lists(&lst, &cmds);
