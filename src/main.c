@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
+/*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/07 21:31:12 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/08 13:45:06 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 #include "execution.h"
 #include "tokenizer.h"
 #include "parser.h"
-#include "phrase.h"
 #include "print.h"
 #include "signal_handler.h"
+#include "minishell.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <readline/readline.h>
@@ -24,7 +24,7 @@
 #include <stdbool.h>
 #include <signal.h>
 
-char	**my_env = NULL;
+t_minishell	g_minishell = (t_minishell){NULL, 0};
 
 char	*get_line(char *line)
 {
@@ -64,7 +64,7 @@ int	main(int argc, char **argv, char **env)
 	(void)argv;
 	signal(SIGINT, newline);
 	signal(SIGQUIT, nothing);
-	my_env = ft_dup_strarr(env);
+	g_minishell.env = ft_dup_strarr(env);
 	tok.str = NULL;
 	cmds = NULL;
 	while (true)

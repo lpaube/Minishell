@@ -6,21 +6,25 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 18:56:07 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/06 20:43:27 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/08 14:16:55 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include "tokenizer.h"
-#include "my_env.h"
+#include "minishell.h"
 #include <stdlib.h>
 
-static char	*output_code(void)
+static void	output_code(t_string out)
 {
-	return (ft_strdup("0"));
+	char	*num;
+
+	num = ft_itoa(g_minishell.code);
+	ft_str_append_cstr(out, num);
+	free(num);
 }
 
-static char	*parse_variable(char **str)
+static void	parse_variable(char **str, t_string out)
 {
 	t_string	var_name;
 	char		*var_value;
@@ -30,7 +34,8 @@ static char	*parse_variable(char **str)
 	if (**str == '?')
 	{
 		++(*str);
-		return (output_code());
+		output_code(out);
+		return ;
 	}
 	while (ft_isalnum(**str) || **str == '_')
 	{
@@ -39,9 +44,8 @@ static char	*parse_variable(char **str)
 	}
 	var_value = ft_getenv(ft_str_data(var_name));
 	ft_str_free(var_name);
-	if (!var_value)
-		return ("");
-	return (var_value);
+	if (var_value)
+		ft_str_append_cstr(out, var_value);
 }
 
 static bool	eval_quotes(char **str, t_state *state)
@@ -81,7 +85,7 @@ char	*parse_special_chars(char *str)
 	{
 		if (*str == '$' && (state == TEXT || state == DQUOTE))
 		{
-			ft_str_append_cstr(ret, parse_variable(&str));
+			parse_variable(&str, ret);
 			continue ;
 		}
 		if (eval_quotes(&str, &state))

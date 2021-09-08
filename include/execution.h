@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 14:46:24 by laube             #+#    #+#             */
-/*   Updated: 2021/09/08 12:43:22 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/08 14:21:49 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <limits.h>
-#include "my_env.h"
+#include "minishell.h"
 #include "tokenizer.h"
 #include "parser.h"
 

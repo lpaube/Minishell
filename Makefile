@@ -5,7 +5,7 @@ INC			=	include
 OBJ			=	obj
 LIB			=	lib
 
-HFILES		=	tokenizer.h parser.h print.h phrase.h execution.h my_env.h\
+HFILES		=	tokenizer.h parser.h print.h phrase.h execution.h minishell.h\
 				signal_handler.h
 HEADERS		=	$(addprefix $(INC)/, $(HFILES))
 

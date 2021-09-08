@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 23:16:36 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/08 12:49:37 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/08 14:20:45 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	fix_redirections(t_phrase *cmds)
 				while (cmds->next->args[i])
 				{
 					cmds->args = ft_expand_strarr(cmds->args,
-						cmds->next->args[i]);
+							cmds->next->args[i]);
 					cmds->next->args[i] = NULL;
 					++i;
 				}

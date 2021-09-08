@@ -6,11 +6,11 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 15:14:49 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/06 18:55:13 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/08 13:41:56 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "my_env.h"
+#include "minishell.h"
 #include "tokenizer.h"
 #include <stdlib.h>
 
