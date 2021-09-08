@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/08 13:45:06 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/08 17:35:33 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,18 @@
 #include <stdbool.h>
 #include <signal.h>
 
-t_minishell	g_minishell = (t_minishell){NULL, 0};
+t_minishell	g_minishell;
+
+void	minishell_init(void)
+{
+	g_minishell.env = NULL;
+	g_minishell.code = 0;
+	g_minishell.fd = malloc(2 * sizeof(int));
+	if (pipe(g_minishell.fd) != 0)
+		print_error("Pipe failed in minishell_init");
+	g_minishell.saved_stdin = dup(0);
+	g_minishell.saved_stdout = dup(1);
+}
 
 char	*get_line(char *line)
 {
@@ -64,6 +75,7 @@ int	main(int argc, char **argv, char **env)
 	(void)argv;
 	signal(SIGINT, newline);
 	signal(SIGQUIT, nothing);
+	minishell_init();
 	g_minishell.env = ft_dup_strarr(env);
 	tok.str = NULL;
 	cmds = NULL;

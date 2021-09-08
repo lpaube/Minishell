@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:29:29 by laube             #+#    #+#             */
-/*   Updated: 2021/09/08 12:42:20 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/08 19:00:02 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	execution_control(t_phrase *phrase)
 	/* Doesn't currently handle arguments */
 	else if (ft_strnstr(phrase->name, "exit", 5))
 	{
-		ft_exit(phrase);
+		ft_exit();
 	}
 	else
 	{
@@ -54,12 +54,13 @@ void	execution_control(t_phrase *phrase)
 /* Most functions don't correctly handle arguments of size 0 or > 1 */
 int	main_control(t_phrase *phrase)
 {
-	while (phrase)
+	g_minishell.phrase = phrase;
+	while (g_minishell.phrase)
 	{
-		phrase->name = parse_special_chars(phrase->name);
-		parse_special_chars_arr(phrase->args);
-		operation_control(phrase);
-		phrase = phrase->next;
+		g_minishell.phrase->name = parse_special_chars(g_minishell.phrase->name);
+		parse_special_chars_arr(g_minishell.phrase->args);
+		operation_control();
+		g_minishell.phrase = g_minishell.phrase->next;
 	}
 	return (0);
 }

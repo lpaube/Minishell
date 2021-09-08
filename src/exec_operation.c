@@ -6,43 +6,52 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 18:54:03 by laube             #+#    #+#             */
-/*   Updated: 2021/09/08 15:38:43 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/08 19:03:20 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-
-void	src_pipe_read(t_phrase *phrase)
+void	clean_fd(void)
 {
-	phrase->saved_stdin = dup(0);
-	dup2(phrase->prev->fd[0], 0);
-	close(phrase->prev->fd[0]);
-	free(phrase->prev->fd);
+	if ((g_minishell.phrase->prev && g_minishell.phrase->prev->op == PIPE) || g_minishell.phrase->op == INPUT || g_minishell.phrase->op == READ)
+	{
+		dup2(g_minishell.saved_stdin, 0);
+	}
+	if (g_minishell.phrase->op == PIPE || g_minishell.phrase->op == OUTPUT || g_minishell.phrase->op == APPEND)
+	{
+		dup2(g_minishell.saved_stdout, 1);
+	}
 }
 
-void	src_red_input(t_phrase *phrase)
+void	src_pipe_read(void)
 {
-	int	open_fd;
+	dup2(g_minishell.fd[0], 0);
+	close(g_minishell.fd[0]);
+}
 
-	phrase->saved_stdin = dup(0);
-	open_fd = open(phrase->next->name, O_RDONLY);
-	dup2(open_fd, 0);
+void	src_red_input(void)
+{
+	int		open_fd;
+	char	*line;
+
+	open_fd = open(g_minishell.phrase->next->name, O_RDONLY);
+	while (get_next_line(open_fd, &line) > 0)
+	{
+		ft_putstr_fd(line, g_minishell.fd[1]);
+		ft_putstr_fd("\n", g_minishell.fd[1]);
+	}
 	close(open_fd);
 }
 
-void	src_heredoc(t_phrase *phrase)
+void	src_heredoc(void)
 {
 	char	*line;
 	char	*limiter;
 	int		ret;
 
-	phrase->fd = malloc(2 * sizeof(int));
-	phrase->saved_stdin = dup(0);
-	if (pipe(phrase->fd) != 0)
-		print_error("pipe failed in src_heredoc");
-	if (phrase->next)
-		limiter = phrase->next->name;
+	if (g_minishell.phrase->next)
+		limiter = g_minishell.phrase->next->name;
 	else
 		limiter = NULL;
 	ft_putstr_fd("> ", 1);
@@ -50,95 +59,86 @@ void	src_heredoc(t_phrase *phrase)
 	{
 		if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
 		{
-			dup2(phrase->fd[0], 0);
-			close(phrase->fd[0]);
-			close(phrase->fd[1]);
-			free(phrase->fd);
 			return ;
 		}
 		ft_putstr_fd("> ", 1);
-		ft_putstr_fd(line, phrase->fd[1]);
-		ft_putstr_fd("\n", phrase->fd[1]);
+		ft_putstr_fd(line, g_minishell.fd[1]);
+		ft_putstr_fd("\n", g_minishell.fd[1]);
 	}
 }
 
-void	get_source(t_phrase *phrase)
+void	get_source(void)
 {
-	if (phrase->prev && phrase->prev->op == PIPE)
-		src_pipe_read(phrase);
-	if (phrase->op == INPUT)
-		src_red_input(phrase);
-	if (phrase->op == READ)
-		src_heredoc(phrase);
-}
-
-void	clean_fd(t_phrase *phrase)
-{
-	if ((phrase->prev && phrase->prev->op == PIPE) || phrase->op == INPUT || phrase->op == READ)
+	if (g_minishell.phrase->prev && g_minishell.phrase->prev->op == PIPE)
+		src_pipe_read();
+	if (g_minishell.phrase->op == INPUT || g_minishell.phrase->op == READ)
 	{
-		dup2(phrase->saved_stdin, 0);
-		close(phrase->saved_stdin);
-	}
-	if (phrase->op == PIPE || phrase->op == OUTPUT || phrase->op == APPEND)
-	{
-		dup2(phrase->saved_stdout, 1);
-		close(phrase->saved_stdout);
+		if (pipe(g_minishell.fd) != 0)
+			print_error("pipe failed in src_heredoc");
+		while (g_minishell.phrase->op == INPUT || g_minishell.phrase->op == READ)
+		{
+			if (g_minishell.phrase->op == INPUT)
+				src_red_input();
+			if (g_minishell.phrase->op == READ)
+				src_heredoc();
+			g_minishell.phrase = g_minishell.phrase->next;
+		}
+		dup2(g_minishell.fd[0], 0);
+		close(g_minishell.fd[0]);
 	}
 }
 
-void	dest_pipe_write(t_phrase *phrase)
+void	dest_pipe_write(void)
 {
-	phrase->saved_stdout = dup(1);
-	phrase->fd = malloc(2 * sizeof(int));
-	if (pipe(phrase->fd) == -1)
+	if (pipe(g_minishell.fd) == -1)
 		print_error("Pipe error");
-	dup2(phrase->fd[1], 1);
-	close(phrase->fd[1]);
+	dup2(g_minishell.fd[1], 1);
+	close(g_minishell.fd[1]);
 }
 
-void	dest_red_output(t_phrase *phrase)
+void	dest_red_output(void)
 {
 	int	open_fd;
 	t_phrase	*phrase_og;
 
-	phrase_og = phrase;
+	phrase_og = g_minishell.phrase;
 	
 	/* loop for consecutive output redirections
 	** cat test1 > test > testing
 	** will put output of cat test1 inside of newly created test, and testing
 	*/
-	while (phrase->op == OUTPUT || phrase->op == APPEND)
+	while (g_minishell.phrase->op == OUTPUT || g_minishell.phrase->op == APPEND)
 	{
-		if (phrase->op == OUTPUT)
-			open_fd = open(phrase->next->name, O_RDWR | O_CREAT, 0644);
-		if (phrase->op == APPEND)
-			open_fd = open(phrase->next->name, O_RDWR | O_APPEND | O_CREAT, 0644);
-		phrase->saved_stdout = dup(1);
+		if (g_minishell.phrase->op == OUTPUT)
+			open_fd = open(g_minishell.phrase->next->name, O_RDWR | O_CREAT, 0644);
+		if (g_minishell.phrase->op == APPEND)
+			open_fd = open(g_minishell.phrase->next->name, O_RDWR | O_APPEND | O_CREAT, 0644);
+		g_minishell.saved_stdout = dup(1);
 		dup2(open_fd, 1);
 		close(open_fd);
 		execution_control(phrase_og);
-		clean_fd(phrase);
-		phrase = phrase->next;
+		clean_fd();
+		g_minishell.phrase = g_minishell.phrase->next;
 	}
 }
 
-void	get_dest(t_phrase *phrase)
+void	get_dest(void)
 {
-	if (phrase->op == PIPE)
-		dest_pipe_write(phrase);
-	if (phrase->op == OUTPUT || phrase->op == APPEND)
-		dest_red_output(phrase);
+	if (g_minishell.phrase->op == PIPE)
+		dest_pipe_write();
+	if (g_minishell.phrase->op == OUTPUT || g_minishell.phrase->op == APPEND)
+		dest_red_output();
 }
 
-void	operation_control(t_phrase *phrase)
+void	operation_control(void)
 {
-	get_source(phrase);
-	if (phrase->op == OUTPUT || phrase->op == APPEND)
-		get_dest(phrase);
+	get_source();
+	if (g_minishell.phrase->op == OUTPUT || g_minishell.phrase->op == APPEND)
+		get_dest();
 	else
 	{
-		get_dest(phrase);
-		execution_control(phrase);
-		clean_fd(phrase);
+		get_dest();
+		execution_control(g_minishell.phrase);
+		clean_fd();
 	}
 }

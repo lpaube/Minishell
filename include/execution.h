@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 14:46:24 by laube             #+#    #+#             */
-/*   Updated: 2021/09/08 14:21:49 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/08 19:02:46 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	execution_control(t_phrase *phrase);
 int		main_control(t_phrase *phrase);
 char	**dup_env_table(char **table, t_phrase *phrase, int new_var);
 char	*get_bin_path(char **envp, char *cmd);
-void	pipe_read(t_phrase *phrase);
-void	pipe_write(t_phrase *phrase);
+void	pipe_read(void);
+void	pipe_write(void);
 int		ft_binary(t_phrase *phrase);
 void	ft_echo(t_phrase *phrase);
 void	ft_cd(t_phrase *phrase);
@@ -39,5 +39,5 @@ void	ft_pwd(t_phrase *phrase);
 void	ft_export(t_phrase *phrase);
 void	ft_unset(t_phrase *phrase);
 void	ft_env(t_phrase *phrase);
-void	ft_exit(t_phrase *phrase);
-void	operation_control(t_phrase *phrase);
+void	ft_exit(void);
+void	operation_control(void);

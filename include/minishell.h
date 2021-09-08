@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 13:33:08 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/08 13:44:46 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/08 17:49:12 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@ typedef struct s_minishell
 {
 	char		**env;
 	int			code;
+	int			*fd;
+	int			saved_stdin;
+	int			saved_stdout;
+	t_phrase	*phrase;
 }	t_minishell;
 
 extern t_minishell	g_minishell;
