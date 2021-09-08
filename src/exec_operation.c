@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 18:54:03 by laube             #+#    #+#             */
-/*   Updated: 2021/09/08 14:18:02 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/08 15:38:43 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,11 @@ void	dest_red_output(t_phrase *phrase)
 	t_phrase	*phrase_og;
 
 	phrase_og = phrase;
+	
+	/* loop for consecutive output redirections
+	** cat test1 > test > testing
+	** will put output of cat test1 inside of newly created test, and testing
+	*/
 	while (phrase->op == OUTPUT || phrase->op == APPEND)
 	{
 		if (phrase->op == OUTPUT)
@@ -128,7 +133,12 @@ void	get_dest(t_phrase *phrase)
 void	operation_control(t_phrase *phrase)
 {
 	get_source(phrase);
-	get_dest(phrase);
-	execution_control(phrase);
-	clean_fd(phrase);
+	if (phrase->op == OUTPUT || phrase->op == APPEND)
+		get_dest(phrase);
+	else
+	{
+		get_dest(phrase);
+		execution_control(phrase);
+		clean_fd(phrase);
+	}
 }
