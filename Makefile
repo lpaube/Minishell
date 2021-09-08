@@ -3,6 +3,7 @@ NAME		=	minishell
 SRC			=	src
 INC			=	include
 OBJ			=	obj
+LIB			=	lib
 
 HFILES		=	tokenizer.h parser.h print.h phrase.h execution.h my_env.h\
 				signal_handler.h
@@ -31,7 +32,7 @@ $(OBJ)/%.o:	%.c
 
 $(NAME):	$(OBJ) $(OBJS)
 			@$(MAKELIBFT)
-			$(CC) $(OBJS) -L$(FTDIR) -l$(LIBFT) -lreadline -o $(NAME)
+			$(CC) $(OBJS) -L$(FTDIR) -l$(LIBFT) -L$(LIB) -lreadline -lcurses -o $(NAME)
 
 $(OBJ):
 			@mkdir -p $(OBJ)
