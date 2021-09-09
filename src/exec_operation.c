@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 18:54:03 by laube             #+#    #+#             */
-/*   Updated: 2021/09/08 19:03:20 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/08 23:32:04 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,8 @@
 
 void	clean_fd(void)
 {
-	if ((g_minishell.phrase->prev && g_minishell.phrase->prev->op == PIPE) || g_minishell.phrase->op == INPUT || g_minishell.phrase->op == READ)
-	{
-		dup2(g_minishell.saved_stdin, 0);
-	}
-	if (g_minishell.phrase->op == PIPE || g_minishell.phrase->op == OUTPUT || g_minishell.phrase->op == APPEND)
-	{
-		dup2(g_minishell.saved_stdout, 1);
-	}
+	dup2(g_minishell.saved_stdin, 0);
+	dup2(g_minishell.saved_stdout, 1);
 }
 
 void	src_pipe_read(void)
@@ -69,6 +63,9 @@ void	src_heredoc(void)
 
 void	get_source(void)
 {
+	t_phrase	*phrase_og;
+
+	phrase_og = g_minishell.phrase;
 	if (g_minishell.phrase->prev && g_minishell.phrase->prev->op == PIPE)
 		src_pipe_read();
 	if (g_minishell.phrase->op == INPUT || g_minishell.phrase->op == READ)
@@ -85,7 +82,9 @@ void	get_source(void)
 		}
 		dup2(g_minishell.fd[0], 0);
 		close(g_minishell.fd[0]);
+		close(g_minishell.fd[1]);
 	}
+	g_minishell.phrase = phrase_og;
 }
 
 void	dest_pipe_write(void)
@@ -133,12 +132,9 @@ void	get_dest(void)
 void	operation_control(void)
 {
 	get_source();
-	if (g_minishell.phrase->op == OUTPUT || g_minishell.phrase->op == APPEND)
-		get_dest();
-	else
-	{
-		get_dest();
-		execution_control(g_minishell.phrase);
-		clean_fd();
-	}
+	get_dest();
+	execution_control(g_minishell.phrase);
+	clean_fd();
+	while (g_minishell.phrase->op == INPUT || g_minishell.phrase->op == READ)
+		g_minishell.phrase = g_minishell.phrase->next;
 }

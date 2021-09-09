@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:29:29 by laube             #+#    #+#             */
-/*   Updated: 2021/09/08 19:00:02 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/08 22:08:38 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	execution_control(t_phrase *phrase)
 	/* Doesn't currently handle arguments */
 	else if (ft_strnstr(phrase->name, "exit", 5))
 	{
-		ft_exit();
+		ft_exit(phrase);
 	}
 	else
 	{

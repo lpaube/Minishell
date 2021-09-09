@@ -32,7 +32,7 @@ $(OBJ)/%.o:	%.c
 
 $(NAME):	$(OBJ) $(OBJS)
 			@$(MAKELIBFT)
-			$(CC) $(OBJS) -L$(FTDIR) -l$(LIBFT) -L$(LIB) -lreadline -lcurses -o $(NAME)
+			$(CC) $(OBJS) -L$(FTDIR) -l$(LIBFT) -lreadline -o $(NAME)
 
 $(OBJ):
 			@mkdir -p $(OBJ)

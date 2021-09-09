@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 14:46:24 by laube             #+#    #+#             */
-/*   Updated: 2021/09/08 19:02:46 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/08 22:03:49 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,5 @@ void	ft_pwd(t_phrase *phrase);
 void	ft_export(t_phrase *phrase);
 void	ft_unset(t_phrase *phrase);
 void	ft_env(t_phrase *phrase);
-void	ft_exit(void);
+void	ft_exit(t_phrase *phrase);
 void	operation_control(void);

@@ -1,1 +1,12 @@
-this is test1
+include
+lib
+libft
+Makefile
+minishell
+obj
+src
+test
+test1
+test2
+test3
+testing

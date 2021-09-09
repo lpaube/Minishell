@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/08 17:35:33 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/08 22:55:52 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ void	minishell_init(void)
 	g_minishell.env = NULL;
 	g_minishell.code = 0;
 	g_minishell.fd = malloc(2 * sizeof(int));
-	if (pipe(g_minishell.fd) != 0)
-		print_error("Pipe failed in minishell_init");
 	g_minishell.saved_stdin = dup(0);
 	g_minishell.saved_stdout = dup(1);
 }
