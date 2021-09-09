@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/08 22:55:52 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/08 23:38:41 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	minishell_init(void)
 	g_minishell.fd = malloc(2 * sizeof(int));
 	g_minishell.saved_stdin = dup(0);
 	g_minishell.saved_stdout = dup(1);
+	g_minishell.allow_signal = 1;
 }
 
 char	*get_line(char *line)

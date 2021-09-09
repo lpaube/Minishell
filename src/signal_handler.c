@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 19:10:13 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/08 12:22:47 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/08 23:47:21 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,17 @@
 #include <stdlib.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include "minishell.h"
+
+#include <stdio.h>
 
 void	newline(int signal)
 {
 	(void)signal;
 	ft_printf("\n");
 	rl_replace_line("", 1);
-	rl_on_new_line();
+	if (g_minishell.allow_signal)
+		rl_on_new_line();
 	rl_redisplay();
 }
 
