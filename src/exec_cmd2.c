@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:15:00 by laube             #+#    #+#             */
-/*   Updated: 2021/09/08 23:46:31 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/08 23:51:04 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	ft_binary(t_phrase *phrase)
 		print_error("Invalid process id after fork.");
 	if (pid == 0)
 	{
-
 		if (execve(bin_path, phrase->args, g_minishell.env) == -1)
 			print_error("Invalid execution of binary.");
 	}

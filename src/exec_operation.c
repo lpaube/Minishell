@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 18:54:03 by laube             #+#    #+#             */
-/*   Updated: 2021/09/08 23:32:04 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/09 00:33:23 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,14 @@ void	clean_fd(void)
 
 void	src_pipe_read(void)
 {
+	// DEBUGGIN: CHECKING FOR LOOSE FDs
+	if (g_minishell.fd[0] == -1)
+		printf("OUCH!: src_pipe_read fd[0] is -1\n");
+	// END OF DEBUGGIN
+
 	dup2(g_minishell.fd[0], 0);
 	close(g_minishell.fd[0]);
+	g_minishell.fd[0] = -1;
 }
 
 void	src_red_input(void)
@@ -70,6 +76,11 @@ void	get_source(void)
 		src_pipe_read();
 	if (g_minishell.phrase->op == INPUT || g_minishell.phrase->op == READ)
 	{
+		// DEBUGGIN: CHECKING FOR LOOSE FDs
+		if (g_minishell.fd[0] == -1 || g_minishell.fd[1] == -1)
+			printf("OUCH!: get_source fd[0] or fd[1] is -1\n");
+		// END OF DEBUGGIN
+
 		if (pipe(g_minishell.fd) != 0)
 			print_error("pipe failed in src_heredoc");
 		while (g_minishell.phrase->op == INPUT || g_minishell.phrase->op == READ)
@@ -82,17 +93,27 @@ void	get_source(void)
 		}
 		dup2(g_minishell.fd[0], 0);
 		close(g_minishell.fd[0]);
+		g_minishell.fd[0] = -1;
 		close(g_minishell.fd[1]);
+		g_minishell.fd[1] = -1;
 	}
 	g_minishell.phrase = phrase_og;
 }
 
 void	dest_pipe_write(void)
 {
+	
 	if (pipe(g_minishell.fd) == -1)
 		print_error("Pipe error");
 	dup2(g_minishell.fd[1], 1);
+
+	// DEBUGGIN: CHECKING FOR LOOSE FDs
+		if (g_minishell.fd[1] == -1)
+			printf("OUCH!: dest_pipe_write fd[1] is -1\n");
+	// END OF DEBUGGIN
+	
 	close(g_minishell.fd[1]);
+	g_minishell.fd[1] = -1;
 }
 
 void	dest_red_output(void)
@@ -101,18 +122,12 @@ void	dest_red_output(void)
 	t_phrase	*phrase_og;
 
 	phrase_og = g_minishell.phrase;
-	
-	/* loop for consecutive output redirections
-	** cat test1 > test > testing
-	** will put output of cat test1 inside of newly created test, and testing
-	*/
 	while (g_minishell.phrase->op == OUTPUT || g_minishell.phrase->op == APPEND)
 	{
 		if (g_minishell.phrase->op == OUTPUT)
 			open_fd = open(g_minishell.phrase->next->name, O_RDWR | O_CREAT, 0644);
 		if (g_minishell.phrase->op == APPEND)
 			open_fd = open(g_minishell.phrase->next->name, O_RDWR | O_APPEND | O_CREAT, 0644);
-		g_minishell.saved_stdout = dup(1);
 		dup2(open_fd, 1);
 		close(open_fd);
 		execution_control(phrase_og);
