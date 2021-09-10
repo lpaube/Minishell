@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
+/*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 23:16:36 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/08 14:20:45 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/10 15:30:51 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_phrase	*get_operator_first_node(t_list **tokens)
 	node = ft_calloc(1, sizeof(t_phrase));
 	node->args = ft_calloc(1, sizeof(char *));
 	node->op = get_operator((*tokens)->content);
-	if (node->op == READ || node->op == APPEND
+	if (node->op == OUTPUT || node->op == APPEND
 		|| node->op == INPUT || node->op == READ)
 	{
 		node->name = ft_strdup("cat");
@@ -100,10 +100,14 @@ t_phrase	*parse(t_list *tokens)
 	cmds = NULL;
 	if (get_operator(tokens->content) == PIPE)
 		return (unexpected_token(tokens->content));
-	if (get_operator(tokens->content) != NONE)
-		nodeadd_back(&cmds, get_operator_first_node(&tokens));
 	while (tokens)
 	{
+		if (get_operator(tokens->content) != NONE
+			&& get_operator(tokens->content) != PIPE)
+		{
+			nodeadd_back(&cmds, get_operator_first_node(&tokens));
+			continue ;
+		}
 		new = get_next_node(&tokens);
 		if (!new)
 		{
