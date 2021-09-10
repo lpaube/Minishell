@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/08 23:38:41 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/10 15:45:44 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,7 @@ int	main(int argc, char **argv, char **env)
 		free_lists(&lst, &cmds);
 		free(tok.str);
 	}
+	close(g_minishell.saved_stdin);
+	close(g_minishell.saved_stdout);
+	free(g_minishell.fd);
 }

@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 18:54:03 by laube             #+#    #+#             */
-/*   Updated: 2021/09/09 00:33:23 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/10 15:48:29 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void	dest_red_output(void)
 	while (g_minishell.phrase->op == OUTPUT || g_minishell.phrase->op == APPEND)
 	{
 		if (g_minishell.phrase->op == OUTPUT)
-			open_fd = open(g_minishell.phrase->next->name, O_RDWR | O_CREAT, 0644);
+			open_fd = open(g_minishell.phrase->next->name, O_RDWR | O_CREAT | O_TRUNC, 0644);
 		if (g_minishell.phrase->op == APPEND)
 			open_fd = open(g_minishell.phrase->next->name, O_RDWR | O_APPEND | O_CREAT, 0644);
 		dup2(open_fd, 1);
