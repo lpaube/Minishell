@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 18:54:03 by laube             #+#    #+#             */
-/*   Updated: 2021/09/10 15:48:29 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/10 20:01:18 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,10 +120,19 @@ void	dest_red_output(void)
 {
 	int	open_fd;
 	t_phrase	*phrase_og;
+	struct stat	fstat_buff;
+	int	og_fd;
 
+	(void)fstat_buff;
 	phrase_og = g_minishell.phrase;
+	og_fd = dup(0);
 	while (g_minishell.phrase->op == OUTPUT || g_minishell.phrase->op == APPEND)
 	{
+		dup2(og_fd, 0);
+		/*
+		fstat(0, &fstat_buff);
+		printf("topfstat st_size: %lld\n", fstat_buff.st_size);
+		*/
 		if (g_minishell.phrase->op == OUTPUT)
 			open_fd = open(g_minishell.phrase->next->name, O_RDWR | O_CREAT | O_TRUNC, 0644);
 		if (g_minishell.phrase->op == APPEND)
@@ -131,9 +140,16 @@ void	dest_red_output(void)
 		dup2(open_fd, 1);
 		close(open_fd);
 		execution_control(phrase_og);
-		clean_fd();
+		/* 
+		testing below
+		dup2(g_minishell.saved_stdout, 1);
+		fstat(0, &fstat_buff);
+		printf("bottomfstat st_size: %lld\n", fstat_buff.st_size);
+		testing above 
+		*/
 		g_minishell.phrase = g_minishell.phrase->next;
 	}
+	clean_fd();
 }
 
 void	get_dest(void)

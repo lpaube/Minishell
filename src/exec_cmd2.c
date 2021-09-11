@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:15:00 by laube             #+#    #+#             */
-/*   Updated: 2021/09/08 23:51:04 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/10 21:06:53 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	ft_binary(t_phrase *phrase)
 			print_error("Invalid execution of binary.");
 	}
 	wait(0);
+	dup2(g_minishell.fd[0], 0);
 	g_minishell.allow_signal = 1;
 	return (0);
 }

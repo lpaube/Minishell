@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:29:29 by laube             #+#    #+#             */
-/*   Updated: 2021/09/10 15:45:45 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/10 19:28:30 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,24 @@ int	main_control(t_phrase *phrase)
 	g_minishell.phrase = phrase;
 	while (g_minishell.phrase)
 	{
+		/*
+		printf("1name: %s\n", g_minishell.phrase->name);
+		printf("1next->name: %s\n", g_minishell.phrase->next->name);
+		printf("1next->address: %p\n", g_minishell.phrase->next);
+		*/
 		g_minishell.phrase->name = parse_special_chars(g_minishell.phrase->name);
 		parse_special_chars_arr(g_minishell.phrase->args);
+		
+		/*
+		printf("2name: %s\n", g_minishell.phrase->name);
+		if (g_minishell.phrase->next)
+		{
+			printf("2next->name: %s\n", g_minishell.phrase->next->name);
+			printf("2next->address: %p\n", g_minishell.phrase->next);
+		}
+		*/
 		operation_control();
+
 		g_minishell.phrase = g_minishell.phrase->next;
 	}
 
