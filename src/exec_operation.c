@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 18:54:03 by laube             #+#    #+#             */
-/*   Updated: 2021/09/10 20:01:18 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/10 21:09:31 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	get_source(void)
 			g_minishell.phrase = g_minishell.phrase->next;
 		}
 		dup2(g_minishell.fd[0], 0);
-		close(g_minishell.fd[0]);
+		//close(g_minishell.fd[0]);
 		g_minishell.fd[0] = -1;
 		close(g_minishell.fd[1]);
 		g_minishell.fd[1] = -1;
@@ -121,14 +121,11 @@ void	dest_red_output(void)
 	int	open_fd;
 	t_phrase	*phrase_og;
 	struct stat	fstat_buff;
-	int	og_fd;
 
 	(void)fstat_buff;
 	phrase_og = g_minishell.phrase;
-	og_fd = dup(0);
 	while (g_minishell.phrase->op == OUTPUT || g_minishell.phrase->op == APPEND)
 	{
-		dup2(og_fd, 0);
 		/*
 		fstat(0, &fstat_buff);
 		printf("topfstat st_size: %lld\n", fstat_buff.st_size);
