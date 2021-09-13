@@ -11,7 +11,7 @@ HEADERS		=	$(addprefix $(INC)/, $(HFILES))
 
 CFILES		=	main.c tokenizer.c tokenizer_utils.c error.c parser.c parser2.c\
 				phrase.c print.c exec_bin.c exec_cmd1.c exec_cmd2.c\
-				exec_control.c exec_utils.c exec_operation.c\
+				exec_control.c exec_utils.c exec_operator1.c exec_operator2.c\
 				signal_handler.c
 OFILES		=	$(CFILES:.c=.o)
 OBJS		=	$(addprefix $(OBJ)/, $(OFILES))
@@ -32,7 +32,7 @@ $(OBJ)/%.o:	%.c
 
 $(NAME):	$(OBJ) $(OBJS)
 			@$(MAKELIBFT)
-			$(CC) $(OBJS) -L$(FTDIR) -l$(LIBFT) -L$(LIB) -lreadline -lcurses -o $(NAME)
+			$(CC) $(OBJS) -L$(FTDIR) -l$(LIBFT) -lreadline -o $(NAME)
 
 $(OBJ):
 			@mkdir -p $(OBJ)

@@ -1,0 +1,257 @@
+[
+ {
+  "directory": "/home/laube/Desktop/code/42_Minishell",
+  "arguments": [
+   "clang",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-g",
+   "-Iinclude",
+   "-Ilibft",
+   "-c",
+   "src/main.c",
+   "-o",
+   "obj/main.o"
+  ],
+  "file": "src/main.c"
+ },
+ {
+  "directory": "/home/laube/Desktop/code/42_Minishell",
+  "arguments": [
+   "clang",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-g",
+   "-Iinclude",
+   "-Ilibft",
+   "-c",
+   "src/tokenizer.c",
+   "-o",
+   "obj/tokenizer.o"
+  ],
+  "file": "src/tokenizer.c"
+ },
+ {
+  "directory": "/home/laube/Desktop/code/42_Minishell",
+  "arguments": [
+   "clang",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-g",
+   "-Iinclude",
+   "-Ilibft",
+   "-c",
+   "src/tokenizer_utils.c",
+   "-o",
+   "obj/tokenizer_utils.o"
+  ],
+  "file": "src/tokenizer_utils.c"
+ },
+ {
+  "directory": "/home/laube/Desktop/code/42_Minishell",
+  "arguments": [
+   "clang",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-g",
+   "-Iinclude",
+   "-Ilibft",
+   "-c",
+   "src/error.c",
+   "-o",
+   "obj/error.o"
+  ],
+  "file": "src/error.c"
+ },
+ {
+  "directory": "/home/laube/Desktop/code/42_Minishell",
+  "arguments": [
+   "clang",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-g",
+   "-Iinclude",
+   "-Ilibft",
+   "-c",
+   "src/parser.c",
+   "-o",
+   "obj/parser.o"
+  ],
+  "file": "src/parser.c"
+ },
+ {
+  "directory": "/home/laube/Desktop/code/42_Minishell",
+  "arguments": [
+   "clang",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-g",
+   "-Iinclude",
+   "-Ilibft",
+   "-c",
+   "src/parser2.c",
+   "-o",
+   "obj/parser2.o"
+  ],
+  "file": "src/parser2.c"
+ },
+ {
+  "directory": "/home/laube/Desktop/code/42_Minishell",
+  "arguments": [
+   "clang",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-g",
+   "-Iinclude",
+   "-Ilibft",
+   "-c",
+   "src/phrase.c",
+   "-o",
+   "obj/phrase.o"
+  ],
+  "file": "src/phrase.c"
+ },
+ {
+  "directory": "/home/laube/Desktop/code/42_Minishell",
+  "arguments": [
+   "clang",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-g",
+   "-Iinclude",
+   "-Ilibft",
+   "-c",
+   "src/print.c",
+   "-o",
+   "obj/print.o"
+  ],
+  "file": "src/print.c"
+ },
+ {
+  "directory": "/home/laube/Desktop/code/42_Minishell",
+  "arguments": [
+   "clang",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-g",
+   "-Iinclude",
+   "-Ilibft",
+   "-c",
+   "src/exec_bin.c",
+   "-o",
+   "obj/exec_bin.o"
+  ],
+  "file": "src/exec_bin.c"
+ },
+ {
+  "directory": "/home/laube/Desktop/code/42_Minishell",
+  "arguments": [
+   "clang",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-g",
+   "-Iinclude",
+   "-Ilibft",
+   "-c",
+   "src/exec_cmd1.c",
+   "-o",
+   "obj/exec_cmd1.o"
+  ],
+  "file": "src/exec_cmd1.c"
+ },
+ {
+  "directory": "/home/laube/Desktop/code/42_Minishell",
+  "arguments": [
+   "clang",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-g",
+   "-Iinclude",
+   "-Ilibft",
+   "-c",
+   "src/exec_cmd2.c",
+   "-o",
+   "obj/exec_cmd2.o"
+  ],
+  "file": "src/exec_cmd2.c"
+ },
+ {
+  "directory": "/home/laube/Desktop/code/42_Minishell",
+  "arguments": [
+   "clang",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-g",
+   "-Iinclude",
+   "-Ilibft",
+   "-c",
+   "src/exec_control.c",
+   "-o",
+   "obj/exec_control.o"
+  ],
+  "file": "src/exec_control.c"
+ },
+ {
+  "directory": "/home/laube/Desktop/code/42_Minishell",
+  "arguments": [
+   "clang",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-g",
+   "-Iinclude",
+   "-Ilibft",
+   "-c",
+   "src/exec_utils.c",
+   "-o",
+   "obj/exec_utils.o"
+  ],
+  "file": "src/exec_utils.c"
+ },
+ {
+  "directory": "/home/laube/Desktop/code/42_Minishell",
+  "arguments": [
+   "clang",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-g",
+   "-Iinclude",
+   "-Ilibft",
+   "-c",
+   "src/exec_operation.c",
+   "-o",
+   "obj/exec_operation.o"
+  ],
+  "file": "src/exec_operation.c"
+ },
+ {
+  "directory": "/home/laube/Desktop/code/42_Minishell",
+  "arguments": [
+   "clang",
+   "-Wall",
+   "-Wextra",
+   "-Werror",
+   "-g",
+   "-Iinclude",
+   "-Ilibft",
+   "-c",
+   "src/signal_handler.c",
+   "-o",
+   "obj/signal_handler.o"
+  ],
+  "file": "src/signal_handler.c"
+ }
+]

@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:11:05 by laube             #+#    #+#             */
-/*   Updated: 2021/09/08 23:22:52 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/13 13:18:03 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@ void	ft_cd(t_phrase *phrase)
 
 void	ft_pwd(t_phrase *phrase)
 {
-	(void)phrase;
 	char	cwd[4096];
+
+	(void)phrase;
 	if (getcwd(cwd, 4096) != NULL)
 		printf("%s\n", cwd);
 	else
@@ -42,8 +43,6 @@ void	ft_export(t_phrase *phrase)
 		print_error("Invalid export command: no equal sign found.");
 	else
 		*equal_char = 0;
-
-	// Checks if var currently exists
 	i = 0;
 	while (g_minishell.env[i])
 	{
@@ -55,7 +54,6 @@ void	ft_export(t_phrase *phrase)
 		}
 		i++;
 	}
-	// If var doesn't already exist: add new env var
 	g_minishell.env = dup_env_table(g_minishell.env, phrase, 1);
 }
 
@@ -64,17 +62,18 @@ void	ft_unset(t_phrase *phrase)
 	int	i;
 	int	j;
 
-	i = 1;
-	while (phrase->args[i])
+	i = 0;
+	while (phrase->args[++i])
 	{
 		phrase->args[i] = ft_strjoin(phrase->args[i], "=");
-		j = 0;
-		while (g_minishell.env[j])
+		j = -1;
+		while (g_minishell.env[++j])
 		{
-			if (ft_strnstr(g_minishell.env[j], phrase->args[i], ft_strlen(phrase->args[i])))
+			if (ft_strnstr(g_minishell.env[j], phrase->args[i],
+					ft_strlen(phrase->args[i])))
 			{
 				free(g_minishell.env[j]);
-				while(g_minishell.env[j + 1])
+				while (g_minishell.env[j + 1])
 				{
 					g_minishell.env[j] = g_minishell.env[j + 1];
 					j++;
@@ -83,17 +82,15 @@ void	ft_unset(t_phrase *phrase)
 				free(g_minishell.env[j + 1]);
 				break ;
 			}
-			j++;
 		}
-		i++;
 	}
 }
 
 void	ft_env(t_phrase *phrase)
 {
-	(void)phrase;
 	int	i;
 
+	(void)phrase;
 	i = 0;
 	while (g_minishell.env[i])
 	{
