@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:29:29 by laube             #+#    #+#             */
-/*   Updated: 2021/09/14 13:10:02 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/14 16:24:14 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	execution_control(t_phrase *phrase)
 	else if (ft_strnstr(phrase->name, "pwd", 4))
 		ft_pwd(phrase);
 	else if (ft_strnstr(phrase->name, "export", 7))
-		ft_export(phrase);
+		ft_export(phrase->args[1]);
 	else if (ft_strnstr(phrase->name, "unset", 6))
 		ft_unset(phrase);
 	else if (ft_strnstr(phrase->name, "env", 4))

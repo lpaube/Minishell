@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:31:51 by laube             #+#    #+#             */
-/*   Updated: 2021/09/13 19:16:43 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/14 16:28:32 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ void	env_new_var(char **res_table, char *new_arg, int *i)
 
 /*	Returns a malloc'd 2d duplicated table of env
  *	and updates it with new var if applicable	*/
-char	**dup_env_table(char **table, t_phrase *phrase, int new_var)
+char	**dup_env_table(char **table, char *env_var, int new_var)
 {
 	char	**res_table;
 	int		i;
 	char	*new_arg;
 
-	new_arg = phrase->args[1];
+	new_arg = env_var;
 	i = 0;
 	while (table[i])
 		i++;

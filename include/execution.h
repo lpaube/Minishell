@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 14:46:24 by laube             #+#    #+#             */
-/*   Updated: 2021/09/14 13:34:50 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/14 16:29:48 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 
 int		execution_control(t_phrase *phrase);
 int		main_control(t_phrase *phrase);
-char	**dup_env_table(char **table, t_phrase *phrase, int new_var);
+char	**dup_env_table(char **table, char *env_var, int new_var);
 char	*get_bin_path(char **envp, char *cmd);
 void	pipe_read(void);
 void	pipe_write(void);
@@ -39,7 +39,7 @@ int		ft_binary(t_phrase *phrase);
 void	ft_echo(t_phrase *phrase);
 void	ft_cd(t_phrase *phrase);
 void	ft_pwd(t_phrase *phrase);
-void	ft_export(t_phrase *phrase);
+void	ft_export(char *env_var);
 void	ft_unset(t_phrase *phrase);
 void	ft_env(t_phrase *phrase);
 void	ft_exit(t_phrase *phrase);
