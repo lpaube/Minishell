@@ -1,2 +1,0 @@
-CompileFlags:
-	add: [-I../includes]
