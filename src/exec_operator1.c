@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 18:54:03 by laube             #+#    #+#             */
-/*   Updated: 2021/09/14 13:06:05 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/14 13:54:38 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,13 @@ void	src_heredoc(void)
 	{
 		if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
 		{
+			free(line);
 			return ;
 		}
 		ft_putstr_fd("> ", 1);
 		ft_putstr_fd(line, g_minishell.fd[1]);
 		ft_putstr_fd("\n", g_minishell.fd[1]);
+		free(line);
 	}
 }
 
