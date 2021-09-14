@@ -10,21 +10,24 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft/libft.h"
-#include "phrase.h"
-#include <fcntl.h>
-#include <unistd.h>
-#include <sys/stat.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/errno.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <limits.h>
-#include "minishell.h"
-#include "tokenizer.h"
-#include "parser.h"
+#ifndef EXECUTION_H
+# define EXECUTION_H
+
+# include "../libft/libft.h"
+# include "phrase.h"
+# include <fcntl.h>
+# include <unistd.h>
+# include <sys/stat.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <sys/errno.h>
+# include <string.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <limits.h>
+# include "minishell.h"
+# include "tokenizer.h"
+# include "parser.h"
 
 void	execution_control(t_phrase *phrase);
 int		main_control(t_phrase *phrase);
@@ -44,3 +47,5 @@ void	operation_control(void);
 void	clean_fd(void);
 void	get_dest(void);
 void	clean_fd(void);
+
+#endif
