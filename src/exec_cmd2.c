@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:15:00 by laube             #+#    #+#             */
-/*   Updated: 2021/09/14 14:09:38 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/14 14:27:41 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ void	ft_echo(t_phrase *phrase)
 		nl = 0;
 		i++;
 	}
+	while ((phrase->args)[i] && ft_strnstr((phrase->args)[i], "-n", 2))
+		i++;
 	while ((phrase->args)[i])
 	{
 		printf("%s", (phrase->args[i]));
