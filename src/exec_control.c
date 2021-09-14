@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:29:29 by laube             #+#    #+#             */
-/*   Updated: 2021/09/14 16:24:14 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/14 16:54:56 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	execution_control(t_phrase *phrase)
 	else if (ft_strnstr(phrase->name, "unset", 6))
 		ft_unset(phrase);
 	else if (ft_strnstr(phrase->name, "env", 4))
-		ft_env(phrase);
+		ft_env();
 	else if (ft_strnstr(phrase->name, "exit", 5))
 	{
 		ft_exit(phrase);

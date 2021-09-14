@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:11:05 by laube             #+#    #+#             */
-/*   Updated: 2021/09/14 16:46:59 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/14 16:55:43 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,14 @@ void	ft_pwd(t_phrase *phrase)
 		print_error("Could not get current directory.");
 }
 
-void	ft_export(char *env_var)
+int	ft_export(char *env_var)
 {
 	char	*var_name;
 	char	*equal_char;
 	int		i;
 
+	if (!env_var)
+		return ft_env();
 	var_name = ft_strdup(env_var);
 	equal_char = ft_strchr(var_name, '=') + 1;
 	if (!equal_char)
@@ -68,11 +70,12 @@ void	ft_export(char *env_var)
 		{
 			free(g_minishell.env[i]);
 			g_minishell.env[i] = env_var;
-			return ;
+			return (0);
 		}
 		i++;
 	}
 	g_minishell.env = dup_env_table(g_minishell.env, env_var, 1);
+	return (0);
 }
 
 void	ft_unset(t_phrase *phrase)
@@ -104,15 +107,15 @@ void	ft_unset(t_phrase *phrase)
 	}
 }
 
-void	ft_env(t_phrase *phrase)
+int	ft_env(void)
 {
 	int	i;
 
-	(void)phrase;
 	i = 0;
 	while (g_minishell.env[i])
 	{
 		printf("%s\n", g_minishell.env[i]);
 		i++;
 	}
+	return (0);
 }
