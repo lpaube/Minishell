@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 18:54:03 by laube             #+#    #+#             */
-/*   Updated: 2021/09/13 17:02:29 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/14 13:06:05 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,14 @@ void	get_source(void)
 	g_minishell.phrase = phrase_og;
 }
 
-void	operation_control(void)
+int	operation_control(void)
 {
 	get_source();
 	get_dest();
-	execution_control(g_minishell.phrase);
+	if (execution_control(g_minishell.phrase) == 1)
+		return (1);
 	clean_fd();
 	while (g_minishell.phrase->op == INPUT || g_minishell.phrase->op == READ)
 		g_minishell.phrase = g_minishell.phrase->next;
+	return (0);
 }
