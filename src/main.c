@@ -6,10 +6,9 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/08 23:38:41 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/13 19:32:40 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "execution.h"
 #include "tokenizer.h"
@@ -64,18 +63,12 @@ void	free_lists(t_list **lst1, t_phrase **lst2)
 	nodeclear(lst2);
 }
 
-int	main(int argc, char **argv, char **env)
+void	minishell_loop(char **argv)
 {
 	t_tokenizer	tok;
 	t_list		*lst;
 	t_phrase	*cmds;
 
-	(void)argc;
-	(void)argv;
-	signal(SIGINT, newline);
-	signal(SIGQUIT, nothing);
-	minishell_init();
-	g_minishell.env = ft_dup_strarr(env);
 	tok.str = NULL;
 	cmds = NULL;
 	while (true)
@@ -88,11 +81,25 @@ int	main(int argc, char **argv, char **env)
 		if (lst)
 		{
 			cmds = parse(lst);
-			if (argv[1] && ft_strncmp(argv[1], "-d", 3) == 0)	// Launch with "-d" for debug mode
+			if (argv[1] && ft_strncmp(argv[1], "-d", 3) == 0)
 				print_nodes(cmds);
 			main_control(cmds);
 		}
 		free_lists(&lst, &cmds);
 		free(tok.str);
 	}
+}
+
+int	main(int argc, char **argv, char **env)
+{
+	(void)argc;
+	(void)argv;
+	signal(SIGINT, newline);
+	signal(SIGQUIT, nothing);
+	minishell_init();
+	g_minishell.env = ft_dup_strarr(env);
+	minishell_loop(argv);
+	close(g_minishell.saved_stdin);
+	close(g_minishell.saved_stdout);
+	free(g_minishell.fd);
 }

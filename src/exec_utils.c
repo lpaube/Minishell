@@ -6,11 +6,18 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:31:51 by laube             #+#    #+#             */
-/*   Updated: 2021/09/08 13:42:52 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/13 19:16:43 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+
+void	env_new_var(char **res_table, char *new_arg, int *i)
+{
+	res_table[*i] = malloc((ft_strlen(new_arg) * sizeof(char)));
+	ft_memcpy(res_table[*i], new_arg, ft_strlen(new_arg) + 1);
+	(*i)++;
+}
 
 /*	Returns a malloc'd 2d duplicated table of env
  *	and updates it with new var if applicable	*/
@@ -37,11 +44,7 @@ char	**dup_env_table(char **table, t_phrase *phrase, int new_var)
 		i++;
 	}
 	if (new_var)
-	{
-		res_table[i] = malloc((ft_strlen(new_arg) * sizeof(char)));
-		ft_memcpy(res_table[i], new_arg, ft_strlen(new_arg) + 1);
-		i++;
-	}
+		env_new_var(res_table, new_arg, &i);
 	table[i] = NULL;
 	return (res_table);
 }

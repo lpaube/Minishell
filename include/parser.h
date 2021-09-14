@@ -17,7 +17,7 @@
 # include "phrase.h"
 
 t_phrase	*parse(t_list *tokens);
-char		*parse_special_chars(char *str);
+char		*parse_spec_char(char *str);
 void		parse_special_chars_arr(char **arr);
 
 #endif

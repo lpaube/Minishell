@@ -1,30 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_operation.c                                   :+:      :+:    :+:   */
+/*   exec_operator1.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 18:54:03 by laube             #+#    #+#             */
-/*   Updated: 2021/09/09 00:33:23 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/13 17:02:29 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-void	clean_fd(void)
-{
-	dup2(g_minishell.saved_stdin, 0);
-	dup2(g_minishell.saved_stdout, 1);
-}
-
 void	src_pipe_read(void)
 {
-	// DEBUGGIN: CHECKING FOR LOOSE FDs
-	if (g_minishell.fd[0] == -1)
-		printf("OUCH!: src_pipe_read fd[0] is -1\n");
-	// END OF DEBUGGIN
-
 	dup2(g_minishell.fd[0], 0);
 	close(g_minishell.fd[0]);
 	g_minishell.fd[0] = -1;
@@ -48,14 +37,13 @@ void	src_heredoc(void)
 {
 	char	*line;
 	char	*limiter;
-	int		ret;
 
 	if (g_minishell.phrase->next)
 		limiter = g_minishell.phrase->next->name;
 	else
 		limiter = NULL;
 	ft_putstr_fd("> ", 1);
-	while ((ret = get_next_line(0, &line)) > 0)
+	while (get_next_line(0, &line) > 0)
 	{
 		if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
 		{
@@ -76,14 +64,10 @@ void	get_source(void)
 		src_pipe_read();
 	if (g_minishell.phrase->op == INPUT || g_minishell.phrase->op == READ)
 	{
-		// DEBUGGIN: CHECKING FOR LOOSE FDs
-		if (g_minishell.fd[0] == -1 || g_minishell.fd[1] == -1)
-			printf("OUCH!: get_source fd[0] or fd[1] is -1\n");
-		// END OF DEBUGGIN
-
 		if (pipe(g_minishell.fd) != 0)
 			print_error("pipe failed in src_heredoc");
-		while (g_minishell.phrase->op == INPUT || g_minishell.phrase->op == READ)
+		while (g_minishell.phrase->op == INPUT
+			|| g_minishell.phrase->op == READ)
 		{
 			if (g_minishell.phrase->op == INPUT)
 				src_red_input();
@@ -92,56 +76,11 @@ void	get_source(void)
 			g_minishell.phrase = g_minishell.phrase->next;
 		}
 		dup2(g_minishell.fd[0], 0);
-		close(g_minishell.fd[0]);
 		g_minishell.fd[0] = -1;
 		close(g_minishell.fd[1]);
 		g_minishell.fd[1] = -1;
 	}
 	g_minishell.phrase = phrase_og;
-}
-
-void	dest_pipe_write(void)
-{
-	
-	if (pipe(g_minishell.fd) == -1)
-		print_error("Pipe error");
-	dup2(g_minishell.fd[1], 1);
-
-	// DEBUGGIN: CHECKING FOR LOOSE FDs
-		if (g_minishell.fd[1] == -1)
-			printf("OUCH!: dest_pipe_write fd[1] is -1\n");
-	// END OF DEBUGGIN
-	
-	close(g_minishell.fd[1]);
-	g_minishell.fd[1] = -1;
-}
-
-void	dest_red_output(void)
-{
-	int	open_fd;
-	t_phrase	*phrase_og;
-
-	phrase_og = g_minishell.phrase;
-	while (g_minishell.phrase->op == OUTPUT || g_minishell.phrase->op == APPEND)
-	{
-		if (g_minishell.phrase->op == OUTPUT)
-			open_fd = open(g_minishell.phrase->next->name, O_RDWR | O_CREAT, 0644);
-		if (g_minishell.phrase->op == APPEND)
-			open_fd = open(g_minishell.phrase->next->name, O_RDWR | O_APPEND | O_CREAT, 0644);
-		dup2(open_fd, 1);
-		close(open_fd);
-		execution_control(phrase_og);
-		clean_fd();
-		g_minishell.phrase = g_minishell.phrase->next;
-	}
-}
-
-void	get_dest(void)
-{
-	if (g_minishell.phrase->op == PIPE)
-		dest_pipe_write();
-	if (g_minishell.phrase->op == OUTPUT || g_minishell.phrase->op == APPEND)
-		dest_red_output();
 }
 
 void	operation_control(void)

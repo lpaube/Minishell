@@ -71,7 +71,7 @@ static bool	eval_quotes(char **str, t_state *state)
 	return (false);
 }
 
-char	*parse_special_chars(char *str)
+char	*parse_spec_char(char *str)
 {
 	t_string	ret;
 	t_state		state;
@@ -106,7 +106,7 @@ void	parse_special_chars_arr(char **arr)
 	i = 0;
 	while (arr[i])
 	{
-		arr[i] = parse_special_chars(arr[i]);
+		arr[i] = parse_spec_char(arr[i]);
 		++i;
 	}
 }

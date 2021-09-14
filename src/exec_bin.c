@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:16:38 by laube             #+#    #+#             */
-/*   Updated: 2021/08/31 18:32:54 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/13 17:10:56 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 char	*validate_path(char *path, char *cmd)
 {
-	char	**paths;
-	char	*tmp_path;
-	char	*tentative_binpath;
+	char		**paths;
+	char		*tmp_path;
+	char		*tentative_binpath;
 	struct stat	buff;
 
 	path = ft_strchr(path, '=') + 1;
