@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_bin.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
+/*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:16:38 by laube             #+#    #+#             */
-/*   Updated: 2021/09/14 13:25:46 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/14 13:32:38 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,17 @@
 char	*validate_path(char *path, char *cmd)
 {
 	char		**paths;
+	int			i;
 	char		*tmp_path;
 	char		*tentative_binpath;
 	struct stat	buff;
 
 	path = ft_strchr(path, '=') + 1;
 	paths = ft_split(path, ':');
-	while (*paths)
+	i = 0;
+	while (paths[i])
 	{
-		tmp_path = ft_strjoin(*paths, "/");
+		tmp_path = ft_strjoin(paths[i], "/");
 		tentative_binpath = ft_strjoin(tmp_path, cmd);
 		free(tmp_path);
 		if (stat(tentative_binpath, &buff) == 0)
@@ -32,7 +34,7 @@ char	*validate_path(char *path, char *cmd)
 			return (tentative_binpath);
 		}
 		free(tentative_binpath);
-		paths++;
+		i++;
 	}
 	ft_free_strarr(paths);
 	return (NULL);

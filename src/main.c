@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/14 12:56:59 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/14 13:33:21 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,14 @@ char	*get_line(char *line)
 	return (line);
 }
 
-void	free_lists(t_list **lst1, t_phrase **lst2)
+void	free_memory(t_list **lst1, t_phrase **lst2, char *str)
 {
 	ft_lstclear(lst1, ft_str_free);
 	nodeclear(lst2);
+	free(str);
 }
 
-void	minishell_loop(char **argv)
+void	minishell_loop(void)
 {
 	t_tokenizer	tok;
 	t_list		*lst;
@@ -74,12 +75,13 @@ void	minishell_loop(char **argv)
 		if (lst)
 		{
 			cmds = parse(lst);
-			if (argv[1] && ft_strncmp(argv[1], "-d", 3) == 0)
-				print_nodes(cmds);
-			main_control(cmds);
+			if (main_control(cmds))
+			{
+				free_memory(&lst, &cmds, tok.str);
+				break ;
+			}
 		}
-		free_lists(&lst, &cmds);
-		free(tok.str);
+		free_memory(&lst, &cmds, tok.str);
 	}
 }
 
@@ -91,8 +93,9 @@ int	main(int argc, char **argv, char **env)
 	signal(SIGQUIT, nothing);
 	minishell_init();
 	g_minishell.env = ft_dup_strarr(env);
-	minishell_loop(argv);
+	minishell_loop();
 	close(g_minishell.saved_stdin);
 	close(g_minishell.saved_stdout);
 	free(g_minishell.fd);
+	scanf("c");
 }

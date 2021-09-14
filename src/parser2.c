@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 18:56:07 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/08 14:16:55 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/14 13:19:04 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ static void	parse_variable(char **str, t_string out)
 	t_string	var_name;
 	char		*var_value;
 
-	var_name = ft_str_new(NULL);
 	++(*str);
 	if (**str == '?')
 	{
@@ -37,6 +36,7 @@ static void	parse_variable(char **str, t_string out)
 		output_code(out);
 		return ;
 	}
+	var_name = ft_str_new(NULL);
 	while (ft_isalnum(**str) || **str == '_')
 	{
 		ft_str_add_back(var_name, **str);
@@ -93,7 +93,7 @@ char	*parse_spec_char(char *str)
 		ft_str_add_back(ret, *str);
 		++str;
 	}
-	tmp = ft_strdup(ft_str_data(ret));
+	tmp = ft_str_take(ret);
 	ft_str_free(ret);
 	free(ptr);
 	return (tmp);

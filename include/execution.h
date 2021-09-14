@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
+/*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 14:46:24 by laube             #+#    #+#             */
-/*   Updated: 2021/09/14 13:07:27 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/14 13:34:03 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # include "tokenizer.h"
 # include "parser.h"
 
-int 	execution_control(t_phrase *phrase);
+int		execution_control(t_phrase *phrase);
 int		main_control(t_phrase *phrase);
 char	**dup_env_table(char **table, t_phrase *phrase, int new_var);
 char	*get_bin_path(char **envp, char *cmd);
@@ -43,7 +43,7 @@ void	ft_export(t_phrase *phrase);
 void	ft_unset(t_phrase *phrase);
 void	ft_env(t_phrase *phrase);
 void	ft_exit(t_phrase *phrase);
-int 	operation_control(void);
+int		operation_control(void);
 void	clean_fd(void);
 void	get_dest(void);
 void	clean_fd(void);
