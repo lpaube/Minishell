@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:11:05 by laube             #+#    #+#             */
-/*   Updated: 2021/09/14 16:55:43 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/14 17:00:13 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,18 +63,19 @@ int	ft_export(char *env_var)
 		print_error("Invalid export command: no equal sign found.");
 	else
 		*equal_char = 0;
-	i = 0;
-	while (g_minishell.env[i])
+	i = -1;
+	while (g_minishell.env[++i])
 	{
 		if (ft_strnstr(g_minishell.env[i], var_name, ft_strlen(var_name)))
 		{
 			free(g_minishell.env[i]);
 			g_minishell.env[i] = env_var;
+			free(var_name);
 			return (0);
 		}
-		i++;
 	}
 	g_minishell.env = dup_env_table(g_minishell.env, env_var, 1);
+	free(var_name);
 	return (0);
 }
 
