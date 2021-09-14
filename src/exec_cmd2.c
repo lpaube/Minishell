@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:15:00 by laube             #+#    #+#             */
-/*   Updated: 2021/09/11 18:19:31 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/14 13:25:37 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	ft_binary(t_phrase *phrase)
 	}
 	wait(0);
 	g_minishell.allow_signal = 1;
+	free(bin_path);
 	return (0);
 }
 

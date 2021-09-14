@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:16:38 by laube             #+#    #+#             */
-/*   Updated: 2021/09/13 17:10:56 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/14 13:25:46 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,14 @@ char	*validate_path(char *path, char *cmd)
 		tentative_binpath = ft_strjoin(tmp_path, cmd);
 		free(tmp_path);
 		if (stat(tentative_binpath, &buff) == 0)
+		{
+			ft_free_strarr(paths);
 			return (tentative_binpath);
+		}
 		free(tentative_binpath);
 		paths++;
 	}
+	ft_free_strarr(paths);
 	return (NULL);
 }
 

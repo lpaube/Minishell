@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:11:05 by laube             #+#    #+#             */
-/*   Updated: 2021/09/13 13:18:03 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/14 13:19:29 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,13 @@
 void	ft_cd(t_phrase *phrase)
 {
 	if (phrase->args[1] != NULL && phrase->args[2] != NULL)
-		print_error("cd: too many arguments");
+		ft_putstr_fd("cd: too many arguments\n", 2);
 	if (chdir(phrase->args[1]) == -1)
-		print_error("Could not change directory.");
+	{
+		ft_putstr_fd("cd: no such file or directory: ", 2);
+		ft_putstr_fd(phrase->args[1], 2);
+		ft_putstr_fd("\n", 2);
+	}
 }
 
 void	ft_pwd(t_phrase *phrase)
