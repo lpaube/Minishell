@@ -6,14 +6,14 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 14:46:24 by laube             #+#    #+#             */
-/*   Updated: 2021/09/14 13:34:03 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/14 13:34:50 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTION_H
 # define EXECUTION_H
 
-# include "../libft/libft.h"
+# include "libft.h"
 # include "phrase.h"
 # include <fcntl.h>
 # include <unistd.h>
