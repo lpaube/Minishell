@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 15:15:12 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/31 18:51:18 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/14 12:56:38 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,6 @@ void	eval_dquote(t_tokenizer *tok);
 bool	end_of_token(const t_tokenizer *tok);
 void	*print_error(const char *msg);
 void	*unexpected_token(const t_string token);
+void	init_tokenizer(t_tokenizer *tok);
 
 #endif

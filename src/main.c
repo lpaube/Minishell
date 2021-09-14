@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
+/*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/13 19:32:40 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/14 12:56:59 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,6 @@ char	*get_line(char *line)
 	if (*line)
 		add_history(line);
 	return (line);
-}
-
-void	init_tokenizer(t_tokenizer *tok)
-{
-	tok->cursor = 0;
-	tok->state = TEXT;
-	tok->next_token = NULL;
 }
 
 void	free_lists(t_list **lst1, t_phrase **lst2)

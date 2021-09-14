@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 23:16:36 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/14 12:34:25 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/14 12:52:51 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,12 +103,8 @@ t_phrase	*parse(t_list *tokens)
 		return (unexpected_token(tokens->content));
 	while (tokens)
 	{
-		if (get_operator(tokens->content) != NONE
-			&& get_operator(tokens->content) != PIPE)
-		{
-			nodeadd_back(&cmds, get_operator_first_node(&tokens));
+		if (appended_redirection(&cmds, &tokens))
 			continue ;
-		}
 		new = get_next_node(&tokens);
 		if (!new)
 		{
