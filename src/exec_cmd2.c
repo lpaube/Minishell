@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:15:00 by laube             #+#    #+#             */
-/*   Updated: 2021/09/14 13:27:25 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/14 14:09:38 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,12 @@ int	ft_binary(t_phrase *phrase)
 
 	bin_path = get_bin_path(g_minishell.env, phrase->name);
 	if (bin_path == NULL)
+	{
+		ft_putstr_fd("minishell: command not found: ", 2);
+		ft_putstr_fd(phrase->name, 2);
+		ft_putstr_fd("\n", 2);
 		return (-1);
+	}
 	g_minishell.allow_signal = 0;
 	pid = fork();
 	if (pid == -1)
