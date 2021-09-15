@@ -6,14 +6,14 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 19:16:01 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/14 20:33:08 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/14 22:04:52 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "node.h"
-#include "tokenizer.h"
+#include "print.h"
 
-bool	is_next_token_string(t_list *tokens)
+static bool	is_next_token_string(t_list *tokens)
 {
 	if (!tokens->next)
 	{
@@ -28,15 +28,14 @@ bool	is_next_token_string(t_list *tokens)
 	return (true);
 }
 
-bool	all_redirs_valid(t_list *tokens)
+static bool	all_redirs_valid(t_list *tokens)
 {
 	t_type	type;
 
 	while (tokens)
 	{
 		type = get_type(tokens->content);
-		if (type == OUTPUT || type == APPEND
-			|| type == INPUT || type == HEREDOC)
+		if (is_redirection(type))
 		{
 			if (!is_next_token_string(tokens))
 				return (false);
@@ -57,7 +56,18 @@ bool	all_pipes_valid(t_list *tokens)
 		type = get_type(tokens->content);
 		if (type == PIPE)
 		{
-			if (!is_next_token_string(tokens))
+			if (!tokens->next)
+			{
+				unexpected_token("\\n");
+				return (false);
+			}
+			type = get_type(tokens->next->content);
+			if (is_redirection(type))
+			{
+				if (!is_next_token_string(tokens->next))
+					return (false);
+			}
+			else if (!is_next_token_string(tokens))
 				return (false);
 		}
 		tokens = tokens->next;
@@ -67,5 +77,10 @@ bool	all_pipes_valid(t_list *tokens)
 
 bool	is_valid_syntax(t_list *tokens)
 {
+	if (get_type(tokens->content) == PIPE)
+	{
+		unexpected_token(ft_str_data(tokens->content));
+		return (false);
+	}
 	return (all_redirs_valid(tokens) && all_pipes_valid(tokens));
 }

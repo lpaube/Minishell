@@ -6,26 +6,14 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 18:28:14 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/14 18:42:13 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/14 22:05:39 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef NODE_H
 # define NODE_H
 
-#include "libft.h"
-
-typedef enum e_type
-{
-	PIPE,
-	OUTPUT,
-	APPEND,
-	INPUT,
-	HEREDOC,
-	STRING,
-}	t_type;
-
-t_type	get_type(t_string token);
+# include "token.h"
 
 typedef struct s_redir
 {
@@ -50,5 +38,6 @@ typedef struct s_node
 void		nodeclear(t_node **node);
 void		nodeadd_back(t_node **lst, t_node *new);
 t_node		*nodelast(t_node *lst);
+t_node		*nodenew(void);
 
 #endif

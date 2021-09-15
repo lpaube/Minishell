@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:11:05 by laube             #+#    #+#             */
-/*   Updated: 2021/09/14 18:35:19 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/14 22:06:47 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	ft_cd(t_node *phrase)
 	my_pwd = ft_strjoin("PWD=", tmp_pwd);
 	ft_export(my_pwd);
 	free(tmp_pwd);
-	return ;
 }
 
 void	ft_pwd(t_node *phrase)
@@ -56,7 +55,7 @@ int	ft_export(char *env_var)
 	int		i;
 
 	if (!env_var)
-		return ft_env();
+		return (ft_env());
 	var_name = ft_strdup(env_var);
 	equal_char = ft_strchr(var_name, '=') + 1;
 	if (!equal_char)

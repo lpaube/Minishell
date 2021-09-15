@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 13:33:08 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/14 18:36:50 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/14 22:06:03 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ typedef struct s_minishell
 	int			*fd;
 	int			saved_stdin;
 	int			saved_stdout;
-	t_node	*phrase;
+	t_node		*phrase;
 	int			allow_signal;
 }	t_minishell;
 

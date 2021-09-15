@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 18:39:19 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/14 20:01:45 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/14 20:51:41 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,17 +64,11 @@ void	nodeadd_back(t_node **lst, t_node *new)
 	}
 }
 
-t_type	get_type(t_string token)
+t_node	*nodenew(void)
 {
-	if (ft_strncmp(ft_str_data(token), "|", ft_str_len(token)) == 0)
-		return (PIPE);
-	if (ft_strncmp(ft_str_data(token), "<", ft_str_len(token)) == 0)
-		return (INPUT);
-	if (ft_strncmp(ft_str_data(token), "<<", ft_str_len(token)) == 0)
-		return (HEREDOC);
-	if (ft_strncmp(ft_str_data(token), ">", ft_str_len(token)) == 0)
-		return (OUTPUT);
-	if (ft_strncmp(ft_str_data(token), ">>", ft_str_len(token)) == 0)
-		return (APPEND);
-	return (STRING);
+	t_node	*node;
+
+	node = ft_calloc(1, sizeof(t_node));
+	node->args = ft_calloc(1, sizeof(char *));
+	return (node);
 }

@@ -1,22 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   token.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/25 15:35:44 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/14 19:15:05 by mleblanc         ###   ########.fr       */
+/*   Created: 2021/09/14 20:37:24 by mleblanc          #+#    #+#             */
+/*   Updated: 2021/09/14 21:24:32 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <unistd.h>
+#ifndef TOKEN_H
+# define TOKEN_H
 
-void	*print_error(const char *msg)
+#include "libft.h"
+
+typedef enum e_type
 {
-	ft_putstr_fd("Error: ", STDERR_FILENO);
-	ft_putstr_fd(msg, STDERR_FILENO);
-	ft_putstr_fd("\n", STDERR_FILENO);
-	return (NULL);
-}
+	PIPE,
+	OUTPUT,
+	APPEND,
+	INPUT,
+	HEREDOC,
+	STRING,
+}	t_type;
+
+t_type	get_type(t_string token);
+bool	is_redirection(t_type type);
+char	*type_str(t_type type);
+
+#endif
