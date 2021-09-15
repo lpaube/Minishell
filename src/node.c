@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 18:39:19 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/14 20:51:41 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/15 10:50:49 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	nodeclear(t_node **lst)
 	while (lst && *lst)
 	{
 		tmp = (*lst)->next;
-		free((*lst)->cmd);
+		free((*lst)->prg);
 		ft_free_strarr((*lst)->args);
 		ft_lstclear(&(*lst)->redirs, free_redir);
 		free(*lst);

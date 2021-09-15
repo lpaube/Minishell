@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:29:29 by laube             #+#    #+#             */
-/*   Updated: 2021/09/14 20:04:03 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/15 10:50:49 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 
 int	execution_control(t_node *phrase)
 {
-	if (ft_strnstr(phrase->cmd, "echo", 5))
+	if (ft_strnstr(phrase->prg, "echo", 5))
 		ft_echo(phrase);
-	else if (ft_strnstr(phrase->cmd, "cd", 3))
+	else if (ft_strnstr(phrase->prg, "cd", 3))
 		ft_cd(phrase);
-	else if (ft_strnstr(phrase->cmd, "pwd", 4))
+	else if (ft_strnstr(phrase->prg, "pwd", 4))
 		ft_pwd(phrase);
-	else if (ft_strnstr(phrase->cmd, "export", 7))
+	else if (ft_strnstr(phrase->prg, "export", 7))
 		ft_export(phrase->args[1]);
-	else if (ft_strnstr(phrase->cmd, "unset", 6))
+	else if (ft_strnstr(phrase->prg, "unset", 6))
 		ft_unset(phrase);
-	else if (ft_strnstr(phrase->cmd, "env", 4))
+	else if (ft_strnstr(phrase->prg, "env", 4))
 		ft_env();
-	else if (ft_strnstr(phrase->cmd, "exit", 5))
+	else if (ft_strnstr(phrase->prg, "exit", 5))
 	{
 		ft_exit(phrase);
 		return (1);

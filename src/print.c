@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 01:43:42 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/14 22:36:07 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/15 10:50:49 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	print_cmds(const t_node *cmds)
 
 	while (cmds)
 	{
-		printf("Cmd: %s\n", cmds->cmd);
+		printf("Cmd: %s\n", cmds->prg);
 		i = 0;
 		while (cmds->args[i])
 		{

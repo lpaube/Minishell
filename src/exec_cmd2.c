@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:15:00 by laube             #+#    #+#             */
-/*   Updated: 2021/09/14 20:02:48 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/15 10:50:49 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ int	ft_binary(t_node *phrase)
 	char	*bin_path;
 	pid_t	pid;
 
-	bin_path = get_bin_path(g_minishell.env, phrase->cmd);
+	bin_path = get_bin_path(g_minishell.env, phrase->prg);
 	if (bin_path == NULL)
 	{
 		ft_putstr_fd("minishell: command not found: ", 2);
-		ft_putstr_fd(phrase->cmd, 2);
+		ft_putstr_fd(phrase->prg, 2);
 		ft_putstr_fd("\n", 2);
 		return (-1);
 	}
