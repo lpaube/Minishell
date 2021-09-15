@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
+/*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:31:51 by laube             #+#    #+#             */
-/*   Updated: 2021/09/14 16:28:32 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/15 17:28:28 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	*ft_getenv(char *var)
 	{
 		if (ft_strnstr(g_minishell.env[i], var_name, ft_strlen(var_name)))
 		{
-			ret = (g_minishell.env[i] + ft_strlen(var_name));
+			ret = g_minishell.env[i] + ft_strlen(var_name);
 			free(var_name);
 			return (ret);
 		}

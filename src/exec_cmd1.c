@@ -6,46 +6,74 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:11:05 by laube             #+#    #+#             */
-/*   Updated: 2021/09/14 22:06:47 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/15 18:03:09 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-void	ft_cd(t_node *phrase)
-{
-	char	*tmp_pwd;
-	char	*my_pwd;
+#define CWD_BUFFER_SIZE (4096)
 
-	if (phrase->args[1] != NULL && phrase->args[2] != NULL)
-	{
-		ft_putstr_fd("cd: too many arguments\n", 2);
-	}
-	else if (phrase->args[1] == NULL)
-	{
+void	ft_cd(t_node *node)
+{
+	char	*cwd;
+	char	*pwd;
+
+	if (ft_strarr_size(node->args) > 2)
+		ft_putendl_fd("cd: too many arguments", STDERR_FILENO);
+	else if (ft_strarr_size(node->args) == 1)
 		chdir(ft_getenv("HOME"));
-	}
-	else if (chdir(phrase->args[1]) == -1)
+	else if (chdir(node->args[1]) == -1)
 	{
-		ft_putstr_fd("cd: no such file or directory: ", 2);
-		ft_putstr_fd(phrase->args[1], 2);
-		ft_putstr_fd("\n", 2);
+		ft_putstr_fd("cd: no such file or directory: ", STDERR_FILENO);
+		ft_putendl_fd(node->args[1], STDERR_FILENO);
 	}
-	tmp_pwd = getcwd(NULL, 0);
-	my_pwd = ft_strjoin("PWD=", tmp_pwd);
-	ft_export(my_pwd);
-	free(tmp_pwd);
+	cwd = getcwd(NULL, 0);
+	pwd = ft_strjoin("PWD=", cwd);
+	ft_export(pwd);
+	free(cwd);
 }
 
-void	ft_pwd(t_node *phrase)
+void	ft_pwd(t_node *node)
 {
-	char	cwd[4096];
+	char	cwd[CWD_BUFFER_SIZE];
 
-	(void)phrase;
-	if (getcwd(cwd, 4096) != NULL)
+	(void)node;
+	if (getcwd(cwd, CWD_BUFFER_SIZE) != NULL)
 		printf("%s\n", cwd);
 	else
-		print_error("Could not get current directory.");
+		print_error("pwd: could not get current directory.");
+}
+
+bool	is_valid_var_name(const char *name)
+{
+	char		*ptr;
+	t_string	var;
+	bool		ret;
+
+	ptr = ft_strchr(name, '=');
+	if (!ptr)
+	{
+		print_error("export: not valid in this context: ", name);
+		return (false);
+	}
+	var = ft_str_new(NULL);
+	while (name != ptr)
+		ft_str_add_back(var, *name++);
+	ptr = ft_str_data(var);
+	ret = true;
+	while (*ptr)
+	{
+		if (!(ft_isalnum(*ptr) || *ptr == '_'))
+		{
+			ret = false;
+			print_error("export: not valid in this context: ", ft_str_data(var));
+			break ;
+		}
+		++ptr;
+	}
+	ft_str_free(var);
+	return (ret);
 }
 
 int	ft_export(char *env_var)
@@ -56,12 +84,9 @@ int	ft_export(char *env_var)
 
 	if (!env_var)
 		return (ft_env());
+	if (!is_valid_var_name(env_var))
+		return (0);
 	var_name = ft_strdup(env_var);
-	equal_char = ft_strchr(var_name, '=') + 1;
-	if (!equal_char)
-		print_error("Invalid export command: no equal sign found.");
-	else
-		*equal_char = 0;
 	i = -1;
 	while (g_minishell.env[++i])
 	{

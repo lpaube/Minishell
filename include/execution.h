@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 14:46:24 by laube             #+#    #+#             */
-/*   Updated: 2021/09/14 22:35:26 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/15 17:38:08 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void	pipe_read(void);
 void	pipe_write(void);
 int		ft_binary(t_node *phrase);
 void	ft_echo(t_node *phrase);
-void	ft_cd(t_node *phrase);
-void	ft_pwd(t_node *phrase);
+void	ft_cd(t_node *node);
+void	ft_pwd(t_node *node);
 int	    ft_export(char *env_var);
 void	ft_unset(t_node *phrase);
 int	    ft_env(void);
