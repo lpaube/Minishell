@@ -30,7 +30,7 @@ $(OBJ)/%.o:	%.c
 
 $(NAME):	$(OBJ) $(OBJS)
 			@$(MAKELIBFT)
-			$(CC) $(OBJS) -L$(FTDIR) -l$(LIBFT) -l$(LIB) -lreadline -lcurses -o $(NAME)
+			$(CC) $(OBJS) -L$(FTDIR) -l$(LIBFT) -L$(LIB) -lreadline -lcurses -o $(NAME)
 
 $(OBJ):
 			@mkdir -p $(OBJ)
@@ -39,7 +39,7 @@ all:		$(NAME)
 
 linux:		$(OBJ) $(OBJS)
 			@$(MAKELIBFT)
-			$(CC) $(OBJS) -L$(FTDIR) -l$(LIBFT) -lreadline -lcurses -o $(NAME)
+			$(CC) $(OBJS) -L$(FTDIR) -l$(LIBFT) -lreadline -o $(NAME)
 
 clean:
 			@$(MAKELIBFT) clean
