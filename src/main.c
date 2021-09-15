@@ -6,14 +6,12 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/14 22:35:33 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/14 22:41:30 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
-#include "tokenizer.h"
 #include "parser.h"
-#include "minishell.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <readline/readline.h>
