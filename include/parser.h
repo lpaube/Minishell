@@ -6,14 +6,13 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 23:11:20 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/14 22:31:23 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/15 10:56:56 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
-# include "libft.h"
 # include "node.h"
 
 t_node	*parse(t_list *tokens);
