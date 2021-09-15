@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:29:29 by laube             #+#    #+#             */
-/*   Updated: 2021/09/14 16:54:56 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/15 13:04:33 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	execution_control(t_phrase *phrase)
 {
+	if (!phrase)
+		return (0);
 	if (ft_strnstr(phrase->name, "echo", 5))
 		ft_echo(phrase);
 	else if (ft_strnstr(phrase->name, "cd", 3))

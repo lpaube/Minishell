@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:31:51 by laube             #+#    #+#             */
-/*   Updated: 2021/09/14 16:28:32 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/15 13:03:03 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	**dup_env_table(char **table, char *env_var, int new_var)
 	}
 	if (new_var)
 		env_new_var(res_table, new_arg, &i);
-	table[i] = NULL;
+	ft_free_strarr(table);
 	return (res_table);
 }
 

@@ -1,5 +1,4 @@
 exit
-export BIG LEAKS
 echo test > ls
 echo test > ls >> ls >> ls
 > lol echo test lol
