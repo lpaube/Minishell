@@ -5,13 +5,12 @@ INC			=	include
 OBJ			=	obj
 LIB			=	lib
 
-HFILES		=	tokenizer.h parser.h print.h node.h execution.h minishell.h\
-				signal_handler.h
+HFILES		=	tokenizer.h parser.h node.h execution.h minishell.h
 HEADERS		=	$(addprefix $(INC)/, $(HFILES))
 
-CFILES		=	main.c tokenizer.c tokenizer_utils.c parser.c parser2.c\
+CFILES		=	main.c tokenizer.c tokenizer_utils.c parser.c interpolation.c\
 				node.c print.c exec_bin.c exec_cmd1.c exec_cmd2.c syntax.c\
-				exec_control.c exec_utils.c signal_handler.c token.c
+				exec_control.c exec_utils.c signal_handler.c token.c interpolation2.c
 OFILES		=	$(CFILES:.c=.o)
 OBJS		=	$(addprefix $(OBJ)/, $(OFILES))
 SRCS		=	$(addprefix $(SRC)/, $(CFILES))

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser2.c                                          :+:      :+:    :+:   */
+/*   interpolation.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 18:56:07 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/14 13:19:04 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/14 22:25:12 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static bool	eval_quotes(char **str, t_state *state)
 	return (false);
 }
 
-char	*parse_spec_char(char *str)
+char	*interpolate(char *str)
 {
 	t_string	ret;
 	t_state		state;
@@ -99,14 +99,14 @@ char	*parse_spec_char(char *str)
 	return (tmp);
 }
 
-void	parse_special_chars_arr(char **arr)
+void	interpolate_arr(char **arr)
 {
 	int	i;
 
 	i = 0;
 	while (arr[i])
 	{
-		arr[i] = parse_spec_char(arr[i]);
+		arr[i] = interpolate(arr[i]);
 		++i;
 	}
 }

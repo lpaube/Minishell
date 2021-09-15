@@ -6,14 +6,14 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 18:28:14 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/14 22:05:39 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/14 22:33:14 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef NODE_H
 # define NODE_H
 
-# include "token.h"
+# include "tokenizer.h"
 
 typedef struct s_redir
 {

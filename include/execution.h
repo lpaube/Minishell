@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 14:46:24 by laube             #+#    #+#             */
-/*   Updated: 2021/09/14 21:11:48 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/14 22:35:26 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@
 # include <limits.h>
 # include "minishell.h"
 # include "tokenizer.h"
-# include "print.h"
 
 int		execution_control(t_node *phrase);
 int		main_control(t_node *phrase);
