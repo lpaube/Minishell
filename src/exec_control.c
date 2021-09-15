@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:29:29 by laube             #+#    #+#             */
-/*   Updated: 2021/09/15 13:04:33 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/15 14:02:37 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ int	main_control(t_phrase *phrase)
 		parse_special_chars_arr(g_minishell.phrase->args);
 		if (operation_control() == 1)
 			return (1);
-		g_minishell.phrase = g_minishell.phrase->next;
+		if (g_minishell.phrase)
+			g_minishell.phrase = g_minishell.phrase->next;
 	}
 	return (0);
 }

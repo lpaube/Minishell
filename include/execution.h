@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 14:46:24 by laube             #+#    #+#             */
-/*   Updated: 2021/09/14 16:54:33 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/15 14:10:52 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,14 @@ int		ft_binary(t_phrase *phrase);
 void	ft_echo(t_phrase *phrase);
 void	ft_cd(t_phrase *phrase);
 void	ft_pwd(t_phrase *phrase);
-int	    ft_export(char *env_var);
+int		ft_export(char *env_var);
 void	ft_unset(t_phrase *phrase);
-int	    ft_env(void);
+int		ft_env(void);
 void	ft_exit(t_phrase *phrase);
 int		operation_control(void);
 void	clean_fd(void);
 void	get_dest(void);
 void	clean_fd(void);
+int		ft_export_helper(char *var_name);
 
 #endif

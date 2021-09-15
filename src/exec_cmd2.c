@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:15:00 by laube             #+#    #+#             */
-/*   Updated: 2021/09/15 13:36:05 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/15 14:12:11 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,10 @@ void	ft_exit(t_phrase *phrase)
 	}
 	else if (phrase->args[1])
 		g_minishell.code = 255;
+}
+
+int	ft_export_helper(char *var_name)
+{
+	free(var_name);
+	return (0);
 }

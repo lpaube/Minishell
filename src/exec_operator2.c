@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/13 16:19:08 by laube             #+#    #+#             */
-/*   Updated: 2021/09/15 13:07:55 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/15 14:01:08 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	dest_red_output(void)
 	}
 	g_minishell.phrase = g_minishell.phrase->next;
 	clean_fd();
-	exit(0);
 }
 
 void	get_dest(void)
