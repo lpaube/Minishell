@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
+/*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 14:46:24 by laube             #+#    #+#             */
-/*   Updated: 2021/09/14 16:54:33 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/14 18:36:50 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define EXECUTION_H
 
 # include "libft.h"
-# include "phrase.h"
+# include "node.h"
 # include <fcntl.h>
 # include <unistd.h>
 # include <sys/stat.h>
@@ -29,20 +29,20 @@
 # include "tokenizer.h"
 # include "parser.h"
 
-int		execution_control(t_phrase *phrase);
-int		main_control(t_phrase *phrase);
+int		execution_control(t_node *phrase);
+int		main_control(t_node *phrase);
 char	**dup_env_table(char **table, char *env_var, int new_var);
 char	*get_bin_path(char **envp, char *cmd);
 void	pipe_read(void);
 void	pipe_write(void);
-int		ft_binary(t_phrase *phrase);
-void	ft_echo(t_phrase *phrase);
-void	ft_cd(t_phrase *phrase);
-void	ft_pwd(t_phrase *phrase);
+int		ft_binary(t_node *phrase);
+void	ft_echo(t_node *phrase);
+void	ft_cd(t_node *phrase);
+void	ft_pwd(t_node *phrase);
 int	    ft_export(char *env_var);
-void	ft_unset(t_phrase *phrase);
+void	ft_unset(t_node *phrase);
 int	    ft_env(void);
-void	ft_exit(t_phrase *phrase);
+void	ft_exit(t_node *phrase);
 int		operation_control(void);
 void	clean_fd(void);
 void	get_dest(void);

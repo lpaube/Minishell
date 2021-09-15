@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_operator2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
+/*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/13 16:19:08 by laube             #+#    #+#             */
-/*   Updated: 2021/09/14 16:31:01 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/14 18:35:19 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	dest_pipe_write(void)
 void	dest_red_output(void)
 {
 	int			open_fd;
-	t_phrase	*phrase_og;
+	t_node	*phrase_og;
 
 	phrase_og = g_minishell.phrase;
 	while (g_minishell.phrase->op == OUTPUT || g_minishell.phrase->op == APPEND)

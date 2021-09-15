@@ -6,13 +6,26 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 15:14:49 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/14 12:56:54 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/14 19:30:19 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "tokenizer.h"
 #include <stdlib.h>
+
+void	*unexpected_token(const char *token)
+{
+	t_string	msg;
+
+	msg = ft_str_new(NULL);
+	ft_str_append_cstr(msg, "syntax error near unexpected token \'");
+	ft_str_append_cstr(msg, token);
+	ft_str_add_back(msg, '\'');
+	print_error(ft_str_data(msg));
+	ft_str_free(msg);
+	return (NULL);
+}
 
 void	init_tokenizer(t_tokenizer *tok)
 {

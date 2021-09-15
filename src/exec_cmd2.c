@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
+/*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:15:00 by laube             #+#    #+#             */
-/*   Updated: 2021/09/14 14:27:41 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/14 20:02:48 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
 /*	Executes the binary entered as cmd */
-int	ft_binary(t_phrase *phrase)
+int	ft_binary(t_node *phrase)
 {
 	char	*bin_path;
 	pid_t	pid;
 
-	bin_path = get_bin_path(g_minishell.env, phrase->name);
+	bin_path = get_bin_path(g_minishell.env, phrase->cmd);
 	if (bin_path == NULL)
 	{
 		ft_putstr_fd("minishell: command not found: ", 2);
-		ft_putstr_fd(phrase->name, 2);
+		ft_putstr_fd(phrase->cmd, 2);
 		ft_putstr_fd("\n", 2);
 		return (-1);
 	}
@@ -41,7 +41,7 @@ int	ft_binary(t_phrase *phrase)
 	return (0);
 }
 
-void	ft_echo(t_phrase *phrase)
+void	ft_echo(t_node *phrase)
 {
 	int	i;
 	int	nl;
@@ -66,7 +66,7 @@ void	ft_echo(t_phrase *phrase)
 		printf("\n");
 }
 
-void	ft_exit(t_phrase *phrase)
+void	ft_exit(t_node *phrase)
 {
 	(void)phrase;
 }

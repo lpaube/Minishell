@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_operator1.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
+/*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 18:54:03 by laube             #+#    #+#             */
-/*   Updated: 2021/09/14 13:56:45 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/14 18:35:19 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	src_heredoc(void)
 
 void	get_source(void)
 {
-	t_phrase	*phrase_og;
+	t_node	*phrase_og;
 
 	phrase_og = g_minishell.phrase;
 	if (g_minishell.phrase->prev && g_minishell.phrase->prev->op == PIPE)

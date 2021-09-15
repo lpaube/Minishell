@@ -1,0 +1,71 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   syntax.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/09/14 19:16:01 by mleblanc          #+#    #+#             */
+/*   Updated: 2021/09/14 20:33:08 by mleblanc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "node.h"
+#include "tokenizer.h"
+
+bool	is_next_token_string(t_list *tokens)
+{
+	if (!tokens->next)
+	{
+		unexpected_token("\\n");
+		return (false);
+	}
+	if (get_type(tokens->next->content) != STRING)
+	{
+		unexpected_token(ft_str_data(tokens->next->content));
+		return (false);
+	}
+	return (true);
+}
+
+bool	all_redirs_valid(t_list *tokens)
+{
+	t_type	type;
+
+	while (tokens)
+	{
+		type = get_type(tokens->content);
+		if (type == OUTPUT || type == APPEND
+			|| type == INPUT || type == HEREDOC)
+		{
+			if (!is_next_token_string(tokens))
+				return (false);
+			tokens = tokens->next->next;
+		}
+		else
+			tokens = tokens->next;
+	}
+	return (true);
+}
+
+bool	all_pipes_valid(t_list *tokens)
+{
+	t_type	type;
+
+	while (tokens)
+	{
+		type = get_type(tokens->content);
+		if (type == PIPE)
+		{
+			if (!is_next_token_string(tokens))
+				return (false);
+		}
+		tokens = tokens->next;
+	}
+	return (true);
+}
+
+bool	is_valid_syntax(t_list *tokens)
+{
+	return (all_redirs_valid(tokens) && all_pipes_valid(tokens));
+}

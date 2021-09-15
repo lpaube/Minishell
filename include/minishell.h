@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
+/*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 13:33:08 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/14 15:35:47 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/14 18:36:50 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "phrase.h"
+# include "node.h"
 
 typedef struct s_minishell
 {
@@ -22,7 +22,7 @@ typedef struct s_minishell
 	int			*fd;
 	int			saved_stdin;
 	int			saved_stdout;
-	t_phrase	*phrase;
+	t_node	*phrase;
 	int			allow_signal;
 }	t_minishell;
 

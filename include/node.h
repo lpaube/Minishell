@@ -1,48 +1,54 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   phrase.h                                           :+:      :+:    :+:   */
+/*   node.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/30 18:38:34 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/14 12:54:53 by mleblanc         ###   ########.fr       */
+/*   Created: 2021/09/14 18:28:14 by mleblanc          #+#    #+#             */
+/*   Updated: 2021/09/14 18:42:13 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHRASE_H
-# define PHRASE_H
+#ifndef NODE_H
+# define NODE_H
 
-# include "libft.h"
+#include "libft.h"
 
-typedef enum e_operator
+typedef enum e_type
 {
 	PIPE,
 	OUTPUT,
 	APPEND,
 	INPUT,
-	READ,
-	NONE,
-}	t_operator;
+	HEREDOC,
+	STRING,
+}	t_type;
 
-t_operator	get_operator(t_string token);
+t_type	get_type(t_string token);
 
-typedef struct s_phrase
+typedef struct s_redir
 {
-	char			*name;
+	t_type	type;
+	char	*file;
+}	t_redir;
+
+typedef struct s_node
+{
+	char			*cmd;
 	char			**args;
-	t_operator		op;
-	struct s_phrase	*next;
-	struct s_phrase	*prev;
+	t_list			*redirs;
 	int				*fd;
 	int				output_fd;
 	int				intput_fd;
 	int				saved_stdout;
 	int				saved_stdin;
-}	t_phrase;
+	struct s_node	*next;
+	struct s_node	*prev;
+}	t_node;
 
-void		nodeclear(t_phrase **node);
-void		nodeadd_back(t_phrase **lst, t_phrase *new);
-t_phrase	*nodelast(t_phrase *lst);
+void		nodeclear(t_node **node);
+void		nodeadd_back(t_node **lst, t_node *new);
+t_node		*nodelast(t_node *lst);
 
 #endif

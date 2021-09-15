@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
+/*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:11:05 by laube             #+#    #+#             */
-/*   Updated: 2021/09/14 17:00:13 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/14 18:35:19 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-void	ft_cd(t_phrase *phrase)
+void	ft_cd(t_node *phrase)
 {
 	char	*tmp_pwd;
 	char	*my_pwd;
@@ -38,7 +38,7 @@ void	ft_cd(t_phrase *phrase)
 	return ;
 }
 
-void	ft_pwd(t_phrase *phrase)
+void	ft_pwd(t_node *phrase)
 {
 	char	cwd[4096];
 
@@ -79,7 +79,7 @@ int	ft_export(char *env_var)
 	return (0);
 }
 
-void	ft_unset(t_phrase *phrase)
+void	ft_unset(t_node *phrase)
 {
 	int	i;
 	int	j;

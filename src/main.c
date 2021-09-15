@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
+/*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/14 13:38:32 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/14 18:35:19 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*get_line(char *line)
 	return (line);
 }
 
-void	free_memory(t_list **lst1, t_phrase **lst2, char *str)
+void	free_memory(t_list **lst1, t_node **lst2, char *str)
 {
 	ft_lstclear(lst1, ft_str_free);
 	nodeclear(lst2);
@@ -61,7 +61,7 @@ void	minishell_loop(void)
 {
 	t_tokenizer	tok;
 	t_list		*lst;
-	t_phrase	*cmds;
+	t_node	*cmds;
 
 	tok.str = NULL;
 	cmds = NULL;

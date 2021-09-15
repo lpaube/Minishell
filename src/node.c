@@ -1,33 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   phrase.c                                           :+:      :+:    :+:   */
+/*   node.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
+/*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/30 18:29:47 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/31 18:33:39 by laube            ###   ########.fr       */
+/*   Created: 2021/09/14 18:39:19 by mleblanc          #+#    #+#             */
+/*   Updated: 2021/09/14 20:01:45 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "phrase.h"
+#include "node.h"
 #include <stdlib.h>
 
-void	nodeclear(t_phrase **lst)
+static void	free_redir(void *redir)
 {
-	t_phrase	*tmp;
+	t_redir	*r;
+
+	r = redir;
+	free(r->file);
+}
+
+void	nodeclear(t_node **lst)
+{
+	t_node	*tmp;
 
 	while (lst && *lst)
 	{
 		tmp = (*lst)->next;
-		free((*lst)->name);
+		free((*lst)->cmd);
 		ft_free_strarr((*lst)->args);
+		ft_lstclear(&(*lst)->redirs, free_redir);
 		free(*lst);
 		*lst = tmp;
 	}
 }
 
-t_phrase	*nodelast(t_phrase *lst)
+t_node	*nodelast(t_node *lst)
 {
 	if (lst)
 	{
@@ -37,9 +46,9 @@ t_phrase	*nodelast(t_phrase *lst)
 	return (lst);
 }
 
-void	nodeadd_back(t_phrase **lst, t_phrase *new)
+void	nodeadd_back(t_node **lst, t_node *new)
 {
-	t_phrase	*last;
+	t_node	*last;
 
 	if (lst)
 	{
@@ -55,17 +64,17 @@ void	nodeadd_back(t_phrase **lst, t_phrase *new)
 	}
 }
 
-t_operator	get_operator(t_string token)
+t_type	get_type(t_string token)
 {
 	if (ft_strncmp(ft_str_data(token), "|", ft_str_len(token)) == 0)
 		return (PIPE);
 	if (ft_strncmp(ft_str_data(token), "<", ft_str_len(token)) == 0)
 		return (INPUT);
 	if (ft_strncmp(ft_str_data(token), "<<", ft_str_len(token)) == 0)
-		return (READ);
+		return (HEREDOC);
 	if (ft_strncmp(ft_str_data(token), ">", ft_str_len(token)) == 0)
 		return (OUTPUT);
 	if (ft_strncmp(ft_str_data(token), ">>", ft_str_len(token)) == 0)
 		return (APPEND);
-	return (NONE);
+	return (STRING);
 }

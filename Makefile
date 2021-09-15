@@ -5,14 +5,13 @@ INC			=	include
 OBJ			=	obj
 LIB			=	lib
 
-HFILES		=	tokenizer.h parser.h print.h phrase.h execution.h minishell.h\
+HFILES		=	tokenizer.h parser.h print.h node.h execution.h minishell.h\
 				signal_handler.h
 HEADERS		=	$(addprefix $(INC)/, $(HFILES))
 
 CFILES		=	main.c tokenizer.c tokenizer_utils.c error.c parser.c parser2.c\
-				phrase.c print.c exec_bin.c exec_cmd1.c exec_cmd2.c\
-				exec_control.c exec_utils.c exec_operator1.c exec_operator2.c\
-				signal_handler.c parser3.c
+				node.c print.c exec_bin.c exec_cmd1.c exec_cmd2.c syntax.c\
+				exec_control.c exec_utils.c signal_handler.c
 OFILES		=	$(CFILES:.c=.o)
 OBJS		=	$(addprefix $(OBJ)/, $(OFILES))
 SRCS		=	$(addprefix $(SRC)/, $(CFILES))
@@ -32,7 +31,7 @@ $(OBJ)/%.o:	%.c
 
 $(NAME):	$(OBJ) $(OBJS)
 			@$(MAKELIBFT)
-			$(CC) $(OBJS) -L$(FTDIR) -l$(LIBFT) -L$(LIB) -lreadline -lcurses -o $(NAME)
+			$(CC) $(OBJS) -L$(FTDIR) -l$(LIBFT) -lreadline -lcurses -o $(NAME)
 
 $(OBJ):
 			@mkdir -p $(OBJ)
