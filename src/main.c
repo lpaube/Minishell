@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/14 22:41:30 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/15 11:03:41 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,11 @@ char	*get_line(char *line)
 
 	line = readline("minishell: ");
 	if (!line)
+	{
+		printf("exit\n");
+		g_minishell.code = 0;
 		exit(0);
+	}
 	tmp = ft_strtrim(line, WHITESPACE);
 	free(line);
 	line = tmp;
