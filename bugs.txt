@@ -1,9 +1,0 @@
-exit
-export BIG LEAKS
-echo test > ls
-echo test > ls >> ls >> ls
-> lol echo test lol
->lol echo > test>lol>test>>lol>test mdr >lol test >test
-cat < ls
-cat < ls > ls
-echo "Fdsfsd" > test1
