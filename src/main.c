@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/14 13:38:32 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/15 13:39:26 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,5 +97,5 @@ int	main(int argc, char **argv, char **env)
 	close(g_minishell.saved_stdin);
 	close(g_minishell.saved_stdout);
 	free(g_minishell.fd);
-	//scanf("c");
+	exit(g_minishell.code);
 }
