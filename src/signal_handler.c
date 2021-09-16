@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 19:10:13 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/15 10:55:53 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/15 23:15:49 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	nothing(int signal)
 	if (g_minishell.allow_signal)
 		rl_on_new_line();
 	else
-		printf("\n");
+		ft_printf("\n");
 	g_minishell.code = 0;
 	rl_redisplay();
 }

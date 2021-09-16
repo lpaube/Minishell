@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 01:43:42 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/15 18:02:06 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/15 23:15:43 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	print_redir(void *redir)
 	t_redir	*r;
 
 	r = redir;
-	printf("File: %s - type: %s\n", r->file, type_str(r->type));
+	ft_printf("File: %s - type: %s\n", r->file, type_str(r->type));
 }
 
 void	print_cmds(const t_node *cmds)
@@ -53,11 +53,11 @@ void	print_cmds(const t_node *cmds)
 
 	while (cmds)
 	{
-		printf("Cmd: %s\n", cmds->prg);
+		ft_printf("Cmd: %s\n", cmds->prg);
 		i = 0;
 		while (cmds->args[i])
 		{
-			printf("Arg%d: %s\n", i, cmds->args[i]);
+			ft_printf("Arg%d: %s\n", i, cmds->args[i]);
 			++i;
 		}
 		ft_lstiter(cmds->redirs, print_redir);
