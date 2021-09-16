@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:29:29 by laube             #+#    #+#             */
-/*   Updated: 2021/09/15 23:05:50 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/16 13:53:50 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ int	execution_control(t_node *node)
 		ft_unset(node);
 	else if (ft_strncmp(node->prg, "export", 7) == 0)
 		ft_export(node);
-	// else if (ft_strnstr(phrase->prg, "exit", 5))
-	// {
-	// 	ft_exit(phrase);
-	// 	return (1);
-	// }
+	else if (ft_strncmp(node->prg, "exit", 5) == 0)
+	{
+		ft_exit(node);
+		return (1);
+	}
 	// else
 	// 	ft_binary(phrase);
 	return (0);

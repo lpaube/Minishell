@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 01:43:42 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/15 23:15:43 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/16 13:58:58 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <unistd.h>
 #include <stdio.h>
 
-void	*print_error(const char *msg, const char *value)
+void	print_error(const char *msg, const char *value)
 {
 	if (value)
 	{
@@ -23,7 +23,6 @@ void	*print_error(const char *msg, const char *value)
 	}
 	else
 		ft_putendl_fd(msg, STDERR_FILENO);
-	return (NULL);
 }
 
 void	*unexpected_token(const char *token)

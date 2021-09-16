@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 20:44:29 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/15 22:59:54 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/16 14:02:56 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	ft_cd(t_node *node)
 	char	*cwd;
 
 	if (ft_strarr_size(node->args) > 2)
-		ft_putendl_fd("cd: too many arguments", STDERR_FILENO);
+		print_error("cd: too many arguments", NULL);
 	else if (ft_strarr_size(node->args) == 1)
 		chdir(ft_getenv("HOME"));
 	else if (chdir(node->args[1]) == -1)
@@ -86,7 +86,9 @@ void	ft_unset(t_node *node)
 	t_string	var;
 
 	if (ft_strarr_size(node->args) < 2)
-		return ;
+		return (print_error("unset: not enough arguments", NULL));
+	if (!is_valid_var_name(node->args[1]))
+		return (print_error("unset: invalid parameter name: ", node->args[1]));
 	var = ft_str_new_copy(node->args[1]);
 	ft_str_add_back(var, '=');
 	i = 0;

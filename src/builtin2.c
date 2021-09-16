@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 22:25:41 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/16 09:14:51 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/16 14:07:08 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,7 @@ bool	is_valid_var_name(const char *var)
 
 	name = var_name(var);
 	if (!name)
-	{
-		print_error("export: not valid in this context: ", var);
 		return (false);
-	}
 	ptr = name;
 	ret = true;
 	while (*ptr)
@@ -36,7 +33,6 @@ bool	is_valid_var_name(const char *var)
 		if (!(ft_isalnum(*ptr) || *ptr == '_'))
 		{
 			ret = false;
-			print_error("export: not valid in this context: ", var);
 			break ;
 		}
 		++ptr;
@@ -49,20 +45,17 @@ void	ft_export(t_node *node)
 {
 	t_string	var;
 	size_t		i;
-	char		*x;
 
 	if (ft_strarr_size(node->args) < 2)
 		return (ft_env());
 	if (!is_valid_var_name(node->args[1]))
-		return ;
+		return (print_error("export: not valid in this context: ",
+			node->args[1]));
 	var = ft_str_new(var_name(node->args[1]));
 	ft_str_add_back(var, '=');
-	char *tmp = ft_str_data(var);
-	(void)tmp;
 	i = 0;
 	while (g_minishell.env[i])
 	{
-		x = g_minishell.env[i];
 		if (ft_str_cmp_cstr(var, g_minishell.env[i], ft_str_len(var)) == 0)
 		{
 			free(g_minishell.env[i]);
@@ -75,4 +68,9 @@ void	ft_export(t_node *node)
 	g_minishell.env
 		= ft_expand_strarr(g_minishell.env, ft_strdup(node->args[1]));
 	ft_str_free(var);
+}
+
+void	ft_exit(t_node *node)
+{
+	(void)node;
 }
