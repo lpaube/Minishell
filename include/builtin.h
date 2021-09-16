@@ -1,37 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/08 13:33:08 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/15 22:05:01 by mleblanc         ###   ########.fr       */
+/*   Created: 2021/09/15 20:45:01 by mleblanc          #+#    #+#             */
+/*   Updated: 2021/09/15 22:32:33 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef BUILTIN_H
+# define BUILTIN_H
 
 # include "node.h"
 
-typedef struct s_minishell
-{
-	char		**env;
-	int			code;
-	int			*fd;
-	int			saved_stdin;
-	int			saved_stdout;
-	t_node		*phrase;
-	int			allow_signal;
-}	t_minishell;
-
-extern t_minishell	g_minishell;
-
-void	newline(int signal);
-void	nothing(int signal);
-void	*print_error(const char *msg, const char *value);
-void	*unexpected_token(const char *token);
-void	print_cmds(const t_node *cmds);
+void	ft_echo(t_node *node);
+void	ft_cd(t_node *node);
+void	ft_unset(t_node *node);
+void	ft_export(t_node *node);
+void	ft_pwd(void);
+void	ft_env(void);
 
 #endif
