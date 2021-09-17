@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:16:38 by laube             #+#    #+#             */
-/*   Updated: 2021/09/16 22:20:06 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/16 23:02:38 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static char	*get_cmd_path(const char *cmd)
 	if (stat(cmd, &buf) == 0)
 		return (ft_strdup(cmd));
 	path = ft_getenv("PATH");
-	if (!path || *cmd == '.')
+	if (!path || *cmd == '.' | *cmd == '/')
 		return (NULL);
 	dirs = ft_split(path, ':');
 	absolute = find_cmd(dirs, cmd);
