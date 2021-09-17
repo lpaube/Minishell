@@ -6,13 +6,14 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 20:44:29 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/16 20:48:23 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/16 22:30:23 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 #include "env.h"
 #include "minishell.h"
+#include "print.h"
 #include <stdlib.h>
 #include <stdio.h>
 

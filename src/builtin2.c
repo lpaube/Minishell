@@ -6,13 +6,14 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 22:25:41 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/16 21:01:47 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/16 22:30:34 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "env.h"
 #include "builtin.h"
+#include "minishell.h"
+#include "print.h"
+#include "env.h"
 #include <stdlib.h>
 
 #define CWD_BUFFER_SIZE (4096)

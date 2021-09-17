@@ -5,7 +5,8 @@ INC			=	include
 OBJ			=	obj
 LIB			=	lib
 
-HFILES		=	tokenizer.h parse.h node.h execution.h minishell.h builtin.h
+HFILES		=	tokenizer.h parse.h node.h execution.h minishell.h builtin.h\
+				print.h
 HEADERS		=	$(addprefix $(INC)/, $(HFILES))
 
 CFILES		=	main.c tokenizer.c tokenizer_utils.c parse.c interpolation.c\

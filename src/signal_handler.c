@@ -6,14 +6,14 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 19:10:13 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/16 20:47:41 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/16 22:25:33 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <stdlib.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <stdlib.h>
 #include <stdio.h>
 
 void	newline(int signal)

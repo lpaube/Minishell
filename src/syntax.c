@@ -6,11 +6,12 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 19:16:01 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/14 22:36:17 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/16 22:29:54 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "node.h"
+#include "print.h"
 
 static bool	is_next_token_string(t_list *tokens)
 {
@@ -46,7 +47,7 @@ static bool	all_redirs_valid(t_list *tokens)
 	return (true);
 }
 
-bool	all_pipes_valid(t_list *tokens)
+static bool	all_pipes_valid(t_list *tokens)
 {
 	t_type	type;
 
