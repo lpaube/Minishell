@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 20:44:29 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/16 14:02:56 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/16 20:48:23 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "env.h"
 #include "minishell.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 #define CWD_BUFFER_SIZE (4096)
 
@@ -31,13 +32,13 @@ void	ft_echo(t_node *node)
 	}
 	while ((node->args)[i])
 	{
-		ft_printf("%s", (node->args)[i]);
+		printf("%s", (node->args)[i]);
 		++i;
 		if ((node->args)[i])
-			ft_printf(" ");
+			printf(" ");
 	}
 	if (nl)
-		ft_printf("\n");
+		printf("\n");
 }
 
 void	ft_pwd(void)
@@ -45,7 +46,7 @@ void	ft_pwd(void)
 	char	cwd[CWD_BUFFER_SIZE];
 
 	if (getcwd(cwd, CWD_BUFFER_SIZE) != NULL)
-		ft_printf("%s\n", cwd);
+		printf("%s\n", cwd);
 	else
 		print_error("pwd: could not get current directory.", NULL);
 }
@@ -73,34 +74,14 @@ void	ft_env(void)
 	size_t	i;
 
 	i = 0;
-	while (g_minishell.env[i])
+	while (g_mini.env[i])
 	{
-		ft_printf("%s\n", g_minishell.env[i]);
+		printf("%s\n", g_mini.env[i]);
 		++i;
 	}
 }
 
-void	ft_unset(t_node *node)
+void	ft_exit(t_node *node)
 {
-	size_t		i;
-	t_string	var;
-
-	if (ft_strarr_size(node->args) < 2)
-		return (print_error("unset: not enough arguments", NULL));
-	if (!is_valid_var_name(node->args[1]))
-		return (print_error("unset: invalid parameter name: ", node->args[1]));
-	var = ft_str_new_copy(node->args[1]);
-	ft_str_add_back(var, '=');
-	i = 0;
-	while (g_minishell.env[i])
-	{
-		if (ft_str_cmp_cstr(var, g_minishell.env[i], ft_str_len(var)) == 0)
-		{
-			ft_shrink_strarr(g_minishell.env, i);
-			ft_str_free(var);
-			return ;
-		}
-		++i;
-	}
-	ft_str_free(var);
+	(void)node;
 }

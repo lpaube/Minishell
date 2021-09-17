@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 13:33:08 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/16 13:58:53 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/16 20:11:04 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef struct s_minishell
 	int			allow_signal;
 }	t_minishell;
 
-extern t_minishell	g_minishell;
+extern t_minishell	g_mini;
 
 void	newline(int signal);
 void	nothing(int signal);
