@@ -6,13 +6,12 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:29:29 by laube             #+#    #+#             */
-/*   Updated: 2021/09/16 13:53:50 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/16 21:31:44 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
 #include "builtin.h"
-#include "parser.h"
+#include "parse.h"
 
 int	execution_control(t_node *node)
 {

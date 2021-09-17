@@ -6,12 +6,13 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/16 20:11:04 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/16 21:30:57 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
-#include "parser.h"
+#include "minishell.h"
+#include "parse.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <readline/readline.h>

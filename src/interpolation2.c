@@ -6,11 +6,11 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 22:36:48 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/14 22:40:00 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/16 21:31:49 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "parse.h"
 
 static	void	interpolate_redir(void *redir)
 {
