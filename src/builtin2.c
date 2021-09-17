@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 22:25:41 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/16 22:30:34 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/17 18:07:05 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,12 @@ void	add_var(const char *var)
 	g_mini.env = ft_expand_strarr(g_mini.env, ft_strdup(var));
 }
 
-static void	process_error(const char *err, const char *var, bool *can_print)
+static void	process_error(const char *prg, const char *v1,
+	const char *v2, bool *can_print)
 {
 	if (*can_print)
 	{
-		print_error(err, var);
+		print_error(prg, v1, v2);
 		*can_print = false;
 	}
 }
@@ -67,8 +68,8 @@ void	ft_export(t_node *node)
 		var = var_name(node->args[i]);
 		if (!is_valid_var_name(var))
 		{
-			process_error("export: not valid in this context: ",
-				node->args[i], &can_perror);
+			process_error(EXPORT, "not valid in this context", node->args[i],
+				&can_perror);
 			++i;
 			continue ;
 		}
@@ -105,15 +106,15 @@ void	ft_unset(t_node *node)
 	bool	can_perror;
 
 	if (ft_strarr_size(node->args) < 2)
-		return (print_error("unset: not enough arguments", NULL));
+		return (print_error(UNSET, NULL, "not enough arguments"));
 	can_perror = true;
 	i = 1;
 	while (node->args[i])
 	{
 		if (!is_valid_var_name(node->args[i]))
 		{
-			process_error("unset: invalid parameter name: ",
-				node->args[i], &can_perror);
+			process_error(UNSET, node->args[i], "invalid parameter name",
+				&can_perror);
 			++i;
 			continue ;
 		}

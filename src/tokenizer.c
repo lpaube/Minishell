@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 15:14:49 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/16 22:29:05 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/17 17:49:03 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ bool	get_next_token(t_tokenizer *tok)
 	}
 	tok->next_token = token;
 	if (tok->state == QUOTE)
-		print_error("found unclosed quotes", NULL);
+		print_error(SHELL_NAME, NULL, "found unclosed quotes");
 	else if (tok->state == DQUOTE)
-		print_error("found unclosed double quotes", NULL);
+		print_error(SHELL_NAME, NULL, "found unclosed double quotes");
 	return (tok->state == TEXT);
 }
 

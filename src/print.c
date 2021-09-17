@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 01:43:42 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/16 22:28:19 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/17 17:47:19 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,30 @@
 #include <unistd.h>
 #include <stdio.h>
 
-void	print_error(const char *msg, const char *value)
+void	print_error(const char *prg, const char *v1, const char *v2)
 {
-	if (value)
+	if (prg)
 	{
-		ft_putstr_fd(msg, STDERR_FILENO);
-		ft_putendl_fd(value, STDERR_FILENO);
+		ft_putstr_fd(prg, STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
 	}
-	else
-		ft_putendl_fd(msg, STDERR_FILENO);
+	if (v1)
+	{
+		ft_putstr_fd(v1, STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
+	}
+	ft_putendl_fd(v2, STDERR_FILENO);
 }
 
-void	*unexpected_token(const char *token)
+void	unexpected_token(const char *token)
 {
 	t_string	msg;
 
-	msg = ft_str_new(NULL);
-	ft_str_append_cstr(msg, "error: syntax error near unexpected token \'");
+	msg = ft_str_new_copy("error: syntax error near unexpected token \'");
 	ft_str_append_cstr(msg, token);
 	ft_str_add_back(msg, '\'');
-	print_error(ft_str_data(msg), NULL);
+	print_error(NULL, NULL, ft_str_data(msg));
 	ft_str_free(msg);
-	return (NULL);
 }
 
 static void	print_redir(void *redir)

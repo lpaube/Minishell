@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 20:44:29 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/16 22:30:23 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/17 18:02:23 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "print.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 #define CWD_BUFFER_SIZE (4096)
 
@@ -42,14 +43,16 @@ void	ft_echo(t_node *node)
 		printf("\n");
 }
 
-void	ft_pwd(void)
+void	ft_pwd(t_node *node)
 {
 	char	cwd[CWD_BUFFER_SIZE];
 
-	if (getcwd(cwd, CWD_BUFFER_SIZE) != NULL)
+	if (ft_strarr_size(node->args) > 1)
+		print_error(PWD, NULL, "too many arguments");
+	else if (getcwd(cwd, CWD_BUFFER_SIZE) != NULL)
 		printf("%s\n", cwd);
 	else
-		print_error("pwd: could not get current directory.", NULL);
+		print_error(PWD, NULL, strerror(errno));
 }
 
 void	ft_cd(t_node *node)
@@ -57,13 +60,19 @@ void	ft_cd(t_node *node)
 	char	*cwd;
 
 	if (ft_strarr_size(node->args) > 2)
-		print_error("cd: too many arguments", NULL);
-	else if (ft_strarr_size(node->args) == 1)
-		chdir(ft_getenv("HOME"));
+	{
+		print_error(CD, NULL, "too many arguments");
+		return ;
+	}
+	else if (ft_strarr_size(node->args) == 1 && chdir(ft_getenv("HOME")) == -1)
+	{
+		print_error(CD, NULL, strerror(errno));
+		return ;
+	}
 	else if (chdir(node->args[1]) == -1)
 	{
-		ft_putstr_fd("cd: no such file or directory: ", STDERR_FILENO);
-		ft_putendl_fd(node->args[1], STDERR_FILENO);
+		print_error(CD, strerror(errno), node->args[1]);
+		return ;
 	}
 	cwd = getcwd(NULL, 0);
 	ft_setenv("PWD", cwd);
