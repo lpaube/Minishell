@@ -1,33 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/08 13:33:08 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/17 18:56:06 by mleblanc         ###   ########.fr       */
+/*   Created: 2021/09/17 19:08:24 by mleblanc          #+#    #+#             */
+/*   Updated: 2021/09/17 19:09:22 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "builtin.h"
 
-# include "node.h"
-
-typedef struct s_minishell
+void	ft_exit(t_node *node)
 {
-	char		**env;
-	int			code;
-	int			*fd;
-	int			saved_stdin;
-	int			saved_stdout;
-	int			allow_signal;
-}	t_minishell;
-
-extern t_minishell	g_mini;
-
-void	newline(int signal);
-void	nothing(int signal);
-
-#endif
+	(void)node;
+}

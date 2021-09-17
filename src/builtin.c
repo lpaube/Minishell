@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 20:44:29 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/17 18:02:23 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/17 19:11:50 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#define CWD_BUFFER_SIZE (4096)
+#define CWD_BUFFER_SIZE (1024)
 
 void	ft_echo(t_node *node)
 {
@@ -55,43 +55,51 @@ void	ft_pwd(t_node *node)
 		print_error(PWD, NULL, strerror(errno));
 }
 
-void	ft_cd(t_node *node)
+static void	update_pwd(const char *oldpwd)
 {
 	char	*cwd;
 
-	if (ft_strarr_size(node->args) > 2)
-	{
-		print_error(CD, NULL, "too many arguments");
-		return ;
-	}
-	else if (ft_strarr_size(node->args) == 1 && chdir(ft_getenv("HOME")) == -1)
-	{
-		print_error(CD, NULL, strerror(errno));
-		return ;
-	}
-	else if (chdir(node->args[1]) == -1)
-	{
-		print_error(CD, strerror(errno), node->args[1]);
-		return ;
-	}
 	cwd = getcwd(NULL, 0);
+	if (!cwd)
+		return (print_error(CD, NULL, strerror(errno)));
+	ft_setenv("OLDPWD", oldpwd);
 	ft_setenv("PWD", cwd);
 	free(cwd);
 }
 
-void	ft_env(void)
+void	ft_cd(t_node *node)
+{
+	char	*oldpwd;
+
+	if (ft_strarr_size(node->args) > 2)
+		return (print_error(CD, NULL, "too many arguments"));
+	oldpwd = getcwd(NULL, 0);
+	if (!oldpwd)
+		return (print_error(CD, NULL, strerror(errno)));
+	if (ft_strarr_size(node->args) == 1 && chdir(ft_getenv("HOME")) == -1)
+	{
+		free(oldpwd);
+		return (print_error(CD, NULL, strerror(errno)));
+	}
+	else if (chdir(node->args[1]) == -1)
+	{
+		free(oldpwd);
+		return (print_error(CD, strerror(errno), node->args[1]));
+	}
+	update_pwd(oldpwd);
+	free(oldpwd);
+}
+
+void	ft_env(t_node *node)
 {
 	size_t	i;
 
+	if (ft_strarr_size(node->args) > 1)
+		return (print_error(ENV, NULL, "too many arguments"));
 	i = 0;
 	while (g_mini.env[i])
 	{
 		printf("%s\n", g_mini.env[i]);
 		++i;
 	}
-}
-
-void	ft_exit(t_node *node)
-{
-	(void)node;
 }

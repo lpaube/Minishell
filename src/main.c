@@ -6,13 +6,14 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/16 22:20:50 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/17 19:53:38 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 #include "minishell.h"
 #include "parse.h"
+#include "print.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <readline/readline.h>
@@ -36,7 +37,7 @@ char	*get_line(char *line)
 {
 	char	*tmp;
 
-	line = readline("minishell: ");
+	line = readline(SHELL_NAME_C" ");
 	if (!line)
 	{
 		g_mini.code = 0;
@@ -50,11 +51,11 @@ char	*get_line(char *line)
 	return (line);
 }
 
-void	free_memory(t_list **lst1, t_node **lst2, char *str)
+void	free_memory(t_list **tokens, t_node **cmds, char *line)
 {
-	ft_lstclear(lst1, ft_str_free);
-	nodeclear(lst2);
-	free(str);
+	ft_lstclear(tokens, ft_str_free);
+	nodeclear(cmds);
+	free(line);
 }
 
 void	minishell_loop(void)
@@ -72,15 +73,9 @@ void	minishell_loop(void)
 		if (!*tok.str)
 			continue ;
 		lst = tokenize(&tok);
-		if (lst)
-		{
-			cmds = parse(lst);
-			if (main_control(cmds))
-			{
-				free_memory(&lst, &cmds, tok.str);
-				break ;
-			}
-		}
+		cmds = parse(lst);
+		if (main_control(cmds))
+			return (free_memory(&lst, &cmds, tok.str));
 		free_memory(&lst, &cmds, tok.str);
 	}
 }

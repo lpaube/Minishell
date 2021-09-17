@@ -6,11 +6,12 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 19:10:13 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/16 22:25:33 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/17 19:57:57 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "print.h"
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <stdlib.h>
@@ -19,7 +20,7 @@
 void	newline(int signal)
 {
 	(void)signal;
-	printf("\rminishell:   \n");
+	printf("\r"SHELL_NAME_C"   \n");
 	rl_replace_line("", 1);
 	if (g_mini.allow_signal)
 		rl_on_new_line();

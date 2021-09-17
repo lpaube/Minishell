@@ -11,7 +11,7 @@ HEADERS		=	$(addprefix $(INC)/, $(HFILES))
 
 CFILES		=	main.c tokenizer.c tokenizer_utils.c parse.c interpolation.c\
 				node.c print.c syntax.c builtin.c builtin2.c env.c exec_control.c\
-				signal_handler.c token.c interpolation2.c exec_cmd.c
+				signal_handler.c token.c interpolation2.c exec_cmd.c exit.c
 #				 exec_control.c 
 
 OFILES		=	$(CFILES:.c=.o)

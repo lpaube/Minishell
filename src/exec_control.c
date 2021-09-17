@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:29:29 by laube             #+#    #+#             */
-/*   Updated: 2021/09/17 18:08:05 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/17 19:10:40 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	execution_control(t_node *node)
 	else if (ft_strncmp(node->cmd, "cd", 3) == 0)
 		ft_cd(node);
 	else if (ft_strncmp(node->cmd, "env", 4) == 0)
-		ft_env();
+		ft_env(node);
 	else if (ft_strncmp(node->cmd, "unset", 6) == 0)
 		ft_unset(node);
 	else if (ft_strncmp(node->cmd, "export", 7) == 0)

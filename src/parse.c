@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 23:16:36 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/16 22:12:23 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/17 19:16:27 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ t_node	*parse(t_list *tokens)
 {
 	t_node	*cmds;
 
+	if (!tokens)
+		return (NULL);
 	cmds = NULL;
 	if (!is_valid_syntax(tokens))
 		return (NULL);

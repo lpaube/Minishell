@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 22:25:41 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/17 18:07:05 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/17 19:10:55 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	ft_export(t_node *node)
 	char	*var;
 
 	if (ft_strarr_size(node->args) < 2)
-		return (ft_env());
+		return (ft_env(node));
 	var = NULL;
 	can_perror = true;
 	i = 1;

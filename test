@@ -1,11 +1,6 @@
-export: not valid in this context: sdf-sd
-unset: not enough arguments
-unset: sdf-sdf: invalid parameter name
-cd: no such file or directory: sdf
 zsh: no such file or directory: /ls
 zsh: no such file or directory: ./ls
 zsh: no such file or directory: //ls
-pwd: too many arguments
 
 SECURITYSESSIONID=186a7
 USER=mleblanc
