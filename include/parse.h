@@ -6,12 +6,12 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 23:11:20 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/16 21:31:11 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/16 22:11:41 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#ifndef PARSE_H
+# define PARSE_H
 
 # include "node.h"
 

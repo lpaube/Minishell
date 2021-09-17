@@ -10,8 +10,8 @@ HEADERS		=	$(addprefix $(INC)/, $(HFILES))
 
 CFILES		=	main.c tokenizer.c tokenizer_utils.c parse.c interpolation.c\
 				node.c print.c syntax.c builtin.c builtin2.c env.c exec_control.c\
-				signal_handler.c token.c interpolation2.c
-#				exec_bin.c exec_control.c 
+				signal_handler.c token.c interpolation2.c exec_cmd.c
+#				 exec_control.c 
 
 OFILES		=	$(CFILES:.c=.o)
 OBJS		=	$(addprefix $(OBJ)/, $(OFILES))

@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 18:28:14 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/15 10:50:49 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/16 22:12:23 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ typedef struct s_redir
 
 typedef struct s_node
 {
-	char			*prg;
+	char			*cmd;
 	char			**args;
 	t_list			*redirs;
 	int				*fd;
