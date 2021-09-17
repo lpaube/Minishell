@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/16 21:30:57 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/16 22:20:50 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	minishell_loop(void)
 {
 	t_tokenizer	tok;
 	t_list		*lst;
-	t_node	*cmds;
+	t_node		*cmds;
 
 	tok.str = NULL;
 	cmds = NULL;
@@ -97,5 +97,4 @@ int	main(int argc, char **argv, char **env)
 	close(g_mini.saved_stdin);
 	close(g_mini.saved_stdout);
 	free(g_mini.fd);
-	//scanf("c");
 }

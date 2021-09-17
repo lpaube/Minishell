@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:16:38 by laube             #+#    #+#             */
-/*   Updated: 2021/09/16 22:17:24 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/16 22:20:06 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,35 +15,7 @@
 #include <sys/stat.h>
 #include <stdlib.h>
 
-// char	*validate_path(char *path, char *cmd)
-// {
-// 	char		**paths;
-// 	int			i;
-// 	char		*tmp_path;
-// 	char		*tentative_binpath;
-// 	struct stat	buff;
-
-// 	path = ft_strchr(path, '=') + 1;
-// 	paths = ft_split(path, ':');
-// 	i = 0;
-// 	while (paths[i])
-// 	{
-// 		tmp_path = ft_strjoin(paths[i], "/");
-// 		tentative_binpath = ft_strjoin(tmp_path, cmd);
-// 		free(tmp_path);
-// 		if (stat(tentative_binpath, &buff) == 0)
-// 		{
-// 			ft_free_strarr(paths);
-// 			return (tentative_binpath);
-// 		}
-// 		free(tentative_binpath);
-// 		i++;
-// 	}
-// 	ft_free_strarr(paths);
-// 	return (NULL);
-// }
-
-static char *find_cmd(char **dirs, const char *cmd)
+static char	*find_cmd(char **dirs, const char *cmd)
 {
 	struct stat	buf;
 	t_string	*str;
@@ -73,7 +45,7 @@ static char	*get_cmd_path(const char *cmd)
 	if (stat(cmd, &buf) == 0)
 		return (ft_strdup(cmd));
 	path = ft_getenv("PATH");
-	if (!path  || *cmd == '.')
+	if (!path || *cmd == '.')
 		return (NULL);
 	dirs = ft_split(path, ':');
 	absolute = find_cmd(dirs, cmd);
@@ -81,7 +53,7 @@ static char	*get_cmd_path(const char *cmd)
 	return (absolute);
 }
 
-void ft_cmd(t_node *node)
+void	ft_cmd(t_node *node)
 {
 	char	*path;
 
