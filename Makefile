@@ -6,7 +6,7 @@ OBJ			=	obj
 LIB			=	lib
 
 HFILES		=	tokenizer.h parse.h node.h execution.h minishell.h builtin.h\
-				print.h
+				eprint.h environment.h
 HEADERS		=	$(addprefix $(INC)/, $(HFILES))
 
 BUILTIN_DIR	=	$(SRC)/builtins
@@ -18,7 +18,7 @@ PARSING_C	=	interpolation.c interpolation2.c parse.c syntax.c token.c\
 				tokenizer.c tokenizer_utils.c
 PARSING_SRC	=	$(addprefix $(PARSING_DIR)/, $(PARSING_C))
 
-CFILES		=	main.c node.c print.c env_variables.c exec_control.c\
+CFILES		=	main.c node.c eprint.c environment.c exec_control.c\
 				signal_handler.c exec_cmd.c
 #				 exec_control.c 
 

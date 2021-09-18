@@ -6,14 +6,14 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 21:34:45 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/17 21:51:35 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/17 23:36:13 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 #include "minishell.h"
-#include "env_variables.h"
-#include "print.h"
+#include "environment.h"
+#include "eprint.h"
 
 static void	remove_var(const char *var)
 {
@@ -42,7 +42,7 @@ void	ft_unset(t_node *node)
 	bool	can_perror;
 
 	if (ft_strarr_size(node->args) < 2)
-		return (print_error(UNSET, NULL, "not enough arguments"));
+		return (pset_err(UNSET, NULL, "not enough arguments", GENERIC_ERR));
 	can_perror = true;
 	i = 1;
 	while (node->args[i])

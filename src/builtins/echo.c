@@ -6,11 +6,12 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 21:31:35 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/17 21:48:34 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/17 23:08:26 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
+#include "minishell.h"
 #include <stdio.h>
 
 void	ft_echo(t_node *node)
@@ -34,4 +35,5 @@ void	ft_echo(t_node *node)
 	}
 	if (nl)
 		printf("\n");
+	g_mini.code = 0;
 }

@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print.h                                            :+:      :+:    :+:   */
+/*   eprint.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 22:27:28 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/17 21:51:16 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/17 23:25:59 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PRINT_H
-# define PRINT_H
+#ifndef EPRINT_H
+# define EPRINT_H
 
 # include "node.h"
 # include <string.h>
 # include <sys/errno.h>
 
-# define SHELL_NAME "minishell"
-
-void	print_error(const char *prg, const char *v1, const char *v2);
+void	pset_err(const char *prg, const char *v1, const char *v2, int err);
 void	unexpected_token(const char *token);
-void	print_cmds(const t_node *cmds);
 
 #endif

@@ -6,12 +6,13 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 21:32:32 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/17 21:50:23 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/17 23:34:14 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
-#include "print.h"
+#include "eprint.h"
+#include "minishell.h"
 #include <stdio.h>
 
 #define CWD_BUFFER_SIZE (1024)
@@ -21,9 +22,9 @@ void	ft_pwd(t_node *node)
 	char	cwd[CWD_BUFFER_SIZE];
 
 	if (ft_strarr_size(node->args) > 1)
-		print_error(PWD, NULL, "too many arguments");
+		pset_err(PWD, NULL, "too many arguments", GENERIC_ERR);
 	else if (getcwd(cwd, CWD_BUFFER_SIZE) != NULL)
 		printf("%s\n", cwd);
 	else
-		print_error(PWD, NULL, strerror(errno));
+		pset_err(PWD, NULL, strerror(errno), GENERIC_ERR);
 }

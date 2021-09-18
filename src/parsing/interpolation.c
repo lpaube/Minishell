@@ -6,13 +6,13 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 18:56:07 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/17 21:47:38 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/17 23:36:29 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse.h"
 #include "minishell.h"
-#include "env_variables.h"
+#include "environment.h"
 #include <stdlib.h>
 
 static void	output_code(t_string out)

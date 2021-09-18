@@ -6,14 +6,14 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/17 21:26:47 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/17 23:26:31 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 #include "minishell.h"
 #include "parse.h"
-#include "print.h"
+#include "eprint.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <readline/readline.h>

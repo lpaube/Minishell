@@ -6,12 +6,12 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 19:16:01 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/16 22:29:54 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/17 23:36:46 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "node.h"
-#include "print.h"
+#include "eprint.h"
 
 static bool	is_next_token_string(t_list *tokens)
 {

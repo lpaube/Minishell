@@ -6,13 +6,13 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:16:38 by laube             #+#    #+#             */
-/*   Updated: 2021/09/17 22:43:26 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/17 23:28:28 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
-#include "env_variables.h"
-#include "print.h"
+#include "environment.h"
+#include "eprint.h"
 #include "minishell.h"
 #include <sys/stat.h>
 #include <sys/wait.h>
@@ -50,13 +50,13 @@ static char	*get_cmd_path(const char *cmd)
 	path = ft_getenv("PATH");
 	if (!path || *cmd == '.' | *cmd == '/')
 	{
-		print_error(SHELL_NAME, strerror(errno), cmd);
+		pset_err(SHELL_NAME, strerror(errno), cmd, ENV_ERR);
 		return (NULL);
 	}
 	dirs = ft_split(path, ':');
 	absolute = find_cmd(dirs, cmd);
 	if (!absolute)
-		print_error(SHELL_NAME, strerror(errno), cmd);
+		pset_err(SHELL_NAME, strerror(errno), cmd, ENV_ERR);
 	ft_free_strarr(dirs);
 	return (absolute);
 }
@@ -72,9 +72,9 @@ void	ft_cmd(t_node *node)
 		return ;
 	pid = fork();
 	if (pid == -1)
-		print_error(SHELL_NAME, NULL, strerror(errno));
+		pset_err(SHELL_NAME, NULL, strerror(errno), GENERIC_ERR);
 	if (pid == 0 && execve(path, node->args, g_mini.env) == -1)
-		print_error(SHELL_NAME, NULL, strerror(errno));
+		pset_err(SHELL_NAME, NULL, strerror(errno), GENERIC_ERR);
 	wait(&wstatus);
 	if (WIFEXITED(wstatus))
 		g_mini.code = WEXITSTATUS(wstatus);

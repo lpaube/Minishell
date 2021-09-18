@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/13 16:19:08 by laube             #+#    #+#             */
-/*   Updated: 2021/09/17 20:29:56 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/17 23:12:19 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	clean_fd(void)
 void	dest_pipe_write(void)
 {
 	if (pipe(g_mini.fd) == -1)
-		print_error("Pipe error");
+		pset_error("Pipe error");
 	dup2(g_mini.fd[1], 1);
 	close(g_mini.fd[1]);
 	g_mini.fd[1] = -1;

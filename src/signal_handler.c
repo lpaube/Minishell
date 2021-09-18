@@ -6,12 +6,12 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 19:10:13 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/17 21:26:52 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/17 23:27:02 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "print.h"
+#include "eprint.h"
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <stdlib.h>

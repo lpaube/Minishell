@@ -6,14 +6,14 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 21:36:30 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/17 21:49:38 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/17 23:33:28 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 #include "minishell.h"
-#include "env_variables.h"
-#include "print.h"
+#include "environment.h"
+#include "eprint.h"
 #include <stdlib.h>
 
 static void	add_var(const char *var)
@@ -44,7 +44,7 @@ void	process_error(const char *prg, const char *v1, const char *v2,
 {
 	if (*can_print)
 	{
-		print_error(prg, v1, v2);
+		pset_err(prg, v1, v2, GENERIC_ERR);
 		*can_print = false;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 18:54:03 by laube             #+#    #+#             */
-/*   Updated: 2021/09/17 20:28:49 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/17 23:12:19 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	get_source(void)
 	if (g_mini.node->op == INPUT || g_mini.node->op == HEREDOC)
 	{
 		if (pipe(g_mini.fd) != 0)
-			print_error("pipe failed in src_heredoc");
+			pset_error("pipe failed in src_heredoc");
 		while (g_mini.node->op == INPUT
 			|| g_mini.node->op == READ)
 		{
