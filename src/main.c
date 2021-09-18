@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/18 18:57:56 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/18 19:25:04 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void	minishell_init(char **env)
 	g_mini.fd[1] = 0;
 	g_mini.stdin_fd = dup(STDIN_FILENO);
 	g_mini.stdout_fd = dup(STDOUT_FILENO);
+	signal(SIGINT, newline);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 char	*get_line(char *line)
@@ -89,8 +91,6 @@ int	main(int argc, char **argv, char **env)
 {
 	(void)argc;
 	(void)argv;
-	signal(SIGINT, newline);
-	signal(SIGQUIT, SIG_IGN);
 	minishell_init(env);
 	minishell_loop();
 	close(g_mini.stdin_fd);
