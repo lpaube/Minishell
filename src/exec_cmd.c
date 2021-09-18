@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:16:38 by laube             #+#    #+#             */
-/*   Updated: 2021/09/17 21:51:04 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/17 22:43:26 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ static char	*get_cmd_path(const char *cmd)
 void	ft_cmd(t_node *node)
 {
 	char	*path;
-	int		pid;
+	pid_t	pid;
+	int		wstatus;
 
 	path = get_cmd_path(node->cmd);
 	if (!path)
@@ -72,12 +73,10 @@ void	ft_cmd(t_node *node)
 	pid = fork();
 	if (pid == -1)
 		print_error(SHELL_NAME, NULL, strerror(errno));
-	if (pid == 0)
-	{
-		if (execve(path, node->args, g_mini.env) == -1)
-			print_error(SHELL_NAME, NULL, strerror(errno));
-		return ;
-	}
-	wait(NULL);
+	if (pid == 0 && execve(path, node->args, g_mini.env) == -1)
+		print_error(SHELL_NAME, NULL, strerror(errno));
+	wait(&wstatus);
+	if (WIFEXITED(wstatus))
+		g_mini.code = WEXITSTATUS(wstatus);
 	free(path);
 }
