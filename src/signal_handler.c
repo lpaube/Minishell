@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 19:10:13 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/17 19:57:57 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/17 20:35:31 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 void	newline(int signal)
 {
 	(void)signal;
-	printf("\r"SHELL_NAME_C"   \n");
+	printf("\r" C_RED SHELL_NAME "%%" C_RST "  \n");
 	rl_replace_line("", 1);
 	if (g_mini.allow_signal)
 		rl_on_new_line();

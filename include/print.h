@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 22:27:28 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/17 19:55:25 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/17 20:30:51 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <sys/errno.h>
 
 # define SHELL_NAME "minishell"
-# define SHELL_NAME_C C_BRED"minishell:"C_RST
 
 void	print_error(const char *prg, const char *v1, const char *v2);
 void	unexpected_token(const char *token);
