@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/17 23:26:31 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/18 04:36:51 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,4 +92,5 @@ int	main(int argc, char **argv, char **env)
 	close(g_mini.saved_stdin);
 	close(g_mini.saved_stdout);
 	free(g_mini.fd);
+	exit(g_mini.code);
 }

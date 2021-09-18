@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_variables.h                                    :+:      :+:    :+:   */
+/*   environment.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 21:29:13 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/17 21:47:13 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/18 04:40:28 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENV_VARIABLES_H
-# define ENV_VARIABLES_H
+#ifndef ENVIRONMENT_H
+# define ENVIRONMENT_H
 
-#include <stdbool.h>
+# include <stdbool.h>
 
 char	*ft_getenv(const char *var);
 void	ft_setenv(const char *var, const char *value);

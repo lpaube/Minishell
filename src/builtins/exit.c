@@ -6,13 +6,62 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 19:08:24 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/17 19:09:22 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/18 04:29:20 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
+#include "eprint.h"
+#include "minishell.h"
+#include <sys/wait.h>
+#include <stdlib.h>
 
-void	ft_exit(t_node *node)
+static bool	is_number(const char *str)
 {
-	(void)node;
+	size_t	i;
+
+	i = 0;
+	if (*str == '-' || *str == '+')
+		++str;
+	return (ft_strall(str, ft_isdigit));
+}
+
+static void	exec_as_child(void)
+{
+	pid_t	pid;
+	int		code;
+
+	code = g_mini.code;
+	pid = fork();
+	if (pid == -1)
+	{
+		pset_err(EXIT, NULL, strerror(errno), GENERIC_ERR);
+		return ;
+	}
+	if (pid == 0)
+		exit(code);
+	wait(NULL);
+}
+
+bool	ft_exit(t_node *node)
+{
+	if (!node->next)
+		ft_putendl_fd(EXIT, STDERR_FILENO);
+	if (ft_strarr_size(node->args) > 2)
+	{
+		pset_err(EXIT, NULL, "too many arguments", GENERIC_ERR);
+		return (false);
+	}
+	if (ft_strarr_size(node->args) == 1)
+		g_mini.code = 1;
+	else if (!is_number(node->args[1]))
+		pset_err(EXIT, node->args[1], "numeric argument required", 2);
+	else
+		g_mini.code = ft_atoi(node->args[1]);
+	if (node->next)
+	{
+		exec_as_child();
+		return (false);
+	}
+	return (true);
 }

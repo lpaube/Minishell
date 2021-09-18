@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:29:29 by laube             #+#    #+#             */
-/*   Updated: 2021/09/17 23:53:37 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/18 04:30:36 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,8 @@
 #include "minishell.h"
 #include "execution.h"
 
-int	execution_control(t_node *node)
+bool	execution_control(t_node *node)
 {
-	g_mini.code = SUCCESS;
 	if (ft_strncmp(node->cmd, "echo", 5) == 0)
 		ft_echo(node);
 	else if (ft_strncmp(node->cmd, "pwd", 4) == 0)
@@ -31,16 +30,13 @@ int	execution_control(t_node *node)
 	else if (ft_strncmp(node->cmd, "export", 7) == 0)
 		ft_export(node);
 	else if (ft_strncmp(node->cmd, "exit", 5) == 0)
-	{
-		ft_exit(node);
-		return (1);
-	}
+		return (ft_exit(node));
 	else
 		ft_cmd(node);
-	return (0);
+	return (false);
 }
 
-int	main_control(t_node *node)
+bool	main_control(t_node *node)
 {
 	while (node)
 	{
@@ -51,8 +47,9 @@ int	main_control(t_node *node)
 		// if (operation_control() == 1)
 		// 	return (1);
 		if (node->cmd)
-			execution_control(node);
+			if (execution_control(node))
+				return (true);
 		node = node->next;
 	}
-	return (0);
+	return (false);
 }

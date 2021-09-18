@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 21:33:13 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/17 23:32:00 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/18 04:31:05 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,5 @@ void	ft_cd(t_node *node)
 	}
 	update_pwd(oldpwd);
 	free(oldpwd);
+	g_mini.code = SUCCESS;
 }

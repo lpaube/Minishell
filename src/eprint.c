@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 01:43:42 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/17 23:26:57 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/18 04:40:00 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	pset_err(const char *prg, const char *v1, const char *v2, int err)
 	}
 	ft_putendl_fd(v2, STDERR_FILENO);
 	g_mini.code = err;
-
 }
 
 void	unexpected_token(const char *token)

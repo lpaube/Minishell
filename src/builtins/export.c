@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 21:36:30 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/17 23:33:28 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/18 04:40:24 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #include "environment.h"
 #include "eprint.h"
 #include <stdlib.h>
+
+#define CTX_ERR "not valid in this context"
 
 static void	add_var(const char *var)
 {
@@ -66,8 +68,7 @@ void	ft_export(t_node *node)
 		var = var_name(node->args[i]);
 		if (!is_valid_var_name(var))
 		{
-			process_error(EXPORT, "not valid in this context", node->args[i],
-				&can_perror);
+			process_error(EXPORT, CTX_ERR, node->args[i], &can_perror);
 			++i;
 			continue ;
 		}
@@ -75,4 +76,6 @@ void	ft_export(t_node *node)
 		++i;
 	}
 	free(var);
+	if (can_perror)
+		g_mini.code = SUCCESS;
 }
