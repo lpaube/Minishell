@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 19:10:13 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/18 06:21:26 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/18 16:08:58 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,6 @@ void	child_proc_interrupt(int signal)
 void	child_proc_quit(int signal)
 {
 	(void)signal;
-	write(STDOUT_FILENO, "Quit\n", 5);
+	write(STDOUT_FILENO, "Quit: 3\n", 8);
 	g_mini.code = 131;
 }
