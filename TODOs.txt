@@ -1,4 +1,5 @@
 Pipes
 redirections
-builtin exit
 fix signal handling
+
+check error codes on mac
