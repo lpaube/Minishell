@@ -6,12 +6,14 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:16:38 by laube             #+#    #+#             */
-/*   Updated: 2021/09/16 23:02:38 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/17 20:03:05 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 #include "env.h"
+#include "print.h"
+#include <string.h>
 #include <sys/stat.h>
 #include <stdlib.h>
 
@@ -46,9 +48,14 @@ static char	*get_cmd_path(const char *cmd)
 		return (ft_strdup(cmd));
 	path = ft_getenv("PATH");
 	if (!path || *cmd == '.' | *cmd == '/')
+	{
+		print_error(SHELL_NAME, strerror(errno), cmd);
 		return (NULL);
+	}
 	dirs = ft_split(path, ':');
 	absolute = find_cmd(dirs, cmd);
+	if (!absolute)
+		print_error(SHELL_NAME, strerror(errno), cmd);
 	ft_free_strarr(dirs);
 	return (absolute);
 }
