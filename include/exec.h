@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 14:46:24 by laube             #+#    #+#             */
-/*   Updated: 2021/09/18 04:50:52 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/18 18:57:45 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 
 # include "node.h"
 
-bool	execute(t_node *phrase);
+bool	process_cmd(t_node *cmds);
+bool	execute(t_node *node);
 void	pipe_read(void);
 void	pipe_write(void);
 int		operation_control(void);

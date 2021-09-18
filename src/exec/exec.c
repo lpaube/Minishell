@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:29:29 by laube             #+#    #+#             */
-/*   Updated: 2021/09/18 04:52:26 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/18 18:57:24 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,23 @@ static bool	dispatch_cmd(t_node *node)
 
 bool	execute(t_node *node)
 {
-	while (node)
+	if (node->cmd)
+		node->cmd = interpolate(node->cmd);
+	interpolate_arr(node->args);
+	interpolate_redirs(node->redirs);
+	if (node->cmd)
+		if (dispatch_cmd(node))
+			return (true);
+	return (false);
+}
+
+bool	process_cmd(t_node *cmds)
+{
+	while (cmds)
 	{
-		if (node->cmd)
-			node->cmd = interpolate(node->cmd);
-		interpolate_arr(node->args);
-		interpolate_redirs(node->redirs);
-		// if (operation_control() == 1)
-		// 	return (1);
-		if (node->cmd)
-			if (dispatch_cmd(node))
-				return (true);
-		node = node->next;
+		if (execute(cmds) && !cmds->next)
+			return (true);
+		cmds = cmds->next;
 	}
 	return (false);
 }

@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/18 17:48:35 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/18 18:57:56 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	minishell_loop(void)
 		}
 		lst = tokenize(&tok);
 		cmds = parse(lst);
-		if (execute(cmds))
+		if (process_cmd(cmds))
 			return (free_memory(&lst, &cmds, tok.str));
 		free_memory(&lst, &cmds, tok.str);
 	}
