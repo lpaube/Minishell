@@ -6,11 +6,13 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 18:54:03 by laube             #+#    #+#             */
-/*   Updated: 2021/09/17 20:23:14 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/17 20:28:49 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include "minishell.h"
+#include <fcntl.h>
 
 void	src_pipe_read(void)
 {
@@ -24,7 +26,7 @@ void	src_red_input(void)
 	int		open_fd;
 	char	*line;
 
-	open_fd = open(g_mini.phrase->next->name, O_RDONLY);
+	open_fd = open(g_mini.node->next->name, O_RDONLY);
 	while (get_next_line(open_fd, &line) > 0)
 	{
 		ft_putstr_fd(line, g_mini.fd[1]);
@@ -40,8 +42,8 @@ void	src_heredoc(void)
 	char	*line;
 	char	*limiter;
 
-	if (g_mini.phrase->next)
-		limiter = g_mini.phrase->next->name;
+	if (g_mini.node->next)
+		limiter = g_mini.node->next->name;
 	else
 		limiter = NULL;
 	ft_putstr_fd("> ", 1);
@@ -61,40 +63,40 @@ void	src_heredoc(void)
 
 void	get_source(void)
 {
-	t_node	*phrase_og;
+	t_node	*node_og;
 
-	phrase_og = g_mini.phrase;
-	if (g_mini.phrase->prev && g_mini.phrase->prev->op == PIPE)
+	node_og = g_mini.node;
+	if (g_mini.node->prev && g_mini.node->prev->op == PIPE)
 		src_pipe_read();
-	if (g_mini.phrase->op == INPUT || g_mini.phrase->op == READ)
+	if (g_mini.node->op == INPUT || g_mini.node->op == HEREDOC)
 	{
 		if (pipe(g_mini.fd) != 0)
 			print_error("pipe failed in src_heredoc");
-		while (g_mini.phrase->op == INPUT
-			|| g_mini.phrase->op == READ)
+		while (g_mini.node->op == INPUT
+			|| g_mini.node->op == READ)
 		{
-			if (g_mini.phrase->op == INPUT)
+			if (g_mini.node->op == INPUT)
 				src_red_input();
-			if (g_mini.phrase->op == READ)
+			if (g_mini.node->op == READ)
 				src_heredoc();
-			g_mini.phrase = g_mini.phrase->next;
+			g_mini.node = g_mini.node->next;
 		}
 		dup2(g_mini.fd[0], 0);
 		g_mini.fd[0] = -1;
 		close(g_mini.fd[1]);
 		g_mini.fd[1] = -1;
 	}
-	g_mini.phrase = phrase_og;
+	g_mini.node = node_og;
 }
 
 int	operation_control(void)
 {
 	get_source();
 	get_dest();
-	if (execution_control(g_mini.phrase) == 1)
+	if (execution_control(g_mini.node) == 1)
 		return (1);
 	clean_fd();
-	while (g_mini.phrase->op == INPUT || g_mini.phrase->op == READ)
-		g_mini.phrase = g_mini.phrase->next;
+	while (g_mini.node->op == INPUT || g_mini.node->op == HEREDOC)
+		g_mini.node = g_mini.node->next;
 	return (0);
 }

@@ -6,11 +6,13 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/13 16:19:08 by laube             #+#    #+#             */
-/*   Updated: 2021/09/17 20:23:21 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/17 20:29:56 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include "minishell.h"
+#include <fcntl.h>
 
 void	clean_fd(void)
 {
@@ -30,31 +32,30 @@ void	dest_pipe_write(void)
 void	dest_red_output(void)
 {
 	int			open_fd;
-	t_node	*phrase_og;
+	t_node	*node_og;
 
-	phrase_og = g_mini.phrase;
-	while (g_mini.phrase->op == OUTPUT || g_mini.phrase->op == APPEND)
+	node_og = g_mini.node;
+	while (g_mini.node->op == OUTPUT || g_mini.node->op == APPEND)
 	{
-		if (g_mini.phrase->op == OUTPUT)
-			open_fd = open(g_mini.phrase->next->name,
+		if (g_mini.node->op == OUTPUT)
+			open_fd = open(g_mini.node->next->name,
 					O_RDWR | O_CREAT | O_TRUNC, 0644);
-		if (g_mini.phrase->op == APPEND)
-			open_fd = open(g_mini.phrase->next->name,
+		if (g_mini.node->op == APPEND)
+			open_fd = open(g_mini.node->next->name,
 					O_RDWR | O_APPEND | O_CREAT, 0644);
 		dup2(open_fd, 1);
 		close(open_fd);
-		execution_control(phrase_og);
-		g_mini.phrase = g_mini.phrase->next;
+		execution_control(node_og);
+		g_mini.node = g_mini.node->next;
 	}
-	g_minishell.phrase = g_minishell.phrase->next;
+	g_mini.node = g_mini.node->next;
 	clean_fd();
-	exit(0);
 }
 
 void	get_dest(void)
 {
-	if (g_mini.phrase->op == PIPE)
+	if (g_mini.node->op == PIPE)
 		dest_pipe_write();
-	if (g_mini.phrase->op == OUTPUT || g_mini.phrase->op == APPEND)
+	if (g_mini.node->op == OUTPUT || g_mini.node->op == APPEND)
 		dest_red_output();
 }
