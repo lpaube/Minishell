@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/18 06:21:07 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/18 16:44:24 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,10 @@ void	minishell_loop(void)
 		if (!tok.str)
 			return (free_memory(&lst, &cmds, tok.str));
 		if (!*tok.str)
+		{
+			free(tok.str);
 			continue ;
+		}
 		lst = tokenize(&tok);
 		cmds = parse(lst);
 		if (execute(cmds))
