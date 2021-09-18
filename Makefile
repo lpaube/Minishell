@@ -9,14 +9,22 @@ HFILES		=	tokenizer.h parse.h node.h execution.h minishell.h builtin.h\
 				print.h
 HEADERS		=	$(addprefix $(INC)/, $(HFILES))
 
-CFILES		=	main.c tokenizer.c tokenizer_utils.c parse.c interpolation.c\
-				node.c print.c syntax.c builtin.c builtin2.c env.c exec_control.c\
-				signal_handler.c token.c interpolation2.c exec_cmd.c exit.c
+BUILTIN_DIR	=	$(SRC)/builtins
+BUILTIN_C	=	cd.c echo.c env.c exit.c export.c pwd.c unset.c
+BUILTIN_SRC	=	$(addprefix $(BUILTIN_DIR)/, $(BUILTIN_C))
+
+PARSING_DIR	=	$(SRC)/parsing
+PARSING_C	=	interpolation.c interpolation2.c parse.c syntax.c token.c\
+				tokenizer.c tokenizer_utils.c
+PARSING_SRC	=	$(addprefix $(PARSING_DIR)/, $(PARSING_C))
+
+CFILES		=	main.c node.c print.c env_variables.c exec_control.c\
+				signal_handler.c exec_cmd.c
 #				 exec_control.c 
 
-OFILES		=	$(CFILES:.c=.o)
+OFILES		=	$(CFILES:.c=.o) $(BUILTIN_C:.c=.o) $(PARSING_C:.c=.o)
 OBJS		=	$(addprefix $(OBJ)/, $(OFILES))
-SRCS		=	$(addprefix $(SRC)/, $(CFILES))
+SRCS		=	$(addprefix $(SRC)/, $(CFILES)) $(BUILTIN_SRC) $(PARSING_SRC)
 
 FTDIR		=	libft
 LIBFT		=	ft
@@ -26,7 +34,7 @@ CC			=	clang
 CFLAGS		=	-Wall -Wextra -Werror -g
 RM			=	rm -rf
 
-VPATH		= $(SRC)
+VPATH		= $(SRC) $(BUILTIN_DIR) $(PARSING_DIR)
 
 $(OBJ)/%.o:	%.c
 			$(CC) $(CFLAGS) -I$(INC) -I$(FTDIR) -c $< -o $@

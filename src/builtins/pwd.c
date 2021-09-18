@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print.h                                            :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/16 22:27:28 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/17 21:51:16 by mleblanc         ###   ########.fr       */
+/*   Created: 2021/09/17 21:32:32 by mleblanc          #+#    #+#             */
+/*   Updated: 2021/09/17 21:50:23 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PRINT_H
-# define PRINT_H
+#include "builtin.h"
+#include "print.h"
+#include <stdio.h>
 
-# include "node.h"
-# include <string.h>
-# include <sys/errno.h>
+#define CWD_BUFFER_SIZE (1024)
 
-# define SHELL_NAME "minishell"
+void	ft_pwd(t_node *node)
+{
+	char	cwd[CWD_BUFFER_SIZE];
 
-void	print_error(const char *prg, const char *v1, const char *v2);
-void	unexpected_token(const char *token);
-void	print_cmds(const t_node *cmds);
-
-#endif
+	if (ft_strarr_size(node->args) > 1)
+		print_error(PWD, NULL, "too many arguments");
+	else if (getcwd(cwd, CWD_BUFFER_SIZE) != NULL)
+		printf("%s\n", cwd);
+	else
+		print_error(PWD, NULL, strerror(errno));
+}

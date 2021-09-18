@@ -1,23 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.h                                              :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/15 21:29:13 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/16 21:34:30 by mleblanc         ###   ########.fr       */
+/*   Created: 2021/09/17 21:31:35 by mleblanc          #+#    #+#             */
+/*   Updated: 2021/09/17 21:48:34 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENV_H
-# define ENV_H
+#include "builtin.h"
+#include <stdio.h>
 
-#include <stdbool.h>
+void	ft_echo(t_node *node)
+{
+	bool	nl;
+	int		i;
 
-char	*ft_getenv(const char *var);
-void	ft_setenv(const char *var, const char *value);
-char	*var_name(const char *var);
-bool	is_valid_var_name(const char *var);
-
-#endif
+	nl = true;
+	i = 1;
+	while ((node->args)[i] && ft_strncmp((node->args)[i], "-n", 3) == 0)
+	{
+		nl = false;
+		++i;
+	}
+	while ((node->args)[i])
+	{
+		printf("%s", (node->args)[i]);
+		++i;
+		if ((node->args)[i])
+			printf(" ");
+	}
+	if (nl)
+		printf("\n");
+}

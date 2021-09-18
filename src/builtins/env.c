@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print.h                                            :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/16 22:27:28 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/17 21:51:16 by mleblanc         ###   ########.fr       */
+/*   Created: 2021/09/17 21:34:03 by mleblanc          #+#    #+#             */
+/*   Updated: 2021/09/17 21:48:52 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PRINT_H
-# define PRINT_H
+#include "builtin.h"
+#include "minishell.h"
+#include "print.h"
+#include <stdio.h>
 
-# include "node.h"
-# include <string.h>
-# include <sys/errno.h>
+void	ft_env(t_node *node)
+{
+	size_t	i;
 
-# define SHELL_NAME "minishell"
-
-void	print_error(const char *prg, const char *v1, const char *v2);
-void	unexpected_token(const char *token);
-void	print_cmds(const t_node *cmds);
-
-#endif
+	if (ft_strarr_size(node->args) > 1)
+		return (print_error(ENV, NULL, "too many arguments"));
+	i = 0;
+	while (g_mini.env[i])
+	{
+		printf("%s\n", g_mini.env[i]);
+		++i;
+	}
+}

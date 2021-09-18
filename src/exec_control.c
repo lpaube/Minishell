@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:29:29 by laube             #+#    #+#             */
-/*   Updated: 2021/09/17 20:25:32 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/17 22:06:12 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,14 @@ int	main_control(t_node *node)
 {
 	while (node)
 	{
-		node->cmd = interpolate(node->cmd);
+		if (node->cmd)
+			node->cmd = interpolate(node->cmd);
 		interpolate_arr(node->args);
 		interpolate_redirs(node->redirs);
 		// if (operation_control() == 1)
 		// 	return (1);
-		execution_control(node);
+		if (node->cmd)
+			execution_control(node);
 		node = node->next;
 	}
 	return (0);

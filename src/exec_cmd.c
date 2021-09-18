@@ -6,16 +6,16 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:16:38 by laube             #+#    #+#             */
-/*   Updated: 2021/09/17 20:20:20 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/17 21:51:04 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
-#include "env.h"
+#include "env_variables.h"
 #include "print.h"
 #include "minishell.h"
-#include <string.h>
 #include <sys/stat.h>
+#include <sys/wait.h>
 #include <stdlib.h>
 
 static char	*find_cmd(char **dirs, const char *cmd)
@@ -78,6 +78,6 @@ void	ft_cmd(t_node *node)
 			print_error(SHELL_NAME, NULL, strerror(errno));
 		return ;
 	}
-	wait(0);
+	wait(NULL);
 	free(path);
 }
