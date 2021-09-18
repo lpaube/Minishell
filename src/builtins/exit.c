@@ -6,13 +6,13 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 19:08:24 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/18 04:29:20 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/18 06:22:46 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
-#include "eprint.h"
 #include "minishell.h"
+#include <string.h>
 #include <sys/wait.h>
 #include <stdlib.h>
 

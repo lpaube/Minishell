@@ -6,14 +6,12 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 21:36:30 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/18 04:40:24 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/18 06:23:27 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 #include "minishell.h"
-#include "environment.h"
-#include "eprint.h"
 #include <stdlib.h>
 
 #define CTX_ERR "not valid in this context"

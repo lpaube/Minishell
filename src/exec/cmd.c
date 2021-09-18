@@ -6,17 +6,17 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:16:38 by laube             #+#    #+#             */
-/*   Updated: 2021/09/18 04:53:23 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/18 06:25:05 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
-#include "environment.h"
-#include "eprint.h"
 #include "minishell.h"
 #include <sys/stat.h>
 #include <sys/wait.h>
 #include <stdlib.h>
+#include <signal.h>
+#include <string.h>
 
 static char	*find_cmd(char **dirs, const char *cmd)
 {
@@ -72,10 +72,17 @@ void	ft_cmd(t_node *node)
 		return ;
 	pid = fork();
 	if (pid == -1)
-		pset_err(SHELL_NAME, NULL, strerror(errno), GENERIC_ERR);
+	{
+		free(path);
+		return (pset_err(SHELL_NAME, NULL, strerror(errno), GENERIC_ERR));
+	}
+	signal(SIGINT, child_proc_interrupt);
+	signal(SIGQUIT, child_proc_quit);
 	if (pid == 0 && execve(path, node->args, g_mini.env) == -1)
 		pset_err(SHELL_NAME, NULL, strerror(errno), GENERIC_ERR);
 	wait(&wstatus);
+	signal(SIGINT, newline);
+	signal(SIGQUIT, SIG_IGN);
 	if (WIFEXITED(wstatus))
 		g_mini.code = WEXITSTATUS(wstatus);
 	free(path);

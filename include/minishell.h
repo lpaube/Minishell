@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 13:33:08 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/18 04:03:33 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/18 06:22:57 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include "node.h"
+# include <sys/errno.h>
 
 # define SHELL_NAME "minishell"
 
@@ -34,7 +35,16 @@ typedef struct s_minishell
 
 extern t_minishell	g_mini;
 
+char	*ft_getenv(const char *var);
+void	ft_setenv(const char *var, const char *value);
+char	*var_name(const char *var);
+bool	is_valid_var_name(const char *var);
+
+void	pset_err(const char *prg, const char *v1, const char *v2, int err);
+void	unexpected_token(const char *token);
+
 void	newline(int signal);
-void	nothing(int signal);
+void	child_proc_quit(int signal);
+void	child_proc_interrupt(int signal);
 
 #endif

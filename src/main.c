@@ -6,14 +6,13 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/18 05:56:31 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/18 06:21:07 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "minishell.h"
 #include "parse.h"
-#include "eprint.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <readline/readline.h>
@@ -88,7 +87,7 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	signal(SIGINT, newline);
-	signal(SIGQUIT, nothing);
+	signal(SIGQUIT, SIG_IGN);
 	minishell_init();
 	g_mini.env = ft_dup_strarr(env);
 	minishell_loop();

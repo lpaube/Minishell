@@ -6,11 +6,10 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 01:43:42 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/18 04:40:00 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/18 06:21:15 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "eprint.h"
 #include "minishell.h"
 #include <unistd.h>
 #include <stdio.h>

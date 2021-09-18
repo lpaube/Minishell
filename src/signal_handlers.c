@@ -6,31 +6,36 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 19:10:13 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/18 05:59:38 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/18 06:21:26 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "eprint.h"
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <stdlib.h>
-#include <stdio.h>
+#include <unistd.h>
 
 void	newline(int signal)
 {
 	(void)signal;
-	printf("\n");
+	write(STDOUT_FILENO, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
 	g_mini.code = 130;
 }
 
-void	nothing(int signal)
+void	child_proc_interrupt(int signal)
 {
 	(void)signal;
-	rl_on_new_line();
-	rl_redisplay();
-	g_mini.code = 0;
+	write(STDOUT_FILENO, "\n", 1);
+	g_mini.code = 130;
+}
+
+void	child_proc_quit(int signal)
+{
+	(void)signal;
+	write(STDOUT_FILENO, "Quit\n", 5);
+	g_mini.code = 131;
 }

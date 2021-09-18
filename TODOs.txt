@@ -1,5 +1,4 @@
 Pipes
 redirections
-fix signal handling
 
 check error codes on mac
