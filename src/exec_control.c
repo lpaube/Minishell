@@ -6,16 +6,18 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:29:29 by laube             #+#    #+#             */
-/*   Updated: 2021/09/17 22:06:12 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/17 23:53:37 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 #include "parse.h"
+#include "minishell.h"
 #include "execution.h"
 
 int	execution_control(t_node *node)
 {
+	g_mini.code = SUCCESS;
 	if (ft_strncmp(node->cmd, "echo", 5) == 0)
 		ft_echo(node);
 	else if (ft_strncmp(node->cmd, "pwd", 4) == 0)

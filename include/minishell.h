@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 13:33:08 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/17 23:27:46 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/17 23:53:12 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 # define SHELL_NAME "minishell"
 
+# define SUCCESS 0
 # define GENERIC_ERR 1
 # define SYNTAX_ERR 2
 # define ENV_ERR 127
