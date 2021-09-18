@@ -1,4 +1,2 @@
 Pipes
 redirections
-
-check error codes on mac
