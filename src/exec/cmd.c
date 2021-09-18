@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:16:38 by laube             #+#    #+#             */
-/*   Updated: 2021/09/18 16:20:17 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/18 18:17:08 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	ft_cmd(t_node *node)
 	signal(SIGQUIT, child_proc_quit);
 	if (pid == 0 && execve(path, node->args, g_mini.env) == -1)
 		pset_err(SHELL_NAME, NULL, strerror(errno), GENERIC_ERR);
-	wait(&wstatus);
+	waitpid(pid, &wstatus, 0);
 	signal(SIGINT, newline);
 	signal(SIGQUIT, SIG_IGN);
 	if (WIFEXITED(wstatus))

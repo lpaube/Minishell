@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 19:08:24 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/18 16:41:20 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/18 17:55:53 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	exec_as_child(void)
 	}
 	if (pid == 0)
 		exit(code);
-	wait(NULL);
+	waitpid(pid, NULL, 0);
 }
 
 bool	ft_exit(t_node *node)

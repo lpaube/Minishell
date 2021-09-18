@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/18 16:44:24 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/18 17:48:35 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@
 
 t_minishell	g_mini;
 
-void	minishell_init(void)
+void	minishell_init(char **env)
 {
-	g_mini.env = NULL;
+	g_mini.env = ft_dup_strarr(env);
 	g_mini.code = 0;
-	g_mini.fd = malloc(2 * sizeof(int));
-	g_mini.saved_stdin = dup(0);
-	g_mini.saved_stdout = dup(1);
-	g_mini.allow_signal = 1;
+	g_mini.fd[0] = 0;
+	g_mini.fd[1] = 0;
+	g_mini.stdin_fd = dup(STDIN_FILENO);
+	g_mini.stdout_fd = dup(STDOUT_FILENO);
 }
 
 char	*get_line(char *line)
@@ -91,11 +91,9 @@ int	main(int argc, char **argv, char **env)
 	(void)argv;
 	signal(SIGINT, newline);
 	signal(SIGQUIT, SIG_IGN);
-	minishell_init();
-	g_mini.env = ft_dup_strarr(env);
+	minishell_init(env);
 	minishell_loop();
-	close(g_mini.saved_stdin);
-	close(g_mini.saved_stdout);
-	free(g_mini.fd);
+	close(g_mini.stdin_fd);
+	close(g_mini.stdout_fd);
 	exit(g_mini.code);
 }
