@@ -6,11 +6,11 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/18 04:36:51 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/18 04:57:11 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execution.h"
+#include "exec.h"
 #include "minishell.h"
 #include "parse.h"
 #include "eprint.h"
@@ -74,7 +74,7 @@ void	minishell_loop(void)
 			continue ;
 		lst = tokenize(&tok);
 		cmds = parse(lst);
-		if (main_control(cmds))
+		if (execute(cmds))
 			return (free_memory(&lst, &cmds, tok.str));
 		free_memory(&lst, &cmds, tok.str);
 	}

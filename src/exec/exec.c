@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_control.c                                     :+:      :+:    :+:   */
+/*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:29:29 by laube             #+#    #+#             */
-/*   Updated: 2021/09/18 04:30:36 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/18 04:52:26 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 #include "parse.h"
 #include "minishell.h"
-#include "execution.h"
+#include "exec.h"
 
-bool	execution_control(t_node *node)
+static bool	dispatch_cmd(t_node *node)
 {
 	if (ft_strncmp(node->cmd, "echo", 5) == 0)
 		ft_echo(node);
@@ -36,7 +36,7 @@ bool	execution_control(t_node *node)
 	return (false);
 }
 
-bool	main_control(t_node *node)
+bool	execute(t_node *node)
 {
 	while (node)
 	{
@@ -47,7 +47,7 @@ bool	main_control(t_node *node)
 		// if (operation_control() == 1)
 		// 	return (1);
 		if (node->cmd)
-			if (execution_control(node))
+			if (dispatch_cmd(node))
 				return (true);
 		node = node->next;
 	}

@@ -4,37 +4,37 @@ SRC			=	src
 INC			=	include
 OBJ			=	obj
 LIB			=	lib
-
-HFILES		=	tokenizer.h parse.h node.h execution.h minishell.h builtin.h\
-				eprint.h environment.h
-HEADERS		=	$(addprefix $(INC)/, $(HFILES))
-
-BUILTIN_DIR	=	$(SRC)/builtins
-BUILTIN_C	=	cd.c echo.c env.c exit.c export.c pwd.c unset.c
-BUILTIN_SRC	=	$(addprefix $(BUILTIN_DIR)/, $(BUILTIN_C))
-
-PARSING_DIR	=	$(SRC)/parsing
-PARSING_C	=	interpolation.c interpolation2.c parse.c syntax.c token.c\
-				tokenizer.c tokenizer_utils.c
-PARSING_SRC	=	$(addprefix $(PARSING_DIR)/, $(PARSING_C))
-
-CFILES		=	main.c node.c eprint.c environment.c exec_control.c\
-				signal_handler.c exec_cmd.c
-#				 exec_control.c 
-
-OFILES		=	$(CFILES:.c=.o) $(BUILTIN_C:.c=.o) $(PARSING_C:.c=.o)
-OBJS		=	$(addprefix $(OBJ)/, $(OFILES))
-SRCS		=	$(addprefix $(SRC)/, $(CFILES)) $(BUILTIN_SRC) $(PARSING_SRC)
+CC			=	clang
+CFLAGS		=	-Wall -Wextra -Werror -g
+RM			=	rm -rf
 
 FTDIR		=	libft
 LIBFT		=	ft
 MAKELIBFT	=	$(MAKE) -C $(FTDIR)
 
-CC			=	clang
-CFLAGS		=	-Wall -Wextra -Werror -g
-RM			=	rm -rf
+HFILES		=	tokenizer.h parse.h node.h exec.h minishell.h builtin.h\
+				eprint.h environment.h
+BUILTIN_C	=	cd.c echo.c env.c exit.c export.c pwd.c unset.c
+PARSING_C	=	interpolation.c interpolation2.c parse.c syntax.c token.c\
+				tokenizer.c tokenizer_utils.c
+EXEC_C		=	cmd.c exec.c
+CFILES		=	main.c node.c eprint.c environment.c signal_handler.c
 
-VPATH		= $(SRC) $(BUILTIN_DIR) $(PARSING_DIR)
+BUILTIN_DIR	=	$(SRC)/builtins
+PARSING_DIR	=	$(SRC)/parsing
+EXEC_DIR	=	$(SRC)/exec
+
+BUILTIN_SRC	=	$(addprefix $(BUILTIN_DIR)/, $(BUILTIN_C))
+PARSING_SRC	=	$(addprefix $(PARSING_DIR)/, $(PARSING_C))
+EXEC_SRC	=	$(addprefix $(EXEC_DIR)/, $(EXEC_C))
+
+OFILES		=	$(CFILES:.c=.o) $(BUILTIN_C:.c=.o) $(PARSING_C:.c=.o) $(EXEC_C:.c=.o)
+
+HEADERS		=	$(addprefix $(INC)/, $(HFILES))
+OBJS		=	$(addprefix $(OBJ)/, $(OFILES))
+SRCS		=	$(addprefix $(SRC)/, $(CFILES)) $(BUILTIN_SRC) $(PARSING_SRC) $(EXEC_SRC)
+
+VPATH		=	$(SRC) $(BUILTIN_DIR) $(PARSING_DIR) $(EXEC_DIR)
 
 $(OBJ)/%.o:	%.c
 			$(CC) $(CFLAGS) -I$(INC) -I$(FTDIR) -c $< -o $@
