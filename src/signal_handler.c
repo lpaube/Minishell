@@ -3,38 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
+/*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 19:10:13 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/12 15:50:56 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/17 19:57:57 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <stdlib.h>
+#include "minishell.h"
+#include "print.h"
 #include <readline/readline.h>
 #include <readline/history.h>
-#include "minishell.h"
+#include <stdlib.h>
 #include <stdio.h>
 
 void	newline(int signal)
 {
 	(void)signal;
-	ft_printf("\rminishell:   \n");
+	printf("\r"SHELL_NAME_C"   \n");
 	rl_replace_line("", 1);
-	if (g_minishell.allow_signal)
+	if (g_mini.allow_signal)
 		rl_on_new_line();
-	g_minishell.code = 130;
+	g_mini.code = 130;
 	rl_redisplay();
 }
 
 void	nothing(int signal)
 {
 	(void)signal;
-	if (g_minishell.allow_signal)
+	if (g_mini.allow_signal)
 		rl_on_new_line();
 	else
 		printf("\n");
-	g_minishell.code = 0;
+	g_mini.code = 0;
 	rl_redisplay();
 }

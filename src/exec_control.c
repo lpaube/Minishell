@@ -3,51 +3,52 @@
 /*                                                        :::      ::::::::   */
 /*   exec_control.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
+/*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:29:29 by laube             #+#    #+#             */
-/*   Updated: 2021/09/15 13:04:33 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/17 20:23:37 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "builtin.h"
+#include "parse.h"
 #include "execution.h"
 
-int	execution_control(t_phrase *phrase)
+int	execution_control(t_node *node)
 {
-	if (!phrase)
-		return (0);
-	if (ft_strnstr(phrase->name, "echo", 5))
-		ft_echo(phrase);
-	else if (ft_strnstr(phrase->name, "cd", 3))
-		ft_cd(phrase);
-	else if (ft_strnstr(phrase->name, "pwd", 4))
-		ft_pwd(phrase);
-	else if (ft_strnstr(phrase->name, "export", 7))
-		ft_export(phrase->args[1]);
-	else if (ft_strnstr(phrase->name, "unset", 6))
-		ft_unset(phrase);
-	else if (ft_strnstr(phrase->name, "env", 4))
-		ft_env();
-	else if (ft_strnstr(phrase->name, "exit", 5))
+	if (ft_strncmp(node->cmd, "echo", 5) == 0)
+		ft_echo(node);
+	else if (ft_strncmp(node->cmd, "pwd", 4) == 0)
+		ft_pwd(node);
+	else if (ft_strncmp(node->cmd, "cd", 3) == 0)
+		ft_cd(node);
+	else if (ft_strncmp(node->cmd, "env", 4) == 0)
+		ft_env(node);
+	else if (ft_strncmp(node->cmd, "unset", 6) == 0)
+		ft_unset(node);
+	else if (ft_strncmp(node->cmd, "export", 7) == 0)
+		ft_export(node);
+	else if (ft_strncmp(node->cmd, "exit", 5) == 0)
 	{
-		ft_exit(phrase);
+		ft_exit(node);
 		return (1);
 	}
 	else
-		ft_binary(phrase);
+		ft_cmd(node);
 	return (0);
 }
 
-int	main_control(t_phrase *phrase)
+int	main_control(t_node *node)
 {
-	g_minishell.phrase = phrase;
-	while (g_minishell.phrase)
+	while (node)
 	{
-		g_minishell.phrase->name = parse_spec_char(g_minishell.phrase->name);
-		parse_special_chars_arr(g_minishell.phrase->args);
-		if (operation_control() == 1)
-			return (1);
-		g_minishell.phrase = g_minishell.phrase->next;
+		node->cmd = interpolate(node->cmd);
+		interpolate_arr(node->args);
+		interpolate_redirs(node->redirs);
+		// if (operation_control() == 1)
+		// 	return (1);
+		execution_control(node);
+		node = node->next;
 	}
 	return (0);
 }

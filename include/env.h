@@ -1,33 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/08 13:33:08 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/17 18:56:06 by mleblanc         ###   ########.fr       */
+/*   Created: 2021/09/15 21:29:13 by mleblanc          #+#    #+#             */
+/*   Updated: 2021/09/16 21:34:30 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef ENV_H
+# define ENV_H
 
-# include "node.h"
+#include <stdbool.h>
 
-typedef struct s_minishell
-{
-	char		**env;
-	int			code;
-	int			*fd;
-	int			saved_stdin;
-	int			saved_stdout;
-	int			allow_signal;
-}	t_minishell;
-
-extern t_minishell	g_mini;
-
-void	newline(int signal);
-void	nothing(int signal);
+char	*ft_getenv(const char *var);
+void	ft_setenv(const char *var, const char *value);
+char	*var_name(const char *var);
+bool	is_valid_var_name(const char *var);
 
 #endif

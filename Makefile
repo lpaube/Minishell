@@ -5,14 +5,15 @@ INC			=	include
 OBJ			=	obj
 LIB			=	lib
 
-HFILES		=	tokenizer.h parser.h print.h phrase.h execution.h minishell.h\
-				signal_handler.h
+HFILES		=	tokenizer.h parse.h node.h execution.h minishell.h builtin.h\
+				print.h
 HEADERS		=	$(addprefix $(INC)/, $(HFILES))
 
-CFILES		=	main.c tokenizer.c tokenizer_utils.c error.c parser.c parser2.c\
-				phrase.c print.c exec_bin.c exec_cmd1.c exec_cmd2.c\
-				exec_control.c exec_utils.c exec_operator1.c exec_operator2.c\
-				signal_handler.c parser3.c
+CFILES		=	main.c tokenizer.c tokenizer_utils.c parse.c interpolation.c\
+				node.c print.c syntax.c builtin.c builtin2.c env.c exec_control.c\
+				signal_handler.c token.c interpolation2.c exec_cmd.c exit.c
+#				 exec_control.c 
+
 OFILES		=	$(CFILES:.c=.o)
 OBJS		=	$(addprefix $(OBJ)/, $(OFILES))
 SRCS		=	$(addprefix $(SRC)/, $(CFILES))
@@ -39,6 +40,10 @@ $(OBJ):
 
 all:		$(NAME)
 
+linux:		$(OBJ) $(OBJS)
+			@$(MAKELIBFT)
+			$(CC) $(OBJS) -L$(FTDIR) -l$(LIBFT) -lreadline -o $(NAME)
+
 clean:
 			@$(MAKELIBFT) clean
 			@$(RM) $(OBJS)
@@ -53,4 +58,4 @@ norme:
 			@$(MAKELIBFT) norme
 			@norminette $(SRCS) $(HEADERS)
 
-.PHONY:		all clean fclean re norme
+.PHONY:		all clean fclean re norme linux

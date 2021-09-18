@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 15:15:12 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/14 12:56:38 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/14 22:32:41 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,20 @@
 # include "libft.h"
 
 # define OP ">|<"
+
+typedef enum e_type
+{
+	PIPE,
+	OUTPUT,
+	APPEND,
+	INPUT,
+	HEREDOC,
+	STRING,
+}	t_type;
+
+t_type	get_type(t_string token);
+bool	is_redirection(t_type type);
+char	*type_str(t_type type);
 
 typedef enum e_state
 {
@@ -38,8 +52,6 @@ void	inc_cursor(t_tokenizer *tok);
 void	eval_quote(t_tokenizer *tok);
 void	eval_dquote(t_tokenizer *tok);
 bool	end_of_token(const t_tokenizer *tok);
-void	*print_error(const char *msg);
-void	*unexpected_token(const t_string token);
 void	init_tokenizer(t_tokenizer *tok);
 
 #endif

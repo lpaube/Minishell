@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser2.c                                          :+:      :+:    :+:   */
+/*   interpolation.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 18:56:07 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/14 13:19:04 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/16 22:09:42 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
-#include "tokenizer.h"
+#include "parse.h"
 #include "minishell.h"
+#include "env.h"
 #include <stdlib.h>
 
 static void	output_code(t_string out)
 {
 	char	*num;
 
-	num = ft_itoa(g_minishell.code);
+	num = ft_itoa(g_mini.code);
 	ft_str_append_cstr(out, num);
 	free(num);
 }
@@ -71,7 +71,7 @@ static bool	eval_quotes(char **str, t_state *state)
 	return (false);
 }
 
-char	*parse_spec_char(char *str)
+char	*interpolate(char *str)
 {
 	t_string	ret;
 	t_state		state;
@@ -94,19 +94,18 @@ char	*parse_spec_char(char *str)
 		++str;
 	}
 	tmp = ft_str_take(ret);
-	ft_str_free(ret);
 	free(ptr);
 	return (tmp);
 }
 
-void	parse_special_chars_arr(char **arr)
+void	interpolate_arr(char **arr)
 {
 	int	i;
 
 	i = 0;
 	while (arr[i])
 	{
-		arr[i] = parse_spec_char(arr[i]);
+		arr[i] = interpolate(arr[i]);
 		++i;
 	}
 }

@@ -3,22 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   print.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
+/*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/31 01:41:41 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/31 18:33:39 by laube            ###   ########.fr       */
+/*   Created: 2021/09/16 22:27:28 by mleblanc          #+#    #+#             */
+/*   Updated: 2021/09/17 19:55:25 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PRINT_H
 # define PRINT_H
 
-# include "libft.h"
-# include "phrase.h"
+# include "node.h"
+# include <sys/errno.h>
 
-void	print_token_list(const t_list *lst);
-char	*op_name(t_operator op);
-void	print_args(char **args);
-void	print_nodes(const t_phrase *lst);
+# define SHELL_NAME "minishell"
+# define SHELL_NAME_C C_BRED"minishell:"C_RST
+
+void	print_error(const char *prg, const char *v1, const char *v2);
+void	unexpected_token(const char *token);
+void	print_cmds(const t_node *cmds);
 
 #endif

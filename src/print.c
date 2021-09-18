@@ -3,63 +3,66 @@
 /*                                                        :::      ::::::::   */
 /*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
+/*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 01:43:42 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/31 15:27:13 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/17 17:47:19 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "print.h"
-#include "stdio.h"
+#include "minishell.h"
+#include <unistd.h>
+#include <stdio.h>
 
-void	print_token_list(const t_list *lst)
+void	print_error(const char *prg, const char *v1, const char *v2)
 {
-	t_string	token;
-
-	while (lst)
+	if (prg)
 	{
-		token = lst->content;
-		printf("%s\n", ft_str_data(token));
-		lst = lst->next;
+		ft_putstr_fd(prg, STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
 	}
-	printf("\n");
+	if (v1)
+	{
+		ft_putstr_fd(v1, STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
+	}
+	ft_putendl_fd(v2, STDERR_FILENO);
 }
 
-char	*op_name(t_operator op)
+void	unexpected_token(const char *token)
 {
-	if (op == PIPE)
-		return ("PIPE");
-	if (op == OUTPUT)
-		return ("OUTPUT");
-	if (op == APPEND)
-		return ("APPEND");
-	if (op == INPUT)
-		return ("INPUT");
-	if (op == READ)
-		return ("READ");
-	return ("NONE");
+	t_string	msg;
+
+	msg = ft_str_new_copy("error: syntax error near unexpected token \'");
+	ft_str_append_cstr(msg, token);
+	ft_str_add_back(msg, '\'');
+	print_error(NULL, NULL, ft_str_data(msg));
+	ft_str_free(msg);
 }
 
-void	print_args(char **args)
+static void	print_redir(void *redir)
+{
+	t_redir	*r;
+
+	r = redir;
+	printf("File: %s - type: %s\n", r->file, type_str(r->type));
+}
+
+void	print_cmds(const t_node *cmds)
 {
 	int	i;
 
-	i = 0;
-	while (args[i])
+	while (cmds)
 	{
-		printf("Arg %d: %s\n", i, args[i]);
-		++i;
-	}
-}
-
-void	print_nodes(const t_phrase *lst)
-{
-	while (lst)
-	{
-		printf("Cmd: %s - Operator: %s\n", lst->name, op_name(lst->op));
-		print_args(lst->args);
-		printf("\n");
-		lst = lst->next;
+		printf("Cmd: %s\n", cmds->cmd);
+		i = 0;
+		while (cmds->args[i])
+		{
+			printf("Arg%d: %s\n", i, cmds->args[i]);
+			++i;
+		}
+		ft_lstiter(cmds->redirs, print_redir);
+		cmds = cmds->next;
 	}
 }

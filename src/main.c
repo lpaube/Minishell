@@ -3,19 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
+/*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/14 13:38:32 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/17 19:53:38 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
-#include "tokenizer.h"
-#include "parser.h"
-#include "print.h"
-#include "signal_handler.h"
 #include "minishell.h"
+#include "parse.h"
+#include "print.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <readline/readline.h>
@@ -23,25 +21,28 @@
 #include <stdbool.h>
 #include <signal.h>
 
-t_minishell	g_minishell;
+t_minishell	g_mini;
 
 void	minishell_init(void)
 {
-	g_minishell.env = NULL;
-	g_minishell.code = 0;
-	g_minishell.fd = malloc(2 * sizeof(int));
-	g_minishell.saved_stdin = dup(0);
-	g_minishell.saved_stdout = dup(1);
-	g_minishell.allow_signal = 1;
+	g_mini.env = NULL;
+	g_mini.code = 0;
+	g_mini.fd = malloc(2 * sizeof(int));
+	g_mini.saved_stdin = dup(0);
+	g_mini.saved_stdout = dup(1);
+	g_mini.allow_signal = 1;
 }
 
 char	*get_line(char *line)
 {
 	char	*tmp;
 
-	line = readline("minishell: ");
+	line = readline(SHELL_NAME_C" ");
 	if (!line)
+	{
+		g_mini.code = 0;
 		exit(0);
+	}
 	tmp = ft_strtrim(line, WHITESPACE);
 	free(line);
 	line = tmp;
@@ -50,18 +51,18 @@ char	*get_line(char *line)
 	return (line);
 }
 
-void	free_memory(t_list **lst1, t_phrase **lst2, char *str)
+void	free_memory(t_list **tokens, t_node **cmds, char *line)
 {
-	ft_lstclear(lst1, ft_str_free);
-	nodeclear(lst2);
-	free(str);
+	ft_lstclear(tokens, ft_str_free);
+	nodeclear(cmds);
+	free(line);
 }
 
 void	minishell_loop(void)
 {
 	t_tokenizer	tok;
 	t_list		*lst;
-	t_phrase	*cmds;
+	t_node		*cmds;
 
 	tok.str = NULL;
 	cmds = NULL;
@@ -72,15 +73,9 @@ void	minishell_loop(void)
 		if (!*tok.str)
 			continue ;
 		lst = tokenize(&tok);
-		if (lst)
-		{
-			cmds = parse(lst);
-			if (main_control(cmds))
-			{
-				free_memory(&lst, &cmds, tok.str);
-				break ;
-			}
-		}
+		cmds = parse(lst);
+		if (main_control(cmds))
+			return (free_memory(&lst, &cmds, tok.str));
 		free_memory(&lst, &cmds, tok.str);
 	}
 }
@@ -92,10 +87,9 @@ int	main(int argc, char **argv, char **env)
 	signal(SIGINT, newline);
 	signal(SIGQUIT, nothing);
 	minishell_init();
-	g_minishell.env = ft_dup_strarr(env);
+	g_mini.env = ft_dup_strarr(env);
 	minishell_loop();
-	close(g_minishell.saved_stdin);
-	close(g_minishell.saved_stdout);
-	free(g_minishell.fd);
-	//scanf("c");
+	close(g_mini.saved_stdin);
+	close(g_mini.saved_stdout);
+	free(g_mini.fd);
 }

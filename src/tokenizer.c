@@ -6,12 +6,12 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 15:14:49 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/14 12:56:54 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/17 17:49:03 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "tokenizer.h"
+#include "print.h"
 #include <stdlib.h>
 
 void	init_tokenizer(t_tokenizer *tok)
@@ -19,6 +19,7 @@ void	init_tokenizer(t_tokenizer *tok)
 	tok->cursor = 0;
 	tok->state = TEXT;
 	tok->next_token = NULL;
+	tok->str = NULL;
 }
 
 bool	get_operator_token(t_tokenizer *tok)
@@ -59,9 +60,9 @@ bool	get_next_token(t_tokenizer *tok)
 	}
 	tok->next_token = token;
 	if (tok->state == QUOTE)
-		print_error("found unclosed quotes");
+		print_error(SHELL_NAME, NULL, "found unclosed quotes");
 	else if (tok->state == DQUOTE)
-		print_error("found unclosed double quotes");
+		print_error(SHELL_NAME, NULL, "found unclosed double quotes");
 	return (tok->state == TEXT);
 }
 

@@ -1,71 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   phrase.c                                           :+:      :+:    :+:   */
+/*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
+/*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/30 18:29:47 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/08/31 18:33:39 by laube            ###   ########.fr       */
+/*   Created: 2021/09/14 20:37:15 by mleblanc          #+#    #+#             */
+/*   Updated: 2021/09/14 22:36:25 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "phrase.h"
-#include <stdlib.h>
+#include "tokenizer.h"
 
-void	nodeclear(t_phrase **lst)
-{
-	t_phrase	*tmp;
-
-	while (lst && *lst)
-	{
-		tmp = (*lst)->next;
-		free((*lst)->name);
-		ft_free_strarr((*lst)->args);
-		free(*lst);
-		*lst = tmp;
-	}
-}
-
-t_phrase	*nodelast(t_phrase *lst)
-{
-	if (lst)
-	{
-		while (lst->next)
-			lst = lst->next;
-	}
-	return (lst);
-}
-
-void	nodeadd_back(t_phrase **lst, t_phrase *new)
-{
-	t_phrase	*last;
-
-	if (lst)
-	{
-		if (*lst)
-		{
-			last = nodelast(*lst);
-			last->next = new;
-			if (new)
-				new->prev = last;
-		}
-		else
-			*lst = new;
-	}
-}
-
-t_operator	get_operator(t_string token)
+t_type	get_type(t_string token)
 {
 	if (ft_strncmp(ft_str_data(token), "|", ft_str_len(token)) == 0)
 		return (PIPE);
 	if (ft_strncmp(ft_str_data(token), "<", ft_str_len(token)) == 0)
 		return (INPUT);
 	if (ft_strncmp(ft_str_data(token), "<<", ft_str_len(token)) == 0)
-		return (READ);
+		return (HEREDOC);
 	if (ft_strncmp(ft_str_data(token), ">", ft_str_len(token)) == 0)
 		return (OUTPUT);
 	if (ft_strncmp(ft_str_data(token), ">>", ft_str_len(token)) == 0)
 		return (APPEND);
-	return (NONE);
+	return (STRING);
+}
+
+bool	is_redirection(t_type type)
+{
+	if (type == OUTPUT || type == APPEND
+		|| type == INPUT || type == HEREDOC)
+		return (true);
+	return (false);
+}
+
+char	*type_str(t_type type)
+{
+	if (type == OUTPUT)
+		return ("OUTPUT");
+	if (type == APPEND)
+		return ("APPEND");
+	if (type == INPUT)
+		return ("INPUT");
+	if (type == HEREDOC)
+		return ("HEREDOC");
+	if (type == PIPE)
+		return ("PIPE");
+	return ("STRING");
 }
