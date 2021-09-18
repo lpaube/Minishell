@@ -12,8 +12,7 @@ FTDIR		=	libft
 LIBFT		=	ft
 MAKELIBFT	=	$(MAKE) -C $(FTDIR)
 
-HFILES		=	tokenizer.h parse.h node.h exec.h minishell.h builtin.h\
-				eprint.h environment.h
+HFILES		=	tokenizer.h parse.h node.h exec.h minishell.h builtin.h
 BUILTIN_C	=	cd.c echo.c env.c exit.c export.c pwd.c unset.c
 PARSING_C	=	interpolation.c interpolation2.c parse.c syntax.c token.c\
 				tokenizer.c tokenizer_utils.c
