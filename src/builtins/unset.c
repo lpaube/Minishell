@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 21:34:45 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/18 06:23:50 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/18 15:54:28 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,24 +37,19 @@ static void	remove_var(const char *var)
 void	ft_unset(t_node *node)
 {
 	size_t	i;
-	bool	can_perror;
 
-	if (ft_strarr_size(node->args) < 2)
-		return (pset_err(UNSET, NULL, "not enough arguments", GENERIC_ERR));
-	can_perror = true;
 	i = 1;
 	while (node->args[i])
 	{
 		if (!is_valid_var_name(node->args[i]))
 		{
-			process_error(UNSET, node->args[i], "invalid parameter name",
-				&can_perror);
+			pset_err(UNSET, node->args[i],
+				"not a valid identifier", GENERIC_ERR);
 			++i;
 			continue ;
 		}
 		remove_var(node->args[i]);
 		++i;
 	}
-	if (can_perror)
-		g_mini.code = SUCCESS;
+	g_mini.code = SUCCESS;
 }

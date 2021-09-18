@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 21:33:13 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/18 06:21:58 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/18 15:45:32 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,17 @@ static void	update_pwd(const char *oldpwd)
 	ft_setenv("OLDPWD", oldpwd);
 	ft_setenv("PWD", cwd);
 	free(cwd);
+	g_mini.code = SUCCESS;
 }
 
 void	ft_cd(t_node *node)
 {
 	char	*oldpwd;
 
-	if (ft_strarr_size(node->args) > 2)
-		return (pset_err(CD, NULL, "too many arguments", GENERIC_ERR));
 	oldpwd = getcwd(NULL, 0);
 	if (!oldpwd)
 		return (pset_err(CD, NULL, strerror(errno), GENERIC_ERR));
-	if (ft_strarr_size(node->args) == 2)
+	if (ft_strarr_size(node->args) > 1)
 	{
 		if (chdir(node->args[1]) == -1)
 		{
@@ -45,12 +44,16 @@ void	ft_cd(t_node *node)
 			return (pset_err(CD, strerror(errno), node->args[1], GENERIC_ERR));
 		}
 	}
-	else if (ft_getenv("HOME") && chdir(ft_getenv("HOME")) == -1)
+	else if (!ft_getenv("HOME"))
 	{
 		free(oldpwd);
-		return (pset_err(CD, NULL, strerror(errno), ENV_ERR));
+		return (pset_err(CD, NULL, "HOME not set", GENERIC_ERR));
+	}
+	else if (chdir(ft_getenv("HOME")) == -1)
+	{
+		free(oldpwd);
+		return (pset_err(CD, NULL, strerror(errno), GENERIC_ERR));
 	}
 	update_pwd(oldpwd);
 	free(oldpwd);
-	g_mini.code = SUCCESS;
 }

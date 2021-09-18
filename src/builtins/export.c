@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 21:36:30 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/18 06:23:27 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/18 16:00:19 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,17 @@
 #include "minishell.h"
 #include <stdlib.h>
 
-#define CTX_ERR "not valid in this context"
+static void	show_env(void)
+{
+	size_t	i;
+
+	i = 0;
+	while (g_mini.env[i])
+	{
+		printf("declare -x %s\n", g_mini.env[i]);
+		++i;
+	}
+}
 
 static void	add_var(const char *var)
 {
@@ -39,26 +49,15 @@ static void	add_var(const char *var)
 	g_mini.env = ft_expand_strarr(g_mini.env, ft_strdup(var));
 }
 
-void	process_error(const char *prg, const char *v1, const char *v2,
-	bool *can_print)
-{
-	if (*can_print)
-	{
-		pset_err(prg, v1, v2, GENERIC_ERR);
-		*can_print = false;
-	}
-}
-
 void	ft_export(t_node *node)
 {
 	size_t	i;
-	bool	can_perror;
 	char	*var;
 
+	g_mini.code = SUCCESS;
 	if (ft_strarr_size(node->args) < 2)
-		return (ft_env(node));
+		return (show_env());
 	var = NULL;
-	can_perror = true;
 	i = 1;
 	while (node->args[i])
 	{
@@ -66,7 +65,8 @@ void	ft_export(t_node *node)
 		var = var_name(node->args[i]);
 		if (!is_valid_var_name(var))
 		{
-			process_error(EXPORT, CTX_ERR, node->args[i], &can_perror);
+			pset_err(EXPORT, node->args[i],
+				"not a valid identifier", GENERIC_ERR);
 			++i;
 			continue ;
 		}
@@ -74,6 +74,4 @@ void	ft_export(t_node *node)
 		++i;
 	}
 	free(var);
-	if (can_perror)
-		g_mini.code = SUCCESS;
 }

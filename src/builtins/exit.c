@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 19:08:24 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/18 06:22:46 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/18 16:06:18 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,17 @@ bool	ft_exit(t_node *node)
 {
 	if (!node->next)
 		ft_putendl_fd(EXIT, STDERR_FILENO);
-	if (ft_strarr_size(node->args) > 2)
+	if (ft_strarr_size(node->args) == 1)
+		g_mini.code = 1;
+	else if (!is_number(node->args[1]))
+		pset_err(EXIT, node->args[1], "numeric argument required", 255);
+	else if (ft_strarr_size(node->args) > 2)
 	{
 		pset_err(EXIT, NULL, "too many arguments", GENERIC_ERR);
 		return (false);
 	}
-	if (ft_strarr_size(node->args) == 1)
-		g_mini.code = 1;
-	else if (!is_number(node->args[1]))
-		pset_err(EXIT, node->args[1], "numeric argument required", 2);
 	else
-		g_mini.code = ft_atoi(node->args[1]);
+		g_mini.code = ft_atoi(node->args[1]) % 256;
 	if (node->next)
 	{
 		exec_as_child();
