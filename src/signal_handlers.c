@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal_handler.c                                   :+:      :+:    :+:   */
+/*   signal_handlers.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 19:10:13 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/17 23:27:02 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/18 05:59:38 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,17 @@
 void	newline(int signal)
 {
 	(void)signal;
-	printf("\r" C_BRED SHELL_NAME "%%" C_RST "  \n");
-	rl_replace_line("", 1);
-	if (g_mini.allow_signal)
-		rl_on_new_line();
-	g_mini.code = 130;
+	printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
 	rl_redisplay();
+	g_mini.code = 130;
 }
 
 void	nothing(int signal)
 {
 	(void)signal;
-	if (g_mini.allow_signal)
-		rl_on_new_line();
-	else
-		printf("\n");
-	g_mini.code = 0;
+	rl_on_new_line();
 	rl_redisplay();
+	g_mini.code = 0;
 }

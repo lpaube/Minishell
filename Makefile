@@ -18,7 +18,7 @@ BUILTIN_C	=	cd.c echo.c env.c exit.c export.c pwd.c unset.c
 PARSING_C	=	interpolation.c interpolation2.c parse.c syntax.c token.c\
 				tokenizer.c tokenizer_utils.c
 EXEC_C		=	cmd.c exec.c
-CFILES		=	main.c node.c eprint.c environment.c signal_handler.c
+CFILES		=	main.c node.c eprint.c environment.c signal_handlers.c
 
 BUILTIN_DIR	=	$(SRC)/builtins
 PARSING_DIR	=	$(SRC)/parsing
