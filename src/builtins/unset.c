@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 21:34:45 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/18 16:14:37 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/18 16:34:17 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	ft_unset(t_node *node)
 {
 	size_t	i;
 
+	g_mini.code = SUCCESS;
 	i = 1;
 	while (node->args[i])
 	{
@@ -50,5 +51,4 @@ void	ft_unset(t_node *node)
 		remove_var(node->args[i]);
 		++i;
 	}
-	g_mini.code = SUCCESS;
 }
