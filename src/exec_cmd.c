@@ -6,13 +6,14 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:16:38 by laube             #+#    #+#             */
-/*   Updated: 2021/09/17 20:03:05 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/17 20:20:20 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 #include "env.h"
 #include "print.h"
+#include "minishell.h"
 #include <string.h>
 #include <sys/stat.h>
 #include <stdlib.h>
@@ -63,8 +64,20 @@ static char	*get_cmd_path(const char *cmd)
 void	ft_cmd(t_node *node)
 {
 	char	*path;
+	int		pid;
 
 	path = get_cmd_path(node->cmd);
-	ft_printf("%s\n", path);
+	if (!path)
+		return ;
+	pid = fork();
+	if (pid == -1)
+		print_error(SHELL_NAME, NULL, strerror(errno));
+	if (pid == 0)
+	{
+		if (execve(path, node->args, g_mini.env) == -1)
+			print_error(SHELL_NAME, NULL, strerror(errno));
+		return ;
+	}
+	wait(0);
 	free(path);
 }
