@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 21:34:45 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/18 15:54:28 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/18 16:14:37 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ void	ft_unset(t_node *node)
 	{
 		if (!is_valid_var_name(node->args[i]))
 		{
-			pset_err(UNSET, node->args[i],
-				"not a valid identifier", GENERIC_ERR);
+			pset_err(UNSET, node->args[i], BAD_IDENT, GENERIC_ERR);
 			++i;
 			continue ;
 		}

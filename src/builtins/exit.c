@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 19:08:24 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/18 16:06:18 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/18 16:22:13 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ bool	ft_exit(t_node *node)
 	if (ft_strarr_size(node->args) == 1)
 		g_mini.code = 1;
 	else if (!is_number(node->args[1]))
-		pset_err(EXIT, node->args[1], "numeric argument required", 255);
+		pset_err(EXIT, node->args[1], NUMERIC_REQ, NON_NUMERIC_ERR);
 	else if (ft_strarr_size(node->args) > 2)
 	{
-		pset_err(EXIT, NULL, "too many arguments", GENERIC_ERR);
+		pset_err(EXIT, NULL, TOO_MANY_ARGS, GENERIC_ERR);
 		return (false);
 	}
 	else

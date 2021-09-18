@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:16:38 by laube             #+#    #+#             */
-/*   Updated: 2021/09/18 15:56:03 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/18 16:20:17 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,13 @@ static char	*get_cmd_path(const char *cmd)
 	path = ft_getenv("PATH");
 	if (!path || *cmd == '.' | *cmd == '/')
 	{
-		pset_err(SHELL_NAME, cmd, strerror(errno), ENV_ERR);
+		pset_err(SHELL_NAME, cmd, strerror(errno), ENVIRONMENT_ERR);
 		return (NULL);
 	}
 	dirs = ft_split(path, ':');
 	absolute = find_cmd(dirs, cmd);
 	if (!absolute)
-		pset_err(SHELL_NAME, cmd, "command not found", ENV_ERR);
+		pset_err(SHELL_NAME, cmd, CMD_NOT_FOUND, ENVIRONMENT_ERR);
 	ft_free_strarr(dirs);
 	return (absolute);
 }

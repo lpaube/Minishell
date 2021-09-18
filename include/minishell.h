@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 13:33:08 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/18 15:41:20 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/18 16:23:27 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,29 @@
 # define SUCCESS 0
 # define GENERIC_ERR 1
 # define SYNTAX_ERR 258
-# define ENV_ERR 127
+# define ENVIRONMENT_ERR 127
+# define NON_NUMERIC_ERR 255
+
+# define BAD_IDENT "not a valid identifier"
+# define TOO_MANY_ARGS "too many arguments"
+# define NUMERIC_REQ "numeric argument required"
+# define CMD_NOT_FOUND "command not found"
+# define NO_HOME "HOME not set"
+# define UNCLOSED_QUOTES "found unclosed quotes"
+# define UNCLOSED_DQUOTES "found unclosed double quotes"
+
+# define ENV_PWD "PWD"
+# define ENV_OLDPWD "OLDPWD"
+# define ENV_HOME "HOME"
 
 typedef struct s_minishell
 {
-	char	**env;
-	int		code;
-	int		*fd;
-	int		saved_stdin;
-	int		saved_stdout;
-	int		allow_signal;
+	char			**env;
+	unsigned int	code;
+	int				*fd;
+	int				saved_stdin;
+	int				saved_stdout;
+	int				allow_signal;
 }	t_minishell;
 
 extern t_minishell	g_mini;

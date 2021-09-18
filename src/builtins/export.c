@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 21:36:30 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/18 16:00:19 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/18 16:14:21 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,7 @@ void	ft_export(t_node *node)
 		var = var_name(node->args[i]);
 		if (!is_valid_var_name(var))
 		{
-			pset_err(EXPORT, node->args[i],
-				"not a valid identifier", GENERIC_ERR);
+			pset_err(EXPORT, node->args[i], BAD_IDENT, GENERIC_ERR);
 			++i;
 			continue ;
 		}

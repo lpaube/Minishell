@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 21:33:13 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/18 15:45:32 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/18 16:19:54 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ static void	update_pwd(const char *oldpwd)
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 		return (pset_err(CD, NULL, strerror(errno), GENERIC_ERR));
-	ft_setenv("OLDPWD", oldpwd);
-	ft_setenv("PWD", cwd);
+	ft_setenv(ENV_OLDPWD, oldpwd);
+	ft_setenv(ENV_PWD, cwd);
 	free(cwd);
 	g_mini.code = SUCCESS;
 }
@@ -44,12 +44,12 @@ void	ft_cd(t_node *node)
 			return (pset_err(CD, strerror(errno), node->args[1], GENERIC_ERR));
 		}
 	}
-	else if (!ft_getenv("HOME"))
+	else if (!ft_getenv(ENV_HOME))
 	{
 		free(oldpwd);
-		return (pset_err(CD, NULL, "HOME not set", GENERIC_ERR));
+		return (pset_err(CD, NULL, NO_HOME, GENERIC_ERR));
 	}
-	else if (chdir(ft_getenv("HOME")) == -1)
+	else if (chdir(ft_getenv(ENV_HOME)) == -1)
 	{
 		free(oldpwd);
 		return (pset_err(CD, NULL, strerror(errno), GENERIC_ERR));
