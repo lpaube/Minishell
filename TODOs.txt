@@ -1,0 +1,4 @@
+Pipes
+redirections
+builtin exit
+fix signal handling
