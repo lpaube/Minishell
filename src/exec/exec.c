@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:29:29 by laube             #+#    #+#             */
-/*   Updated: 2021/09/18 23:31:48 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/19 00:39:31 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	pipe_control(t_node *cmds)
 {
 	int	open_fd;
 	t_redir	*redir;
-	char	*line;
+	// char	*line;
 
 	pipe(cmds->fd);
 	if (cmds->prev)
@@ -85,13 +85,7 @@ void	pipe_control(t_node *cmds)
 		else if (redir->type == INPUT)
 		{
 			open_fd = open(redir->file, O_RDONLY);
-			while (get_next_line(open_fd, &line) > 0)
-			{
-				ft_putstr_fd(line, 0);
-				ft_putstr_fd("\n", 0);
-				free(line);
-			}
-			free(line);
+			dup2(open_fd, 0);
 			close(open_fd);
 		}
 		else if (redir->type == HEREDOC)
@@ -109,10 +103,12 @@ bool	process_cmd(t_node *cmds)
 	pipe(g_mini.fd);
 	while (cmds)
 	{
-		printf("EXEC:cmds: %s | next-addr: %p\n", cmds->cmd, cmds->next);
+		// printf("EXEC:cmds: %s | next-addr: %p\n", cmds->cmd, cmds->next);
 		pipe_control(cmds);
 		if (execute(cmds) && !cmds->next)
+		{
 			return (true);
+		}
 		dup2(g_mini.stdout_fd, 1);
 		dup2(g_mini.stdin_fd, 0);
 		cmds = cmds->next;

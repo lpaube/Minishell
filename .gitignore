@@ -5,3 +5,4 @@ minishell
 .cache/*
 .clangd
 compile_commands.json
+test*
