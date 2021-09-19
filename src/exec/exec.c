@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:29:29 by laube             #+#    #+#             */
-/*   Updated: 2021/09/18 23:08:12 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/18 23:31:48 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "parse.h"
 #include "minishell.h"
 #include "exec.h"
+#include <stdio.h>
 
 static bool	dispatch_cmd(t_node *node)
 {
@@ -108,6 +109,7 @@ bool	process_cmd(t_node *cmds)
 	pipe(g_mini.fd);
 	while (cmds)
 	{
+		printf("EXEC:cmds: %s | next-addr: %p\n", cmds->cmd, cmds->next);
 		pipe_control(cmds);
 		if (execute(cmds) && !cmds->next)
 			return (true);
