@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   node.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 18:28:14 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/16 22:12:23 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/19 00:33:44 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,7 @@ typedef struct s_node
 	char			*cmd;
 	char			**args;
 	t_list			*redirs;
-	int				*fd;
-	int				output_fd;
-	int				intput_fd;
-	int				saved_stdout;
-	int				saved_stdin;
+	int				fd[2];
 	struct s_node	*next;
 	struct s_node	*prev;
 }	t_node;

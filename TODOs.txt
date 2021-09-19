@@ -1,2 +1,4 @@
-Pipes
-redirections
+1. "exit" prints twice.
+2. If there's a file named "ls" in curr_dir, the command "ls" will try to execute that file instead of the command.
+4. Beginning a command with a redirection doesn't work.
+

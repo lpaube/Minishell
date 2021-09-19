@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:29:29 by laube             #+#    #+#             */
-/*   Updated: 2021/09/18 20:09:24 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/19 18:28:58 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "parse.h"
 #include "minishell.h"
 #include "exec.h"
+#include <stdio.h>
 
 static bool	dispatch_cmd(t_node *node)
 {
@@ -47,12 +48,23 @@ bool	execute(t_node *node)
 	return (false);
 }
 
+void	fd_reset()
+{
+	dup2(g_mini.stdout_fd, 1);
+	dup2(g_mini.stdin_fd, 0);
+}
+
 bool	process_cmd(t_node *cmds)
 {
 	while (cmds)
 	{
+		op_control(cmds);
 		if (execute(cmds) && !cmds->next)
+		{
+			fd_reset();
 			return (true);
+		}
+		fd_reset();
 		cmds = cmds->next;
 	}
 	return (false);
