@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:29:29 by laube             #+#    #+#             */
-/*   Updated: 2021/09/19 00:39:31 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/19 14:22:06 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,28 @@ void	pipe_control(t_node *cmds)
 		}
 		else if (redir->type == HEREDOC)
 		{
-			(void)open_fd;
+			char	*limiter;
+			char	*line;
+
+			limiter = redir->file;
+			ft_putstr_fd("> ", 1);
+			while (get_next_line(0, &line) > 0)
+			{
+				if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
+				{
+					free(line);
+					dup2(cmds->fd[0], 0);
+					// close(cmds->fd[0]);
+					close(cmds->fd[1]);
+					return ;
+				}
+				ft_putstr_fd("> ", 1);
+				ft_putstr_fd(line, cmds->fd[1]);
+				ft_putstr_fd("\n", cmds->fd[1]);
+				free(line);
+			}
+			close(cmds->fd[0]);
+			close(cmds->fd[1]);
 		}
 		cmds->redirs = cmds->redirs->next;
 		if (cmds->redirs)
@@ -100,13 +121,14 @@ void	pipe_control(t_node *cmds)
 
 bool	process_cmd(t_node *cmds)
 {
-	pipe(g_mini.fd);
 	while (cmds)
 	{
 		// printf("EXEC:cmds: %s | next-addr: %p\n", cmds->cmd, cmds->next);
 		pipe_control(cmds);
 		if (execute(cmds) && !cmds->next)
 		{
+			dup2(g_mini.stdout_fd, 1);
+			dup2(g_mini.stdin_fd, 0);
 			return (true);
 		}
 		dup2(g_mini.stdout_fd, 1);
