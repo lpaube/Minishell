@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 18:18:50 by laube             #+#    #+#             */
-/*   Updated: 2021/09/19 18:23:49 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/19 18:37:03 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	redir_control(t_node *cmds)
 {
 	t_redir	*redir;
-	
+
 	while (cmds->redirs)
 	{
 		redir = cmds->redirs->content;
@@ -52,7 +52,6 @@ void	op_control(t_node *cmds)
 	left_pipe(cmds);
 	redir_control(cmds);
 	right_pipe(cmds);
-
 	close(cmds->fd[1]);
 	if (!cmds->next)
 		close(cmds->fd[0]);

@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:29:29 by laube             #+#    #+#             */
-/*   Updated: 2021/09/19 18:28:58 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/19 18:36:36 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ bool	execute(t_node *node)
 	return (false);
 }
 
-void	fd_reset()
+void	fd_reset(void)
 {
 	dup2(g_mini.stdout_fd, 1);
 	dup2(g_mini.stdin_fd, 0);

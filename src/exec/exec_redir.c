@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 18:22:42 by laube             #+#    #+#             */
-/*   Updated: 2021/09/19 18:23:45 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/19 18:36:21 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	redir_output(t_redir *redir)
 void	redir_append(t_redir *redir)
 {
 	int	open_fd;
-	
+
 	open_fd = open(redir->file, O_RDWR | O_CREAT | O_APPEND, 0644);
 	dup2(open_fd, 1);
 	close(open_fd);
