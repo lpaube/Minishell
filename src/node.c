@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 18:39:19 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/16 22:12:23 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/19 00:14:30 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ void	nodeclear(t_node **lst)
 	while (lst && *lst)
 	{
 		tmp = (*lst)->next;
-		free((*lst)->cmd);
-		ft_free_strarr((*lst)->args);
+		ft_free_strarr((*lst)->argv);
 		ft_lstclear(&(*lst)->redirs, free_redir);
 		free(*lst);
 		*lst = tmp;
@@ -69,6 +68,6 @@ t_node	*nodenew(void)
 	t_node	*node;
 
 	node = ft_calloc(1, sizeof(t_node));
-	node->args = ft_calloc(1, sizeof(char *));
+	node->argv = ft_calloc(1, sizeof(char *));
 	return (node);
 }

@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 21:34:45 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/18 16:34:17 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/19 00:14:19 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,15 @@ void	ft_unset(t_node *node)
 
 	g_mini.code = SUCCESS;
 	i = 1;
-	while (node->args[i])
+	while (node->argv[i])
 	{
-		if (!is_valid_var_name(node->args[i]))
+		if (!is_valid_var_name(node->argv[i]))
 		{
-			pset_err(UNSET, node->args[i], BAD_IDENT, GENERIC_ERR);
+			pset_err(UNSET, node->argv[i], BAD_IDENT, GENERIC_ERR);
 			++i;
 			continue ;
 		}
-		remove_var(node->args[i]);
+		remove_var(node->argv[i]);
 		++i;
 	}
 }

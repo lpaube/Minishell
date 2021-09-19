@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 21:36:30 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/18 18:58:20 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/19 00:14:19 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,21 +56,21 @@ void	ft_export(t_node *node)
 	char	*var;
 
 	g_mini.code = SUCCESS;
-	if (ft_strarr_size(node->args) < 2)
+	if (ft_strarr_size(node->argv) < 2)
 		return (show_env());
 	var = NULL;
 	i = 1;
-	while (node->args[i])
+	while (node->argv[i])
 	{
 		free(var);
-		var = var_name(node->args[i]);
+		var = var_name(node->argv[i]);
 		if (!is_valid_var_name(var))
 		{
-			pset_err(EXPORT, node->args[i], BAD_IDENT, GENERIC_ERR);
+			pset_err(EXPORT, node->argv[i], BAD_IDENT, GENERIC_ERR);
 			++i;
 			continue ;
 		}
-		add_var(node->args[i]);
+		add_var(node->argv[i]);
 		++i;
 	}
 	free(var);

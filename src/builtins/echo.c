@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 21:31:35 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/18 04:30:49 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/19 00:31:09 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,16 @@ void	ft_echo(t_node *node)
 
 	nl = true;
 	i = 1;
-	while ((node->args)[i] && ft_strncmp((node->args)[i], "-n", 3) == 0)
+	while (node->argv[i] && ft_strncmp(node->argv[i], "-n", 3) == 0)
 	{
 		nl = false;
 		++i;
 	}
-	while ((node->args)[i])
+	while (node->argv[i])
 	{
-		printf("%s", (node->args)[i]);
+		printf("%s", node->argv[i]);
 		++i;
-		if ((node->args)[i])
+		if (node->argv[i])
 			printf(" ");
 	}
 	if (nl)

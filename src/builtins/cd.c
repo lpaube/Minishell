@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 21:33:13 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/18 16:19:54 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/19 00:14:19 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ void	ft_cd(t_node *node)
 	oldpwd = getcwd(NULL, 0);
 	if (!oldpwd)
 		return (pset_err(CD, NULL, strerror(errno), GENERIC_ERR));
-	if (ft_strarr_size(node->args) > 1)
+	if (ft_strarr_size(node->argv) > 1)
 	{
-		if (chdir(node->args[1]) == -1)
+		if (chdir(node->argv[1]) == -1)
 		{
 			free(oldpwd);
-			return (pset_err(CD, strerror(errno), node->args[1], GENERIC_ERR));
+			return (pset_err(CD, strerror(errno), node->argv[1], GENERIC_ERR));
 		}
 	}
 	else if (!ft_getenv(ENV_HOME))

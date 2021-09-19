@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 23:16:36 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/17 19:16:27 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/19 00:15:21 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,8 @@ t_node	*get_next_node(t_list **tokens)
 		if (is_redirection(get_type((*tokens)->content)))
 			ft_lstadd_back(&node->redirs,
 				ft_lstnew((void *)new_redir(tokens)));
-		else if (!node->cmd)
-		{
-			node->cmd = ft_strdup(str);
-			node->args = ft_expand_strarr(node->args, ft_strdup(str));
-		}
 		else
-			node->args = ft_expand_strarr(node->args, ft_strdup(str));
+			node->argv = ft_expand_strarr(node->argv, ft_strdup(str));
 		ft_lstnext(tokens);
 	}
 	if (*tokens)
