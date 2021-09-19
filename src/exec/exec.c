@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:29:29 by laube             #+#    #+#             */
-/*   Updated: 2021/09/18 18:57:24 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/18 20:09:24 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,8 @@ bool	execute(t_node *node)
 		node->cmd = interpolate(node->cmd);
 	interpolate_arr(node->args);
 	interpolate_redirs(node->redirs);
-	if (node->cmd)
-		if (dispatch_cmd(node))
-			return (true);
+	if (node->cmd && dispatch_cmd(node))
+		return (true);
 	return (false);
 }
 
