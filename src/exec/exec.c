@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:29:29 by laube             #+#    #+#             */
-/*   Updated: 2021/09/18 18:57:24 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/18 23:08:12 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,71 @@ bool	execute(t_node *node)
 	return (false);
 }
 
+void	pipe_control(t_node *cmds)
+{
+	int	open_fd;
+	t_redir	*redir;
+	char	*line;
+
+	pipe(cmds->fd);
+	if (cmds->prev)
+	{
+		dup2(cmds->prev->fd[0], 0);
+		close(cmds->prev->fd[0]);
+	}
+	if (cmds->next)
+	{
+		dup2(cmds->fd[1], 1);
+		close(cmds->fd[1]);
+	}
+	if (cmds->redirs)
+		redir = cmds->redirs->content;
+	while (cmds->redirs)
+	{
+		if (redir->type == OUTPUT)
+		{
+			open_fd = open(redir->file, O_RDWR | O_CREAT | O_TRUNC, 0644);
+			dup2(open_fd, 1);
+			close(open_fd);
+		}
+		else if (redir->type == APPEND)
+		{
+			open_fd = open(redir->file, O_RDWR | O_CREAT | O_APPEND, 0644);
+			dup2(open_fd, 1);
+			close(open_fd);
+		}
+		else if (redir->type == INPUT)
+		{
+			open_fd = open(redir->file, O_RDONLY);
+			while (get_next_line(open_fd, &line) > 0)
+			{
+				ft_putstr_fd(line, 0);
+				ft_putstr_fd("\n", 0);
+				free(line);
+			}
+			free(line);
+			close(open_fd);
+		}
+		else if (redir->type == HEREDOC)
+		{
+			(void)open_fd;
+		}
+		cmds->redirs = cmds->redirs->next;
+		if (cmds->redirs)
+			redir = cmds->redirs->content;
+	}
+}
+
 bool	process_cmd(t_node *cmds)
 {
+	pipe(g_mini.fd);
 	while (cmds)
 	{
+		pipe_control(cmds);
 		if (execute(cmds) && !cmds->next)
 			return (true);
+		dup2(g_mini.stdout_fd, 1);
+		dup2(g_mini.stdin_fd, 0);
 		cmds = cmds->next;
 	}
 	return (false);
