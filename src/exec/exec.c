@@ -6,7 +6,7 @@
 /*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:29:29 by laube             #+#    #+#             */
-/*   Updated: 2021/09/19 14:22:06 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/19 15:29:21 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,19 +53,16 @@ void	pipe_control(t_node *cmds)
 {
 	int	open_fd;
 	t_redir	*redir;
-	// char	*line;
 
+	// Pipe on the left
 	pipe(cmds->fd);
 	if (cmds->prev)
 	{
 		dup2(cmds->prev->fd[0], 0);
 		close(cmds->prev->fd[0]);
 	}
-	if (cmds->next)
-	{
-		dup2(cmds->fd[1], 1);
-		close(cmds->fd[1]);
-	}
+
+	// Redirections in current node
 	if (cmds->redirs)
 		redir = cmds->redirs->content;
 	while (cmds->redirs)
@@ -92,7 +89,9 @@ void	pipe_control(t_node *cmds)
 		{
 			char	*limiter;
 			char	*line;
+			int		heredoc_fd[2];
 
+			pipe(heredoc_fd);
 			limiter = redir->file;
 			ft_putstr_fd("> ", 1);
 			while (get_next_line(0, &line) > 0)
@@ -100,23 +99,30 @@ void	pipe_control(t_node *cmds)
 				if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
 				{
 					free(line);
-					dup2(cmds->fd[0], 0);
-					// close(cmds->fd[0]);
-					close(cmds->fd[1]);
-					return ;
+					dup2(heredoc_fd[0], 0);
+					close(heredoc_fd[1]);
+					close(heredoc_fd[0]);
+					break ;
 				}
 				ft_putstr_fd("> ", 1);
-				ft_putstr_fd(line, cmds->fd[1]);
-				ft_putstr_fd("\n", cmds->fd[1]);
+				ft_putstr_fd(line, heredoc_fd[1]);
+				ft_putstr_fd("\n", heredoc_fd[1]);
 				free(line);
 			}
-			close(cmds->fd[0]);
-			close(cmds->fd[1]);
 		}
 		cmds->redirs = cmds->redirs->next;
 		if (cmds->redirs)
 			redir = cmds->redirs->content;
 	}
+	// Pipe on the right
+	if (cmds->next)
+	{
+		dup2(cmds->fd[1], 1);
+	}
+
+	close(cmds->fd[1]);
+	if (!cmds->next)
+		close(cmds->fd[0]);
 }
 
 bool	process_cmd(t_node *cmds)
@@ -129,6 +135,8 @@ bool	process_cmd(t_node *cmds)
 		{
 			dup2(g_mini.stdout_fd, 1);
 			dup2(g_mini.stdin_fd, 0);
+			close(g_mini.stdout_fd);
+			close(g_mini.stdin_fd);
 			return (true);
 		}
 		dup2(g_mini.stdout_fd, 1);
