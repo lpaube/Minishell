@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 18:39:19 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/19 00:14:30 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/19 23:52:28 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static void	free_redir(void *redir)
 
 	r = redir;
 	free(r->file);
+	free(redir);
 }
 
 void	nodeclear(t_node **lst)

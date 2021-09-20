@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 18:18:50 by laube             #+#    #+#             */
-/*   Updated: 2021/09/19 22:17:27 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/19 23:56:59 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	left_pipe(t_node *cmds)
 {
 	if (cmds->prev)
 	{
-		dup2(cmds->prev->fd[0], 0);
+		dup2(cmds->prev->fd[0], STDIN_FILENO);
 		close(cmds->prev->fd[0]);
 	}
 }
@@ -25,7 +25,7 @@ static void	left_pipe(t_node *cmds)
 static void	right_pipe(t_node *cmds)
 {
 	if (cmds->next)
-		dup2(cmds->fd[1], 1);
+		dup2(cmds->fd[1], STDOUT_FILENO);
 }
 
 void	op_control(t_node *cmds)
