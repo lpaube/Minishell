@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 18:18:50 by laube             #+#    #+#             */
-/*   Updated: 2021/09/20 02:49:47 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/20 15:10:27 by laube            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ void	op_control(t_node *cmds)
 {
 	pipe(cmds->fd);
 	left_pipe(cmds);
-	ft_lstiter(cmds->redirs, redirect);
 	right_pipe(cmds);
+	ft_lstiter(cmds->redirs, redirect);
 	close(cmds->fd[1]);
 	if (!cmds->next)
 		close(cmds->fd[0]);
