@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
+/*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/19 18:29:17 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/20 03:20:12 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ void	minishell_init(char **env)
 {
 	g_mini.env = ft_dup_strarr(env);
 	g_mini.code = 0;
-	g_mini.fd[0] = 0;
-	g_mini.fd[1] = 0;
 	g_mini.stdin_fd = dup(STDIN_FILENO);
 	g_mini.stdout_fd = dup(STDOUT_FILENO);
 	signal(SIGINT, newline);

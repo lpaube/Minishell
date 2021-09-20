@@ -4,5 +4,3 @@
 
 4. Heredoc signals + variables
 https://github.dev/paulahemsi/minishell
-
-5. Ctrl-D when last execution failed
