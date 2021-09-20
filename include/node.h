@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 18:28:14 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/19 00:14:25 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/19 22:15:10 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,7 @@ typedef struct s_node
 {
 	char			**argv;
 	t_list			*redirs;
-	int				*fd;
-	int				output_fd;
-	int				intput_fd;
-	int				saved_stdout;
-	int				saved_stdin;
+	int				fd[2];
 	struct s_node	*next;
 	struct s_node	*prev;
 }	t_node;

@@ -1,2 +1,2 @@
-Pipes
-redirections
+1. "exit" prints twice.
+2. Beginning a command with a redirection doesn't work.

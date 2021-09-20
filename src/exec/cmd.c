@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:16:38 by laube             #+#    #+#             */
-/*   Updated: 2021/09/19 00:24:08 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/19 22:15:34 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,10 @@ static char	*get_cmd_path(const char *cmd)
 	char		*absolute;
 	char		**dirs;
 
-	if (stat(cmd, &buf) == 0)
+	if ((*cmd == '.' || *cmd == '/') && stat(cmd, &buf) == 0)
 		return (ft_strdup(cmd));
 	path = ft_getenv("PATH");
-	if (!path || *cmd == '.' | *cmd == '/')
+	if (!path)
 	{
 		pset_err(SHELL_NAME, cmd, strerror(errno), ENVIRONMENT_ERR);
 		return (NULL);

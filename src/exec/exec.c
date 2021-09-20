@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:29:29 by laube             #+#    #+#             */
-/*   Updated: 2021/09/19 00:16:16 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/19 22:15:54 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "parse.h"
 #include "minishell.h"
 #include "exec.h"
+#include <stdio.h>
 
 static bool	dispatch_cmd(t_node *node)
 {
@@ -47,12 +48,23 @@ bool	execute(t_node *node)
 	return (false);
 }
 
+void	fd_reset(void)
+{
+	dup2(g_mini.stdout_fd, 1);
+	dup2(g_mini.stdin_fd, 0);
+}
+
 bool	process_cmd(t_node *cmds)
 {
 	while (cmds)
 	{
+		op_control(cmds);
 		if (execute(cmds) && !cmds->next)
+		{
+			fd_reset();
 			return (true);
+		}
+		fd_reset();
 		cmds = cmds->next;
 	}
 	return (false);
