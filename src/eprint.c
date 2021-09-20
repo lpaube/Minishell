@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 01:43:42 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/18 06:21:15 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/20 19:27:13 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ void	unexpected_token(const char *token)
 {
 	t_string	msg;
 
-	msg = ft_str_new_copy("error: syntax error near unexpected token \'");
+	msg = ft_str_new_copy("syntax error near unexpected token \'");
 	ft_str_append_cstr(msg, token);
 	ft_str_add_back(msg, '\'');
-	pset_err(NULL, NULL, ft_str_data(msg), SYNTAX_ERR);
+	pset_err(SHELL_NAME, NULL, ft_str_data(msg), SYNTAX_ERR);
 	ft_str_free(msg);
 }

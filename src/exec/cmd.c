@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:16:38 by laube             #+#    #+#             */
-/*   Updated: 2021/09/20 03:25:52 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/20 19:39:17 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static char	*find_executable(char **dirs, const char *cmd)
 		str = ft_str_new_copy(dirs[i]);
 		ft_str_add_back(str, '/');
 		ft_str_append_cstr(str, cmd);
-		if (stat(ft_str_data(str), &buf) == 0)
+		if (stat(ft_str_data(str), &buf) == 0 && !S_ISDIR(buf.st_mode))
 			return (ft_str_take(str));
 		ft_str_free(str);
 		++i;
@@ -61,6 +61,11 @@ static char	*get_cmd_path(const char *cmd)
 	char	*absolute;
 	char	**dirs;
 
+	if (!*cmd || ft_strall(cmd, ft_isspace))
+	{
+		pset_err(SHELL_NAME, "$", CMD_NOT_FOUND, ENVIRONMENT_ERR);
+		return (NULL);
+	}
 	if (is_in_cwd(cmd))
 		return (ft_strdup(cmd));
 	if (errno == EISDIR)
@@ -68,7 +73,7 @@ static char	*get_cmd_path(const char *cmd)
 	path = ft_getenv("PATH");
 	if (!path)
 	{
-		pset_err(SHELL_NAME, cmd, strerror(errno), ENVIRONMENT_ERR);
+		pset_err(SHELL_NAME, cmd, CMD_NOT_FOUND, ENVIRONMENT_ERR);
 		return (NULL);
 	}
 	dirs = ft_split(path, ':');
