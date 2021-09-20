@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/20 03:41:36 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/20 03:56:40 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_minishell	g_mini;
 
 void	minishell_init(char **env)
 {
-	g_mini.env = ft_dup_strarr(env);
+	g_mini.env = ft_strarr_dup(env);
 	g_mini.code = 0;
 	g_mini.stdin_fd = dup(STDIN_FILENO);
 	g_mini.stdout_fd = dup(STDOUT_FILENO);

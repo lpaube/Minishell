@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 21:36:30 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/19 00:14:19 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/20 03:56:57 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	add_var(const char *var)
 		++i;
 	}
 	ft_str_free(var_cpy);
-	g_mini.env = ft_expand_strarr(g_mini.env, ft_strdup(var));
+	g_mini.env = ft_strarr_extend(g_mini.env, ft_strdup(var));
 }
 
 void	ft_export(t_node *node)
