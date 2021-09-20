@@ -3,35 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
+/*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 18:18:50 by laube             #+#    #+#             */
-/*   Updated: 2021/09/19 18:37:03 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/19 22:10:37 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+#include "tokenizer.h"
 
-void	redir_control(t_node *cmds)
-{
-	t_redir	*redir;
-
-	while (cmds->redirs)
-	{
-		redir = cmds->redirs->content;
-		if (redir->type == OUTPUT)
-			redir_output(redir);
-		else if (redir->type == APPEND)
-			redir_append(redir);
-		else if (redir->type == INPUT)
-			redir_input(redir);
-		else if (redir->type == HEREDOC)
-			redir_heredoc(redir);
-		cmds->redirs = cmds->redirs->next;
-	}
-}
-
-void	left_pipe(t_node *cmds)
+static void	left_pipe(t_node *cmds)
 {
 	if (cmds->prev)
 	{
@@ -40,7 +22,7 @@ void	left_pipe(t_node *cmds)
 	}
 }
 
-void	right_pipe(t_node *cmds)
+static void	right_pipe(t_node *cmds)
 {
 	if (cmds->next)
 		dup2(cmds->fd[1], 1);
@@ -50,7 +32,7 @@ void	op_control(t_node *cmds)
 {
 	pipe(cmds->fd);
 	left_pipe(cmds);
-	redir_control(cmds);
+	ft_lstiter(cmds->redirs, do_redirections);
 	right_pipe(cmds);
 	close(cmds->fd[1]);
 	if (!cmds->next)
