@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:29:29 by laube             #+#    #+#             */
-/*   Updated: 2021/09/20 16:22:02 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/20 16:58:39 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ bool	execute(t_node *node)
 
 void	fd_reset(void)
 {
-	dup2(g_mini.stdout_fd, 1);
-	dup2(g_mini.stdin_fd, 0);
+	dup2(g_mini.stdout_fd, STDOUT_FILENO);
+	dup2(g_mini.stdin_fd, STDIN_FILENO);
 }
 
 bool	process_cmd(t_node *cmds)
