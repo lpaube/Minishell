@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/20 03:20:12 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/20 03:41:36 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,6 @@ int	main(int argc, char **argv, char **env)
 	minishell_loop();
 	close(g_mini.stdin_fd);
 	close(g_mini.stdout_fd);
+	ft_putendl_fd("exit", STDOUT_FILENO);
 	exit(g_mini.code);
 }

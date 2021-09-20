@@ -1,4 +1,3 @@
-1. "exit" prints twice.
 2. Beginning a command with a redirection doesn't work.
 3. redirect + pipe combined
 

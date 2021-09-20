@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 19:10:13 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/18 16:08:58 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/20 03:35:13 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 void	newline(int signal)
 {
 	(void)signal;
-	write(STDOUT_FILENO, "\n", 1);
+	ft_putstr_fd("\n", STDOUT_FILENO);
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
@@ -29,13 +29,13 @@ void	newline(int signal)
 void	child_proc_interrupt(int signal)
 {
 	(void)signal;
-	write(STDOUT_FILENO, "\n", 1);
+	ft_putstr_fd("\n", STDOUT_FILENO);
 	g_mini.code = 130;
 }
 
 void	child_proc_quit(int signal)
 {
 	(void)signal;
-	write(STDOUT_FILENO, "Quit: 3\n", 8);
+	ft_putstr_fd("\n", STDOUT_FILENO);
 	g_mini.code = 131;
 }
