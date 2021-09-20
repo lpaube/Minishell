@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/20 03:56:40 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/20 16:47:53 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*get_line(char *line)
 {
 	char	*tmp;
 
-	line = readline(C_BRED SHELL_NAME "%" C_RST " ");
+	line = readline(SHELL_NAME"% ");
 	if (!line)
 	{
 		g_mini.code = 0;
