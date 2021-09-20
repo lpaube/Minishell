@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 19:10:13 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/20 03:35:13 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/20 15:37:11 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,19 @@ void	newline(int signal)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
-	g_mini.code = 130;
+	g_mini.code = INTERRUPT_SIG;
 }
 
 void	child_proc_interrupt(int signal)
 {
 	(void)signal;
 	ft_putstr_fd("\n", STDOUT_FILENO);
-	g_mini.code = 130;
+	g_mini.code = INTERRUPT_SIG;
 }
 
 void	child_proc_quit(int signal)
 {
 	(void)signal;
 	ft_putstr_fd("\n", STDOUT_FILENO);
-	g_mini.code = 131;
+	g_mini.code = QUIT_SIG;
 }

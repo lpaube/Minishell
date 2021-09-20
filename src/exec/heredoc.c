@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: laube <louis-philippe.aube@hotmail.com>    +#+  +:+       +#+        */
+/*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 01:31:53 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/20 15:29:36 by laube            ###   ########.fr       */
+/*   Updated: 2021/09/20 15:37:00 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 void	stop_heredoc(int signal)
 {
 	(void)signal;
-	g_mini.code = 130;
-	write(1, "\n", 1);
-	exit(130);
+	ft_putstr_fd("\n", STDOUT_FILENO);
+	g_mini.code = INTERRUPT_SIG;
+	exit(INTERRUPT_SIG);
 }
 
 void	exec_heredoc(char **line, char *limiter, int *heredoc_fd)

@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 13:33:08 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/20 03:20:15 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/20 15:36:42 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # define SYNTAX_ERR 2
 # define NOT_EXEC_ERR 126
 # define ENVIRONMENT_ERR 127
+# define INTERRUPT_SIG 130
+# define QUIT_SIG 131
 # define NON_NUMERIC_ERR 255
 
 # define BAD_IDENT "not a valid identifier"
