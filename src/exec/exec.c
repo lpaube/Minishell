@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:29:29 by laube             #+#    #+#             */
-/*   Updated: 2021/09/19 22:15:54 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/20 16:22:02 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,13 @@ bool	process_cmd(t_node *cmds)
 {
 	while (cmds)
 	{
-		op_control(cmds);
-		if (execute(cmds) && !cmds->next)
+		if (op_control(cmds))
 		{
-			fd_reset();
-			return (true);
+			if (execute(cmds) && !cmds->next)
+			{
+				fd_reset();
+				return (true);
+			}
 		}
 		fd_reset();
 		cmds = cmds->next;
