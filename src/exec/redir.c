@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 18:22:42 by laube             #+#    #+#             */
-/*   Updated: 2021/09/20 01:32:23 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/20 02:49:39 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	redir_input(t_redir *redir)
 	close(open_fd);
 }
 
-void	do_redirection(void *redir_ptr)
+void	redirect(void *redir_ptr)
 {
 	t_redir	*redir;
 

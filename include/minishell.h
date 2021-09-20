@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 13:33:08 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/18 17:27:38 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/20 03:16:57 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@
 
 # define SUCCESS 0
 # define GENERIC_ERR 1
-# define SYNTAX_ERR 258
+# define SYNTAX_ERR 2
+# define NOT_EXEC_ERR 126
 # define ENVIRONMENT_ERR 127
 # define NON_NUMERIC_ERR 255
 

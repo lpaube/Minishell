@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:16:38 by laube             #+#    #+#             */
-/*   Updated: 2021/09/19 22:15:34 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/20 03:15:48 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <signal.h>
 #include <string.h>
 
-static char	*find_cmd(char **dirs, const char *cmd)
+static char	*find_executable(char **dirs, const char *cmd)
 {
 	struct stat	buf;
 	t_string	*str;
@@ -38,15 +38,33 @@ static char	*find_cmd(char **dirs, const char *cmd)
 	return (NULL);
 }
 
-static char	*get_cmd_path(const char *cmd)
+bool	is_in_cwd(const char *cmd)
 {
 	struct stat	buf;
-	const char	*path;
-	char		*absolute;
-	char		**dirs;
 
 	if ((*cmd == '.' || *cmd == '/') && stat(cmd, &buf) == 0)
+	{
+		if (S_ISDIR(buf.st_mode))
+		{
+			errno = EISDIR;
+			pset_err(SHELL_NAME, cmd, strerror(errno), NOT_EXEC_ERR);
+			return (false);
+		}
+		return (true);
+	}
+	return (false);
+}
+
+static char	*get_cmd_path(const char *cmd)
+{
+	char	*path;
+	char	*absolute;
+	char	**dirs;
+
+	if (is_in_cwd(cmd))
 		return (ft_strdup(cmd));
+	if (errno == EISDIR)
+		return (NULL);
 	path = ft_getenv("PATH");
 	if (!path)
 	{
@@ -54,7 +72,7 @@ static char	*get_cmd_path(const char *cmd)
 		return (NULL);
 	}
 	dirs = ft_split(path, ':');
-	absolute = find_cmd(dirs, cmd);
+	absolute = find_executable(dirs, cmd);
 	if (!absolute)
 		pset_err(SHELL_NAME, cmd, CMD_NOT_FOUND, ENVIRONMENT_ERR);
 	ft_free_strarr(dirs);
@@ -77,7 +95,7 @@ void	ft_cmd(t_node *node)
 	signal(SIGINT, child_proc_interrupt);
 	signal(SIGQUIT, child_proc_quit);
 	if (pid == 0 && execve(node->argv[0], node->argv, g_mini.env) == -1)
-		pset_err(SHELL_NAME, NULL, strerror(errno), GENERIC_ERR);
+		pset_err(SHELL_NAME, node->argv[0], strerror(errno), NOT_EXEC_ERR);
 	waitpid(pid, &wstatus, 0);
 	signal(SIGINT, newline);
 	signal(SIGQUIT, SIG_IGN);
