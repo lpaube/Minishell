@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 18:18:50 by laube             #+#    #+#             */
-/*   Updated: 2021/09/20 16:23:02 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/20 17:01:24 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ static bool	input_file_exist(void *redir_ptr)
 		pset_err(SHELL_NAME, redir->file, strerror(errno), GENERIC_ERR);
 		return (false);
 	}
-	pset_err(SHELL_NAME, redir->file, strerror(errno), GENERIC_ERR);
 	return (true);
 }
 
