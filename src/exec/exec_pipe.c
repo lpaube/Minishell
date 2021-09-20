@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 18:18:50 by laube             #+#    #+#             */
-/*   Updated: 2021/09/19 22:10:37 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/19 22:17:27 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	op_control(t_node *cmds)
 {
 	pipe(cmds->fd);
 	left_pipe(cmds);
-	ft_lstiter(cmds->redirs, do_redirections);
+	ft_lstiter(cmds->redirs, do_redirection);
 	right_pipe(cmds);
 	close(cmds->fd[1]);
 	if (!cmds->next)

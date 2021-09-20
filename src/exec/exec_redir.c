@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 18:22:42 by laube             #+#    #+#             */
-/*   Updated: 2021/09/19 22:10:24 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/19 22:16:59 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static void	redir_heredoc(t_redir *redir)
 	}
 }
 
-void	do_redirections(void *redir_ptr)
+void	do_redirection(void *redir_ptr)
 {
 	t_redir	*redir;
 
