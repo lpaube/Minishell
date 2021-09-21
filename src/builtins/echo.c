@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 21:31:35 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/19 00:31:09 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/21 00:24:53 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ void	ft_echo(t_node *node)
 	}
 	while (node->argv[i])
 	{
-		printf("%s", node->argv[i]);
+		ft_putstr_fd(node->argv[i], STDOUT_FILENO);
 		++i;
 		if (node->argv[i])
-			printf(" ");
+			ft_putstr_fd(" ", STDOUT_FILENO);
 	}
 	if (nl)
-		printf("\n");
+		ft_putstr_fd("\n", STDOUT_FILENO);
 	g_mini.code = SUCCESS;
 }

@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 21:34:03 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/19 00:14:19 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/21 00:23:36 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_env(t_node *node)
 	i = 0;
 	while (g_mini.env[i])
 	{
-		printf("%s\n", g_mini.env[i]);
+		ft_putendl_fd(g_mini.env[i], STDOUT_FILENO);
 		++i;
 	}
 	g_mini.code = SUCCESS;

@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 21:32:32 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/18 15:56:19 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/21 00:23:58 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_pwd(t_node *node)
 
 	(void)node;
 	if (getcwd(cwd, CWD_BUFFER_SIZE) != NULL)
-		printf("%s\n", cwd);
+		ft_putendl_fd(cwd, STDOUT_FILENO);
 	else
 		return (pset_err(PWD, NULL, strerror(errno), GENERIC_ERR));
 	g_mini.code = SUCCESS;
