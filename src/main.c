@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/20 16:47:53 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/22 03:43:57 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 t_minishell	g_mini;
 
-void	minishell_init(char **env)
+static void	minishell_init(char **env)
 {
 	g_mini.env = ft_strarr_dup(env);
 	g_mini.code = 0;
@@ -32,7 +32,7 @@ void	minishell_init(char **env)
 	signal(SIGQUIT, SIG_IGN);
 }
 
-char	*get_line(char *line)
+static char	*get_line(char *line)
 {
 	char	*tmp;
 
@@ -50,14 +50,14 @@ char	*get_line(char *line)
 	return (line);
 }
 
-void	free_memory(t_list **tokens, t_node **cmds, char *line)
+static void	free_memory(t_list **tokens, t_node **cmds, char *line)
 {
 	ft_lstclear(tokens, ft_str_free);
 	nodeclear(cmds);
 	free(line);
 }
 
-void	minishell_loop(void)
+static void	minishell_loop(void)
 {
 	t_tokenizer	tok;
 	t_list		*lst;
@@ -94,5 +94,5 @@ int	main(int argc, char **argv, char **env)
 	close(g_mini.stdin_fd);
 	close(g_mini.stdout_fd);
 	ft_putendl_fd("exit", STDOUT_FILENO);
-	exit(g_mini.code);
+	return (g_mini.code);
 }

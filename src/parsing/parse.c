@@ -6,14 +6,14 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/25 23:16:36 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/20 03:56:57 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/21 05:16:07 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse.h"
 #include <stdlib.h>
 
-t_redir	*new_redir(t_list **tokens)
+static t_redir	*new_redir(t_list **tokens)
 {
 	t_redir	*redir;
 	char	*str;
@@ -26,7 +26,7 @@ t_redir	*new_redir(t_list **tokens)
 	return (redir);
 }
 
-t_node	*get_next_node(t_list **tokens)
+static t_node	*get_next_node(t_list **tokens)
 {
 	t_node	*node;
 	char	*str;

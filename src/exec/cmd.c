@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:16:38 by laube             #+#    #+#             */
-/*   Updated: 2021/09/21 04:48:00 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/22 03:46:10 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static char	*find_executable(char **dirs, const char *cmd)
 	return (NULL);
 }
 
-bool	is_in_cwd(const char *cmd)
+static bool	is_in_cwd(const char *cmd)
 {
 	struct stat	buf;
 
@@ -88,7 +88,6 @@ void	ft_cmd(t_node *node)
 	path = get_cmd_path(node->argv[0]);
 	if (!path)
 		return ;
-	ft_strarr_replace(node->argv, path, 0);
 	pid = fork();
 	if (pid == -1)
 		return (pset_err(SHELL_NAME, NULL, strerror(errno), GENERIC_ERR));
@@ -96,8 +95,8 @@ void	ft_cmd(t_node *node)
 	signal(SIGQUIT, child_proc_quit);
 	if (pid == 0)
 	{
-		if (execve(node->argv[0], node->argv, g_mini.env) == -1)
-			pset_err(SHELL_NAME, node->argv[0], strerror(errno), NOT_EXEC_ERR);
+		if (execve(path, node->argv, g_mini.env) == -1)
+			pset_err(SHELL_NAME, path, strerror(errno), NOT_EXEC_ERR);
 		exit(NOT_EXEC_ERR);
 	}
 	waitpid(pid, &wstatus, 0);

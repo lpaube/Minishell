@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:29:29 by laube             #+#    #+#             */
-/*   Updated: 2021/09/20 19:33:36 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/22 05:22:31 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static bool	dispatch_cmd(t_node *node)
 	return (false);
 }
 
-bool	execute(t_node *node)
+static bool	execute(t_node *node)
 {
 	interpolate_arr(node->argv);
 	interpolate_redirs(node->redirs);
@@ -46,7 +46,7 @@ bool	execute(t_node *node)
 	return (false);
 }
 
-void	fd_reset(void)
+static void	fd_reset(void)
 {
 	dup2(g_mini.stdout_fd, STDOUT_FILENO);
 	dup2(g_mini.stdin_fd, STDIN_FILENO);
@@ -54,17 +54,24 @@ void	fd_reset(void)
 
 bool	process_cmd(t_node *cmds)
 {
+	bool	error;
+	bool	should_exit;
+
 	while (cmds)
 	{
-		if (op_control(cmds))
+		error = !op_control(cmds);
+		if (!error)
 		{
-			if (execute(cmds) && !cmds->next)
+			should_exit = execute(cmds);
+			if (should_exit && !cmds->next)
 			{
 				fd_reset();
 				return (true);
 			}
 		}
 		fd_reset();
+		if (error)
+			return (false);
 		cmds = cmds->next;
 	}
 	return (false);
