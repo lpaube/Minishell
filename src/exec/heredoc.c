@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 01:31:53 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/20 15:37:00 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/21 00:16:02 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include "minishell.h"
 #include <stdlib.h>
 #include <readline/readline.h>
+#include <signal.h>
+#include <sys/wait.h>
 
 void	stop_heredoc(int signal)
 {
@@ -41,7 +43,7 @@ void	exec_heredoc(char **line, char *limiter, int *heredoc_fd)
 		*line = readline("> ");
 	}
 	free(*line);
-	exit(0);
+	exit(SUCCESS);
 }
 
 void	redir_heredoc(t_redir *redir)
@@ -49,16 +51,17 @@ void	redir_heredoc(t_redir *redir)
 	char	*limiter;
 	char	*line;
 	int		heredoc_fd[2];
-	int		pid;
+	pid_t	pid;
 
-	(void)pid;
 	limiter = redir->file;
 	signal(SIGINT, SIG_IGN);
 	pipe(heredoc_fd);
 	pid = fork();
+	if (pid == -1)
+		pset_err(SHELL_NAME, NULL, strerror(errno), GENERIC_ERR);
 	if (pid == 0)
 		exec_heredoc(&line, limiter, heredoc_fd);
-	wait(0);
+	waitpid(pid, NULL, 0);
 	signal(SIGINT, newline);
 	dup2(heredoc_fd[0], STDIN_FILENO);
 	close(heredoc_fd[1]);
