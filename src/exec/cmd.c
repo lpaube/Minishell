@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:16:38 by laube             #+#    #+#             */
-/*   Updated: 2021/09/21 00:13:10 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/21 04:48:00 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,6 @@ static char	*get_cmd_path(const char *cmd)
 	char	*absolute;
 	char	**dirs;
 
-	if (!*cmd || ft_strall(cmd, ft_isspace))
-	{
-		pset_err(SHELL_NAME, "$", CMD_NOT_FOUND, ENVIRONMENT_ERR);
-		return (NULL);
-	}
 	if (is_in_cwd(cmd))
 		return (ft_strdup(cmd));
 	if (errno == EISDIR)

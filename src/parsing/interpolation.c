@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 18:56:07 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/18 06:23:55 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/21 04:46:52 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,11 @@ static void	parse_variable(char **str, t_string out)
 	{
 		++(*str);
 		output_code(out);
+		return ;
+	}
+	if (!(ft_isalnum(**str) || **str == '_'))
+	{
+		ft_str_add_back(out, '$');
 		return ;
 	}
 	var_name = ft_str_new(NULL);
