@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 01:31:53 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/22 05:24:42 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/23 11:20:49 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,24 +24,15 @@ static void	stop_heredoc(int signal)
 	exit(INTERRUPT_SIG);
 }
 
-static size_t	max_value(size_t a, size_t b)
-{
-	if (a >= b)
-		return (a);
-	return (b);
-}
-
 static void	exec_heredoc(const char *limiter, int *heredoc_fd)
 {
 	char	*line;
-	size_t	count;
 
 	signal(SIGINT, stop_heredoc);
 	line = readline("> ");
 	while (line)
 	{
-		count = max_value(ft_strlen(line), ft_strlen(limiter));
-		if (ft_strncmp(line, limiter, count) == 0)
+		if (ft_strcmp(line, limiter) == 0)
 		{
 			close(heredoc_fd[1]);
 			close(heredoc_fd[0]);
