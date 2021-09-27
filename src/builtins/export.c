@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 21:36:30 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/20 03:56:57 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/27 16:31:01 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,25 +29,13 @@ static void	show_env(void)
 
 static void	add_var(const char *var)
 {
-	size_t		i;
 	t_string	var_cpy;
+	const char	*value;
 
 	var_cpy = ft_str_new(var_name(var));
-	ft_str_add_back(var_cpy, '=');
-	i = 0;
-	while (g_mini.env[i])
-	{
-		if (ft_str_cmp_cstr(var_cpy, g_mini.env[i], ft_str_len(var_cpy)) == 0)
-		{
-			free(g_mini.env[i]);
-			ft_str_free(var_cpy);
-			g_mini.env[i] = ft_strdup(var);
-			return ;
-		}
-		++i;
-	}
+	value = ft_strchr(var, '=') + 1;
+	ft_setenv(ft_str_data(var_cpy), value);
 	ft_str_free(var_cpy);
-	g_mini.env = ft_strarr_extend(g_mini.env, ft_strdup(var));
 }
 
 void	ft_export(t_node *node)

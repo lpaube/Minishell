@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:31:51 by laube             #+#    #+#             */
-/*   Updated: 2021/09/20 03:56:57 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/27 16:29:15 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,16 @@ void	ft_setenv(const char *var, const char *value)
 	size_t		i;
 	t_string	env_value;
 	bool		found;
+	char		*var_cpy;
 
-	env_value = ft_str_new_copy(var);
-	ft_str_add_back(env_value, '=');
+	var_cpy = ft_strjoin(var, "=");
+	env_value = ft_str_new_copy(var_cpy);
 	ft_str_append_cstr(env_value, value);
 	found = false;
 	i = 0;
 	while (g_mini.env[i])
 	{
-		if (ft_strncmp(g_mini.env[i], var, ft_strlen(var)) == 0)
+		if (ft_strncmp(g_mini.env[i], var_cpy, ft_strlen(var_cpy)) == 0)
 		{
 			free(g_mini.env[i]);
 			g_mini.env[i] = ft_str_take(env_value);
@@ -59,6 +60,7 @@ void	ft_setenv(const char *var, const char *value)
 	}
 	if (!found)
 		g_mini.env = ft_strarr_extend(g_mini.env, ft_str_take(env_value));
+	free(var_cpy);
 }
 
 char	*var_name(const char *var)
