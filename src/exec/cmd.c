@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:16:38 by laube             #+#    #+#             */
-/*   Updated: 2021/09/22 03:46:10 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/28 08:42:52 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,8 @@ void	ft_cmd(t_node *node)
 	signal(SIGQUIT, child_proc_quit);
 	if (pid == 0)
 	{
-		if (execve(path, node->argv, g_mini.env) == -1)
-			pset_err(SHELL_NAME, path, strerror(errno), NOT_EXEC_ERR);
+		execve(path, node->argv, g_mini.env);
+		pset_err(SHELL_NAME, path, strerror(errno), NOT_EXEC_ERR);
 		exit(NOT_EXEC_ERR);
 	}
 	waitpid(pid, &wstatus, 0);
