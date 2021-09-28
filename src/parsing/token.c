@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 20:37:15 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/14 22:36:25 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/28 09:46:22 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,4 @@ bool	is_redirection(t_type type)
 		|| type == INPUT || type == HEREDOC)
 		return (true);
 	return (false);
-}
-
-char	*type_str(t_type type)
-{
-	if (type == OUTPUT)
-		return ("OUTPUT");
-	if (type == APPEND)
-		return ("APPEND");
-	if (type == INPUT)
-		return ("INPUT");
-	if (type == HEREDOC)
-		return ("HEREDOC");
-	if (type == PIPE)
-		return ("PIPE");
-	return ("STRING");
 }
