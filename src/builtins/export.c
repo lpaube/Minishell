@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 21:36:30 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/27 16:31:01 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/09/29 14:47:28 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,6 @@
 #include "minishell.h"
 #include <stdlib.h>
 #include <stdio.h>
-
-static void	show_env(void)
-{
-	size_t	i;
-
-	i = 0;
-	while (g_mini.env[i])
-	{
-		printf("declare -x %s\n", g_mini.env[i]);
-		++i;
-	}
-}
 
 static void	add_var(const char *var)
 {
@@ -44,8 +32,8 @@ void	ft_export(t_node *node)
 	char	*var;
 
 	g_mini.code = SUCCESS;
-	if (ft_strarr_size(node->argv) < 2)
-		return (show_env());
+	if (ft_strarr_size(node->argv) == 1)
+		return (ft_env(node));
 	var = NULL;
 	i = 1;
 	while (node->argv[i])
