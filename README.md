@@ -18,7 +18,7 @@ Replicates the basic features of bash like execution and pipes
 - Quotes inhibit all interpretation of a sequence of characters
 - Double quotes inhibit all interpretation of a sequence of characters except for $
 - 4 redirections (> >> < <<)
-- Unix like pipes
+- Unix-like pipes
 - Environment variables interpolation (sequence starting with $)
 - $? for last exit status
 - Ctrl+C, Ctrl+\ and Ctrl+D works like in bash
