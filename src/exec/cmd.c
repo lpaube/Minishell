@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:16:38 by laube             #+#    #+#             */
-/*   Updated: 2021/09/28 08:42:52 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/10/01 16:28:04 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,4 +104,5 @@ void	ft_cmd(t_node *node)
 	signal(SIGQUIT, SIG_IGN);
 	if (WIFEXITED(wstatus))
 		g_mini.code = WEXITSTATUS(wstatus);
+	free(path);
 }
