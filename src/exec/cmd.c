@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:16:38 by laube             #+#    #+#             */
-/*   Updated: 2021/10/01 16:28:04 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/10/01 19:12:23 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,13 @@ static char	*get_cmd_path(const char *cmd)
 	return (absolute);
 }
 
+static void	exec_binary(const char *path, char *const *argv)
+{
+	execve(path, argv, g_mini.env);
+	pset_err(SHELL_NAME, path, strerror(errno), NOT_EXEC_ERR);
+	exit(NOT_EXEC_ERR);
+}
+
 void	ft_cmd(t_node *node)
 {
 	char	*path;
@@ -90,15 +97,14 @@ void	ft_cmd(t_node *node)
 		return ;
 	pid = fork();
 	if (pid == -1)
+	{
+		free(path);
 		return (pset_err(SHELL_NAME, NULL, strerror(errno), GENERIC_ERR));
+	}
 	signal(SIGINT, child_proc_interrupt);
 	signal(SIGQUIT, child_proc_quit);
 	if (pid == 0)
-	{
-		execve(path, node->argv, g_mini.env);
-		pset_err(SHELL_NAME, path, strerror(errno), NOT_EXEC_ERR);
-		exit(NOT_EXEC_ERR);
-	}
+		exec_binary(path, node->argv);
 	waitpid(pid, &wstatus, 0);
 	signal(SIGINT, newline);
 	signal(SIGQUIT, SIG_IGN);
