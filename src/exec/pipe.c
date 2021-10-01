@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 18:18:50 by laube             #+#    #+#             */
-/*   Updated: 2021/09/22 04:59:58 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/10/01 14:53:14 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static bool	is_stdout_redir(void *redir_ptr)
 	t_redir		*redir;
 
 	redir = redir_ptr;
-	if (redir->type == OUTPUT)
+	if (redir->type == OUTPUT || redir->type == APPEND)
 		return (true);
 	return (false);
 }
