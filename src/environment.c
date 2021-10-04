@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:31:51 by laube             #+#    #+#             */
-/*   Updated: 2021/09/27 16:29:15 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/10/04 12:16:52 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ bool	is_valid_var_name(const char *var)
 	if (!var)
 		return (false);
 	ptr = var;
+	if (ft_isdigit(*ptr))
+		return (false);
 	while (*ptr)
 	{
 		if (!(ft_isalnum(*ptr) || *ptr == '_'))
