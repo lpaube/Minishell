@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 18:56:07 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/10/04 10:13:42 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/10/05 16:38:08 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "minishell.h"
 #include <stdlib.h>
 
-static void	output_code(t_string out)
+static void	add_status_code(t_string out)
 {
 	char	*num;
 
@@ -29,17 +29,15 @@ static void	parse_variable(char **str, t_string out)
 	char		*var_value;
 
 	++(*str);
-	if (**str == '?')
+	if (**str == '?' || ft_isdigit(**str))
 	{
 		++(*str);
-		output_code(out);
+		if (**str == '?')
+			add_status_code(out);
 		return ;
 	}
 	if (!(ft_isalnum(**str) || **str == '_'))
-	{
-		ft_str_add_back(out, '$');
-		return ;
-	}
+		return ((void)ft_str_add_back(out, '$'));
 	var_name = ft_str_new(NULL);
 	while (ft_isalnum(**str) || **str == '_')
 	{
