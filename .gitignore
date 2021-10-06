@@ -6,3 +6,4 @@ minishell
 .clangd
 compile_commands.json
 test*
+*.dSYM/*

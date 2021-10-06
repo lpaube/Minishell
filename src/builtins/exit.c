@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 19:08:24 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/21 00:39:06 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/10/06 15:57:04 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,23 +43,18 @@ static void	exec_as_child(void)
 	waitpid(pid, NULL, 0);
 }
 
-bool	ft_exit(t_node *node)
+void	ft_exit(t_node *node)
 {
 	if (ft_strarr_size(node->argv) == 1)
 		g_mini.code = SUCCESS;
 	else if (!is_number(node->argv[1]))
 		pset_err(EXIT, node->argv[1], NUMERIC_REQ, SYNTAX_ERR);
 	else if (ft_strarr_size(node->argv) > 2)
-	{
-		pset_err(EXIT, NULL, TOO_MANY_ARGS, GENERIC_ERR);
-		return (false);
-	}
+		return (pset_err(EXIT, NULL, TOO_MANY_ARGS, GENERIC_ERR));
 	else
 		g_mini.code = ft_atoi(node->argv[1]) % 256;
 	if (node->next)
-	{
-		exec_as_child();
-		return (false);
-	}
-	return (true);
+		return (exec_as_child());
+	ft_putendl_fd("exit", STDOUT_FILENO);
+	exit(g_mini.code);
 }

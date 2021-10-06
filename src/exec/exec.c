@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:29:29 by laube             #+#    #+#             */
-/*   Updated: 2021/09/22 05:22:31 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/10/06 15:54:48 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "exec.h"
 #include <stdio.h>
 
-static bool	dispatch_cmd(t_node *node)
+static void	dispatch_cmd(t_node *node)
 {
 	if (ft_strncmp(node->argv[0], "echo", 5) == 0)
 		ft_echo(node);
@@ -31,19 +31,17 @@ static bool	dispatch_cmd(t_node *node)
 	else if (ft_strncmp(node->argv[0], "export", 7) == 0)
 		ft_export(node);
 	else if (ft_strncmp(node->argv[0], "exit", 5) == 0)
-		return (ft_exit(node));
+		ft_exit(node);
 	else
 		ft_cmd(node);
-	return (false);
 }
 
-static bool	execute(t_node *node)
+static void	execute(t_node *node)
 {
 	interpolate_arr(node->argv);
 	interpolate_redirs(node->redirs);
-	if (node->argv[0] && dispatch_cmd(node))
-		return (true);
-	return (false);
+	if (node->argv[0])
+		dispatch_cmd(node);
 }
 
 static void	fd_reset(void)
@@ -52,27 +50,25 @@ static void	fd_reset(void)
 	dup2(g_mini.stdin_fd, STDIN_FILENO);
 }
 
-bool	process_cmd(t_node *cmds)
+void	process_cmd(t_node *cmds)
 {
 	bool	error;
-	bool	should_exit;
 
 	while (cmds)
 	{
 		error = !op_control(cmds);
 		if (!error)
 		{
-			should_exit = execute(cmds);
-			if (should_exit && !cmds->next)
+			execute(cmds);
+			if (!cmds->next)
 			{
 				fd_reset();
-				return (true);
+				return ;
 			}
 		}
 		fd_reset();
 		if (error)
-			return (false);
+			return ;
 		cmds = cmds->next;
 	}
-	return (false);
 }

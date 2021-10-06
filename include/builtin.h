@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/15 20:45:01 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/18 15:53:37 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/10/06 15:55:21 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,6 @@ void	ft_unset(t_node *node);
 void	ft_export(t_node *node);
 void	ft_pwd(t_node *node);
 void	ft_env(t_node *node);
-bool	ft_exit(t_node *node);
+void	ft_exit(t_node *node);
 
 #endif

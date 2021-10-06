@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 14:46:24 by laube             #+#    #+#             */
-/*   Updated: 2021/09/22 04:33:50 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/10/06 15:55:11 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "node.h"
 
-bool	process_cmd(t_node *cmds);
+void	process_cmd(t_node *cmds);
 void	ft_cmd(t_node *node);
 bool	op_control(t_node *cmds);
 bool	exec_redirections(t_list *redirs);
