@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 18:56:07 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/10/06 00:14:03 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/10/06 11:15:16 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	add_status_code(t_string out)
 {
 	char	*num;
 
-	num = ft_utoa(g_mini.code);
+	num = ft_ltoa(g_mini.code);
 	ft_str_append_cstr(out, num);
 	free(num);
 }
