@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 18:56:07 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/10/05 16:38:08 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/10/06 00:14:03 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ static void	parse_variable(char **str, t_string out)
 	++(*str);
 	if (**str == '?' || ft_isdigit(**str))
 	{
-		++(*str);
 		if (**str == '?')
 			add_status_code(out);
+		++(*str);
 		return ;
 	}
 	if (!(ft_isalnum(**str) || **str == '_'))
