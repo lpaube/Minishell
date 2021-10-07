@@ -6,14 +6,14 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/18 15:15:12 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/28 09:46:27 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/10/06 21:54:54 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TOKENIZER_H
 # define TOKENIZER_H
 
-# include "libft.h"
+# include <libft/libft.h>
 
 # define OP ">|<"
 

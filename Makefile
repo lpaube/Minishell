@@ -36,7 +36,7 @@ SRCS		=	$(addprefix $(SRC)/, $(CFILES)) $(BUILTIN_SRC) $(PARSING_SRC) $(EXEC_SRC
 VPATH		=	$(SRC) $(BUILTIN_DIR) $(PARSING_DIR) $(EXEC_DIR)
 
 $(OBJ)/%.o:	%.c
-			$(CC) $(CFLAGS) -I$(INC) -I$(FTDIR) -c $< -o $@
+			$(CC) $(CFLAGS) -I. -I$(INC) -c $< -o $@
 
 $(NAME):	$(OBJ) $(OBJS)
 			@$(MAKELIBFT)
