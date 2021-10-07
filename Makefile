@@ -39,7 +39,7 @@ $(OBJ)/%.o:	%.c
 			$(CC) $(CFLAGS) -I. -I$(INC) -c $< -o $@
 
 $(NAME):	$(OBJ) $(OBJS)
-			@$(MAKELIBFT)
+			@$(MAKELIBFT) all
 			$(CC) $(OBJS) -L$(FTDIR) -l$(LIBFT) -L$(LIB) -lreadline -lcurses -o $(NAME)
 
 $(OBJ):
