@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 01:31:53 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/23 11:20:49 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/10/08 16:40:06 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ static void	exec_heredoc(const char *limiter, int *heredoc_fd)
 			close(heredoc_fd[0]);
 			break ;
 		}
-		ft_putstr_fd(line, heredoc_fd[1]);
-		ft_putstr_fd("\n", heredoc_fd[1]);
+		ft_putendl_fd(line, heredoc_fd[1]);
 		free(line);
 		line = readline("> ");
 	}
