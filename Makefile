@@ -5,7 +5,7 @@ INC			=	include
 OBJ			=	obj
 LIB			=	lib
 CC			=	clang
-CFLAGS		=	-Wall -Wextra -Werror -O2
+CFLAGS		=	-Wall -Wextra -Werror
 RM			=	rm -rf
 
 FTDIR		=	libft
@@ -38,18 +38,22 @@ VPATH		=	$(SRC) $(BUILTIN_DIR) $(PARSING_DIR) $(EXEC_DIR)
 $(OBJ)/%.o:	%.c
 			$(CC) $(CFLAGS) -I. -I$(INC) -c $< -o $@
 
+all:		CFLAGS += -O2
+all:		$(NAME)
+
 $(NAME):	$(OBJ) $(OBJS)
-			@$(MAKELIBFT) all
+			@$(MAKELIBFT)
 			$(CC) $(OBJS) -L$(FTDIR) -l$(LIBFT) -L$(LIB) -lreadline -lcurses -o $(NAME)
 
 $(OBJ):
 			@mkdir -p $(OBJ)
 
-all:		$(NAME)
-
 linux:		$(OBJ) $(OBJS)
 			@$(MAKELIBFT)
 			$(CC) $(OBJS) -L$(FTDIR) -l$(LIBFT) -lreadline -o $(NAME)
+
+debug:		CFLAGS += -g
+debug:		$(NAME)
 
 clean:
 			@$(MAKELIBFT) clean
