@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 01:31:53 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/10/08 17:31:40 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/10/08 19:50:36 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,26 +46,25 @@ static void	exec_heredoc(const char *limiter, int *heredoc_fd)
 	exit(SUCCESS);
 }
 
-bool	redir_heredoc(t_redir *redir)
+bool	redir_heredoc(t_redir *redir, bool last)
 {
-	char	*limiter;
 	int		heredoc_fd[2];
 	pid_t	pid;
 	int		wstatus;
 
-	limiter = redir->file;
 	signal(SIGINT, SIG_IGN);
 	pipe(heredoc_fd);
 	pid = fork();
 	if (pid == -1)
 		pset_err(SHELL_NAME, NULL, strerror(errno), GENERIC_ERR);
 	if (pid == 0)
-		exec_heredoc(limiter, heredoc_fd);
+		exec_heredoc(redir->file, heredoc_fd);
 	waitpid(pid, &wstatus, 0);
 	signal(SIGINT, newline);
 	if (WIFEXITED(wstatus))
 		g_mini.code = WEXITSTATUS(wstatus);
-	dup2(heredoc_fd[0], STDIN_FILENO);
+	if (last)
+		dup2(heredoc_fd[0], STDIN_FILENO);
 	close(heredoc_fd[1]);
 	close(heredoc_fd[0]);
 	if (WIFEXITED(wstatus) && WEXITSTATUS(wstatus) == INTERRUPT_SIG)
