@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 01:31:53 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/10/08 16:40:06 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/10/08 17:31:40 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,7 @@ bool	redir_heredoc(t_redir *redir)
 	signal(SIGINT, newline);
 	if (WIFEXITED(wstatus))
 		g_mini.code = WEXITSTATUS(wstatus);
-	if (WIFEXITED(wstatus) && WEXITSTATUS(wstatus) == SUCCESS)
-		dup2(heredoc_fd[0], STDIN_FILENO);
+	dup2(heredoc_fd[0], STDIN_FILENO);
 	close(heredoc_fd[1]);
 	close(heredoc_fd[0]);
 	if (WIFEXITED(wstatus) && WEXITSTATUS(wstatus) == INTERRUPT_SIG)
