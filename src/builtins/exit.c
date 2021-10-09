@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 19:08:24 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/10/06 15:57:04 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/10/09 02:51:05 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,23 +26,6 @@ static bool	is_number(const char *str)
 	return (ft_strall(str, ft_isdigit));
 }
 
-static void	exec_as_child(void)
-{
-	pid_t	pid;
-	int		code;
-
-	code = g_mini.code;
-	pid = fork();
-	if (pid == -1)
-	{
-		pset_err(EXIT, NULL, strerror(errno), GENERIC_ERR);
-		return ;
-	}
-	if (pid == 0)
-		exit(code);
-	waitpid(pid, NULL, 0);
-}
-
 void	ft_exit(t_node *node)
 {
 	if (ft_strarr_size(node->argv) == 1)
@@ -54,7 +37,7 @@ void	ft_exit(t_node *node)
 	else
 		g_mini.code = ft_atoi(node->argv[1]) % 256;
 	if (node->next)
-		return (exec_as_child());
+		return ;
 	ft_putendl_fd("exit", STDOUT_FILENO);
 	exit(g_mini.code);
 }
