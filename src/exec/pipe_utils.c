@@ -1,28 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec.h                                             :+:      :+:    :+:   */
+/*   pipe_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/31 14:46:24 by laube             #+#    #+#             */
-/*   Updated: 2021/10/08 23:04:29 by mleblanc         ###   ########.fr       */
+/*   Created: 2021/10/08 23:03:30 by mleblanc          #+#    #+#             */
+/*   Updated: 2021/10/08 23:04:10 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXEC_H
-# define EXEC_H
+#include "minishell.h"
 
-# include "node.h"
+void	fd_reset(void)
+{
+	dup2(g_mini.stdout_fd, STDOUT_FILENO);
+	dup2(g_mini.stdin_fd, STDIN_FILENO);
+}
 
-void	process_cmd(t_node *cmds);
-void	ft_cmd(t_node *node);
-bool	op_control(t_node *cmds);
-bool	exec_redirections(t_list *redirs, int *pipe_fd);
-bool	exec_heredocs(t_list *redirs, int stdin_fd);
+void	init_pipes(t_node *cmds)
+{
+	while (cmds)
+	{
+		pipe(cmds->fd);
+		cmds = cmds->next;
+	}
+}
 
-void	fd_reset(void);
-void	init_pipes(t_node *cmds);
-void	close_pipes(t_node *cmds);
-
-#endif
+void	close_pipes(t_node *cmds)
+{
+	while (cmds)
+	{
+		close(cmds->fd[0]);
+		close(cmds->fd[1]);
+		cmds = cmds->next;
+	}
+}

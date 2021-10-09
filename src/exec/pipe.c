@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 18:18:50 by laube             #+#    #+#             */
-/*   Updated: 2021/10/01 14:53:14 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/10/08 22:57:39 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,19 +59,13 @@ static bool	is_stdout_redir(void *redir_ptr)
 
 bool	op_control(t_node *cmds)
 {
-	bool	no_error;
-	bool	any_stdout_redir;
-
-	pipe(cmds->fd);
 	left_pipe(cmds);
-	no_error = ft_lstall(cmds->redirs, input_file_exist);
-	any_stdout_redir = ft_lstany(cmds->redirs, is_stdout_redir);
-	if (no_error && !exec_redirections(cmds->redirs))
-		no_error = false;
-	if (!any_stdout_redir)
+	if (!ft_lstall(cmds->redirs, input_file_exist))
+		return (false);
+	if (!exec_redirections(cmds->redirs, cmds->fd))
+		return (false);
+	if (!ft_lstany(cmds->redirs, is_stdout_redir))
 		right_pipe(cmds);
 	close(cmds->fd[1]);
-	if (!cmds->next)
-		close(cmds->fd[0]);
-	return (no_error);
+	return (true);
 }

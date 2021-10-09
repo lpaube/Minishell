@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:29:29 by laube             #+#    #+#             */
-/*   Updated: 2021/10/06 15:54:48 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/10/08 23:09:33 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,31 +44,39 @@ static void	execute(t_node *node)
 		dispatch_cmd(node);
 }
 
-static void	fd_reset(void)
+static bool	process_heredocs(t_node *cmds)
 {
-	dup2(g_mini.stdout_fd, STDOUT_FILENO);
-	dup2(g_mini.stdin_fd, STDIN_FILENO);
+	while (cmds)
+	{
+		if (!exec_heredocs(cmds->redirs, cmds->fd[0]))
+			return (true);
+		cmds = cmds->next;
+	}
+	return (false);
 }
 
 void	process_cmd(t_node *cmds)
 {
+	t_node	*start;
 	bool	error;
 
-	while (cmds)
+	start = cmds;
+	init_pipes(start);
+	error = process_heredocs(cmds);
+	while (!error && cmds)
 	{
 		error = !op_control(cmds);
 		if (!error)
 		{
 			execute(cmds);
 			if (!cmds->next)
-			{
-				fd_reset();
-				return ;
-			}
+				break ;
+			fd_reset();
 		}
-		fd_reset();
 		if (error)
-			return ;
+			break ;
 		cmds = cmds->next;
 	}
+	close_pipes(start);
+	fd_reset();
 }

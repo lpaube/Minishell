@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 18:22:42 by laube             #+#    #+#             */
-/*   Updated: 2021/10/08 19:43:23 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/10/08 22:57:22 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static bool	redir_input(t_redir *redir)
 	return (true);
 }
 
-static bool	redirect(void *redir_ptr, size_t *n)
+static bool	redirect(void *redir_ptr, int *pipe_fd)
 {
 	t_redir	*redir;
 
@@ -73,26 +73,15 @@ static bool	redirect(void *redir_ptr, size_t *n)
 	else if (redir->type == INPUT)
 		return (redir_input(redir));
 	else if (redir->type == HEREDOC)
-		return (redir_heredoc(redir, (*n)-- == 1));
-	return (false);
+		dup2(pipe_fd[0], STDIN_FILENO);
+	return (true);
 }
 
-bool	heredoc_count(void *redir)
+bool	exec_redirections(t_list *redirs, int *pipe_fd)
 {
-	t_redir	*r;
-
-	r = redir;
-	return (r->type == HEREDOC);
-}
-
-bool	exec_redirections(t_list *redirs)
-{
-	size_t	n_heredoc;
-
-	n_heredoc = ft_lstcount_if(redirs, heredoc_count);
 	while (redirs)
 	{
-		if (!redirect(redirs->content, &n_heredoc))
+		if (!redirect(redirs->content, pipe_fd))
 			return (false);
 		ft_lstnext(&redirs);
 	}
