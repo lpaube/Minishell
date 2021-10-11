@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 00:16:38 by laube             #+#    #+#             */
-/*   Updated: 2021/10/08 23:11:34 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/10/11 15:41:28 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,8 @@ void	ft_cmd(t_node *node)
 	if (pid == -1)
 	{
 		free(path);
-		return (pset_err(SHELL_NAME, NULL, strerror(errno), GENERIC_ERR));
+		pset_err(SHELL_NAME, NULL, strerror(errno), GENERIC_ERR);
+		return ;
 	}
 	signal(SIGINT, child_proc_interrupt);
 	signal(SIGQUIT, child_proc_quit);

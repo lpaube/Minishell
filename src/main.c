@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/10/06 15:56:35 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/10/11 15:35:49 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static void	minishell_loop(void)
 		init_tokenizer(&tok);
 		tok.str = get_line(tok.str);
 		if (!tok.str)
-			return (free_memory(&lst, &cmds, tok.str));
+			return ;
 		if (!*tok.str)
 		{
 			free(tok.str);
@@ -94,5 +94,5 @@ int	main(int argc, char **argv, char **env)
 	close(g_mini.stdout_fd);
 	rl_clear_history();
 	ft_putendl_fd("exit", STDOUT_FILENO);
-	return (g_mini.code);
+	return ((int)g_mini.code);
 }

@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 21:36:30 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/09/29 14:47:28 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/10/11 15:38:26 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ void	ft_export(t_node *node)
 
 	g_mini.code = SUCCESS;
 	if (ft_strarr_size(node->argv) == 1)
-		return (ft_env(node));
+	{
+		ft_env(node);
+		return ;
+	}
 	var = NULL;
 	i = 1;
 	while (node->argv[i])

@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/06 18:56:07 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/10/06 11:15:16 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/10/11 15:40:54 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ static void	parse_variable(char **str, t_string out)
 	t_string	var_name;
 	char		*var_value;
 
-	++(*str);
 	if (**str == '?' || ft_isdigit(**str))
 	{
 		if (**str == '?')
@@ -37,7 +36,10 @@ static void	parse_variable(char **str, t_string out)
 		return ;
 	}
 	if (!(ft_isalnum(**str) || **str == '_'))
-		return ((void)ft_str_add_back(out, '$'));
+	{
+		ft_str_add_back(out, '$');
+		return ;
+	}
 	var_name = ft_str_new(NULL);
 	while (ft_isalnum(**str) || **str == '_')
 	{
@@ -87,6 +89,7 @@ char	*interpolate(char *str)
 	{
 		if (*str == '$' && (state == TEXT || state == DQUOTE))
 		{
+			str++;
 			parse_variable(&str, ret);
 			continue ;
 		}

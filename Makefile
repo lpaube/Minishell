@@ -5,7 +5,7 @@ INC			=	include
 OBJ			=	obj
 LIB			=	lib
 CC			=	clang
-CFLAGS		=	-Wall -Wextra -Werror
+CFLAGS		=	-Wall -Wextra -Werror -Wpedantic -Wconversion
 RM			=	rm -rf
 
 FTDIR		=	libft
