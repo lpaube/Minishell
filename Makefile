@@ -70,4 +70,4 @@ norme:
 			@$(MAKELIBFT) norme
 			@norminette $(SRCS) $(HEADERS)
 
-.PHONY:		all clean fclean re norme linux
+.PHONY:		all clean fclean re norme linux debug
