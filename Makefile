@@ -38,7 +38,7 @@ VPATH		=	$(SRC) $(BUILTIN_DIR) $(PARSING_DIR) $(EXEC_DIR)
 $(OBJ)/%.o:	%.c
 			$(CC) $(CFLAGS) -I. -I$(INC) -c $< -o $@
 
-all:		CFLAGS += -O2
+all:		CFLAGS += -O2 -DNDEBUG
 all:		$(NAME)
 
 $(NAME):	$(OBJ) $(OBJS)
@@ -48,7 +48,7 @@ $(NAME):	$(OBJ) $(OBJS)
 $(OBJ):
 			@mkdir -p $(OBJ)
 
-linux:		CFLAGS += -O2
+linux:		CFLAGS += -O2 -DNDEBUG
 linux:		$(OBJ) $(OBJS)
 			@$(MAKELIBFT)
 			$(CC) $(OBJS) -L$(FTDIR) -l$(LIBFT) -lreadline -o $(NAME)
