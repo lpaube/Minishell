@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/17 19:08:24 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/10/11 15:38:02 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/10/11 22:31:46 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static bool	is_number(const char *str)
 
 void	ft_exit(t_node *node)
 {
+	ft_putendl_fd("exit", STDOUT_FILENO);
 	if (ft_strarr_size(node->argv) == 1)
 		g_mini.code = SUCCESS;
 	else if (!is_number(node->argv[1]))
@@ -41,6 +42,5 @@ void	ft_exit(t_node *node)
 		g_mini.code = ft_atoi(node->argv[1]) % 256;
 	if (node->next)
 		return ;
-	ft_putendl_fd("exit", STDOUT_FILENO);
 	exit((int)g_mini.code);
 }
