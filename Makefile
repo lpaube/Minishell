@@ -48,11 +48,6 @@ $(NAME):	$(OBJ) $(OBJS)
 $(OBJ):
 			@mkdir -p $(OBJ)
 
-linux:		CFLAGS += -O2 -DNDEBUG
-linux:		$(OBJ) $(OBJS)
-			@$(MAKELIBFT)
-			$(CC) $(OBJS) -L$(FTDIR) -l$(LIBFT) -lreadline -o $(NAME)
-
 debug:		CFLAGS += -g
 debug:		$(NAME)
 
@@ -70,4 +65,4 @@ norme:
 			@$(MAKELIBFT) norme
 			@norminette $(SRCS) $(HEADERS)
 
-.PHONY:		all clean fclean re norme linux debug
+.PHONY:		all clean fclean re norme debug
