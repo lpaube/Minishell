@@ -6,7 +6,7 @@
 /*   By: mleblanc <mleblanc@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 16:03:37 by mleblanc          #+#    #+#             */
-/*   Updated: 2021/10/11 15:35:49 by mleblanc         ###   ########.fr       */
+/*   Updated: 2021/10/11 23:53:36 by mleblanc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,12 @@ static void	free_memory(t_list **tokens, t_node **cmds, char *line)
 static void	minishell_loop(void)
 {
 	t_tokenizer	tok;
-	t_list		*lst;
+	t_list		*tokens;
 	t_node		*cmds;
 
 	tok.str = NULL;
 	cmds = NULL;
-	lst = NULL;
+	tokens = NULL;
 	while (true)
 	{
 		init_tokenizer(&tok);
@@ -77,10 +77,10 @@ static void	minishell_loop(void)
 			free(tok.str);
 			continue ;
 		}
-		lst = tokenize(&tok);
-		cmds = parse(lst);
+		tokens = tokenize(&tok);
+		cmds = parse(tokens);
 		process_cmd(cmds);
-		free_memory(&lst, &cmds, tok.str);
+		free_memory(&tokens, &cmds, tok.str);
 	}
 }
 
