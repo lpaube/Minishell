@@ -1,4 +1,4 @@
-# minishell
+# Minishell (MacOS only)
 A smaller shell
 
 ## Summary
